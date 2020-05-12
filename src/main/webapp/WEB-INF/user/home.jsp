@@ -4,9 +4,55 @@
 <%@ page isELIgnored="false" %>
 
 
+<c:if test="${not empty param.lang}">
+    <fmt:setLocale value="${param.lang}" scope="session"/>
+</c:if>
+<fmt:setBundle basename="messages"/>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title><fmt:message key="messages.title.login"/></title>
+</head>
+<body>
+
+<%--<c:import url="/WEB-INF/user/menu.jsp" charEncoding="utf-8" />--%>
 
 
-<c:import url="/WEB-INF/user/menu.jsp" charEncoding="utf-8" />
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="${pageContext.request.contextPath}/api/home">
+                <fmt:message key="messages.menu.home"/>
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="${pageContext.request.contextPath}/api/account">
+                <fmt:message key="messages.menu.account"/>
+            </a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="${pageContext.request.contextPath}/api/statistics" >
+                <fmt:message key="messages.menu.statistics"/>
+            </a>
+        </li>
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/api/logout">
+            <fmt:message key="messages.menu.logout"/>
+        </a></li>
+
+        <c:if test="${isAdmin}">
+            <a href="${pageContext.request.contextPath}/api/admin">
+                <fmt:message key="messages.menu.admin"/>
+            </a>
+        </c:if>
+
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}?lang=en">English</a></li>
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}?lang=ua">Українська</a></li>
+    </ol>
+</nav>
+
 
 <div class="container" style="margin-top: 60px">
 
@@ -71,7 +117,7 @@
                         <fmt:message key="messages.enter.food.amount"/>
                     </label>
                     <input class="form-control form-control-lg" id="food-amount" type="number" placeholder=""
-                           name = "addMealAmount" required>
+                           name="addMealAmount" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="margin-top:30px">

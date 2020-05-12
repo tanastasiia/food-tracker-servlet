@@ -56,7 +56,8 @@
                 </c:if>
 
                 <c:if test="${auth_error}">
-                    <div class="alert alert-info"><p>wrong fields</p></div>
+                    <div class="alert alert-info"><p>
+                        <fmt:message key="messages.error.invalid.username.or.password"/></p></div>
                 </c:if>
 
                 <div class="form-group">

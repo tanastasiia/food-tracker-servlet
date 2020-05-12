@@ -1,8 +1,10 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.Constants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.controller.utils.Endpoints;
 import ua.training.controller.utils.PagesToForward;
+import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.service.UserService;
 
@@ -13,34 +15,41 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class LoginCommand implements Command {
+
+    private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
+
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String username = request.getParameter("username");
-        String pass = request.getParameter("password");
-        System.out.println("name: " + username + "\npass: " + pass);
 
-        if (username == null || username.equals("") || pass == null || pass.equals("")) {
+        if (!request.getMethod().equalsIgnoreCase("POST")) {
             return PagesToForward.LOGIN;
         }
 
-        //TODO auth
-        Optional<User> user = (new UserService()).findByUsername(username);
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        //LOGGER.info("name: " + username + "\npass: " + password);
+        System.out.println("username: " + username + "\npassword: " + password);
 
-        if (user.isPresent()) {
-            if(user.get().getPassword().equals(pass)){
-                HttpSession session = request.getSession();
-                session.setAttribute("role", "admin");
+        Optional<User> user = UserService.getInstance().findByUsername(username);
 
-                System.out.println("logged");
-                response.sendRedirect(Endpoints.HOME.getPath());
-            }else {
-                request.setAttribute("auth_error", true);
-                System.out.println("auth_error");
-                return PagesToForward.LOGIN;
-            }
+        if (user.isPresent() && user.get().getPassword().equals(password)) {
+
+            HttpSession session = request.getSession();
+            session.setAttribute("role", user.get().getRole());
+            session.setAttribute("user", user.get());
+            session.setAttribute("isAdmin", user.get().getRole().equals(Role.ADMIN.name()));
+
+            System.out.println("redirecting to HOME");
+            System.out.println("HOME endpoint: "+ request.getContextPath()+Endpoints.HOME.getPath());
+            response.sendRedirect(/*request.getContextPath()+*/Endpoints.HOME.getPath());
+            System.out.println("redirected");
+            return PagesToForward.NONE;
+
+        } else {
+            request.setAttribute("auth_error", true);
+            return PagesToForward.LOGIN;
         }
 
-        return PagesToForward.EMPTY;
 
     }
 }

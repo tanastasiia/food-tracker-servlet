@@ -2,6 +2,7 @@ package ua.training.filters;
 
 import ua.training.controller.utils.Endpoints;
 import ua.training.controller.utils.PagesToForward;
+import ua.training.model.entity.Role;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -31,7 +32,7 @@ public class UserSecurityFilter implements Filter {
         System.out.println("user filter");
         System.out.println("role:" + role);
 
-        if (role == null || (!role.equals("user") && !role.equals("admin"))) {
+        if (role == null || (!role.equals(Role.USER.name()) && !role.equals(Role.ADMIN.name()))) {
             res.sendRedirect(Endpoints.LOGIN.getPath());
             return;
         }

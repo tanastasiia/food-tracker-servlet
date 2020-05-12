@@ -46,29 +46,26 @@ age int
 </nav>
 
 
-
-
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-
-<%--            <h1 th:text="#{messages.title.registration}">
-                <fmt:message key="messages.enter.username"/>
+            <h1>
+                <fmt:message key="messages.title.registration"/>
             </h1>
 
-            <div ng-show="showSuccess">
-                <div class="alert alert-info" th:text="#{messages.alert.register.success}">
-                    <fmt:message key="messages.alert.register.success"/>
-                </div>
-            </div>
+            <c:choose>
+                <c:when test="${success}">
+                    <div class="alert alert-info"><p><fmt:message key="messages.alert.register.success"/></p></div>
+                </c:when>
+                <c:when test="${success==false}">
+                    <div class="alert alert-info"><p><fmt:message key="messages.error.username.exists"/></p></div>
+                </c:when>
+                <c:otherwise>
+                </c:otherwise>
+            </c:choose>
 
-            <div ng-show="showError">
-                <div class="alert alert-danger"th:text="#{messages.error.username.exists}">
-                    <fmt:message key="messages.error.username.exists"/>
-                </div>
-            </div>--%>
 
-            <form action="${pageContext.request.contextPath}/api/registration" method="post" >
+            <form action="${pageContext.request.contextPath}/api/registration" method="post">
 
                 <div class="form-group">
                     <label for="firstName" class="control-label">
@@ -141,7 +138,7 @@ age int
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="radios4"
                            name="activity_level" value="FORTH" checked>
-                    <label class="form-check-label" for="radios4" >
+                    <label class="form-check-label" for="radios4">
                         <fmt:message key="messages.enter.activity4"/>
                     </label>
                 </div>
@@ -160,7 +157,7 @@ age int
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" id="inlineRadio1"
                            name="gender" value="MALE">
-                    <label class="form-check-label" for="inlineRadio1" >
+                    <label class="form-check-label" for="inlineRadio1">
                         <fmt:message key="messages.enter.male"/>
                     </label>
                 </div>
@@ -182,7 +179,7 @@ age int
                 </div>
 
 
-                <button type="submit" class="btn btn-success" >
+                <button type="submit" class="btn btn-success">
                     <fmt:message key="messages.button.submit"/>
                 </button>
                 <div class="form-group">

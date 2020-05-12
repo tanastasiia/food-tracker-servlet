@@ -1,5 +1,7 @@
 package ua.training.controller.command;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ua.training.controller.utils.Endpoints;
 import ua.training.controller.utils.PagesToForward;
 import ua.training.model.constants.UserConst;
@@ -14,26 +16,21 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class RegistrationCommand implements Command {
+
+    private static final Logger LOGGER = LogManager.getLogger(RegistrationCommand.class);
+
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("Params: " + request.getParameterMap().entrySet().toString());
+
         if (!request.getMethod().equalsIgnoreCase("POST")) {
             return PagesToForward.REGISTRATION;
         }
 
         User user = parseForm(request);
-        System.out.println("User: " + user.toString());
 
-        Optional<User> foundUser = UserService.getInstance().findByUsername(user.getUsername());
+        LOGGER.info("User: " + user.toString());
 
-        if (!foundUser.isPresent()) {
-            UserService.getInstance().registrate(user);
-            request.setAttribute("success", true);
-
-        } else {
-            request.setAttribute("success", false);
-            System.out.println("reg_error");
-        }
+        request.setAttribute("success", UserService.getInstance().register(user));
 
         return PagesToForward.REGISTRATION;
 }

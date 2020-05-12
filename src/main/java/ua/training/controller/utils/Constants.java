@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Constants {
+
+    public static String ERROR = "error";
     private static class BundleHolder {
         private static final ResourceBundle INSTANCE = ResourceBundle.getBundle("constants", Locale.ENGLISH);
     }

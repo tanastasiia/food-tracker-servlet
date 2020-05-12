@@ -8,6 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 public class EmptyCommand implements Command {
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) {
-        return PagesToForward.EMPTY;
+        return PagesToForward.NONE;
     }
 }

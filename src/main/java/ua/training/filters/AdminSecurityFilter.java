@@ -1,6 +1,7 @@
 package ua.training.filters;
 
 import ua.training.controller.utils.Endpoints;
+import ua.training.model.entity.Role;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -28,7 +29,7 @@ public class AdminSecurityFilter implements Filter {
 
         System.out.println("auth filter");
 
-        if(!role.equals("admin")){
+        if(!role.equals(Role.ADMIN.name())){
             res.sendRedirect(Endpoints.HOME.getPath());
             return;
         }

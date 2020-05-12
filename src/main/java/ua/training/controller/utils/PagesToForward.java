@@ -10,7 +10,7 @@ public enum PagesToForward {
     STATISTICS("/WEB-INF/user/statistics.jsp"),
 
     ADMIN("/WEB-INF/admin/admin.jsp"),
-    EMPTY("");
+    NONE("");
 
     private String path;
 

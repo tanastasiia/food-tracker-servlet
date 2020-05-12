@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 
 //TODO use patterns in project!!!
 //TODO patterns usage in java libraries
@@ -27,12 +26,14 @@ public class Servlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
-        servletConfig.getServletContext()
-                .setAttribute("loggedUsers", new HashSet<String>());
 
         commands.put(Endpoints.LOGIN.getPath(), new LoginCommand());
+        commands.put(Endpoints.LOGOUT.getPath(), new LogoutCommand());
         commands.put(Endpoints.HOME.getPath(), new HomeCommand());
+        commands.put(Endpoints.ADD_MEAL.getPath(), new AddMealCommand());
+        commands.put(Endpoints.ADD_FOOD.getPath(), new AddFoodCommand());
         commands.put(Endpoints.REGISTRATION.getPath(), new RegistrationCommand());
+
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,14 +62,19 @@ public class Servlet extends HttpServlet {
         System.out.println(path);
 
         Command command = commands.getOrDefault(path, new EmptyCommand());//CommandEnum.valueOf(path).getCommand();//
+        System.out.println("command:"+command.getClass());
 
         PagesToForward page = command.execute(request, response);
-        System.out.println(page);
+        System.out.println("page: " + page);
 
-        if (page != null && !page.equals(PagesToForward.EMPTY)) {
+        if (page != null && !page.equals(PagesToForward.NONE)) {
             System.out.println("forwarding: " + page.getPath());
             request.getRequestDispatcher(page.getPath()).forward(request, response);
         }
+    }
+
+    private void pareseParams(){
+
     }
 
 
