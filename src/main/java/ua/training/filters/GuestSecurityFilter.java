@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/api/login", "/api/registration", "/api"})
+@WebFilter(urlPatterns = {"/api/login","/api/login?logout=true", "/api/registration", "/api"})
 public class GuestSecurityFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

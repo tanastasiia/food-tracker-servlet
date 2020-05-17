@@ -40,6 +40,47 @@ public class Food {
         this.calories = calories;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getNameUa() {
+        return nameUa;
+    }
+
+    public Integer getCarbs() {
+        return carbs;
+    }
+
+    public Integer getProtein() {
+        return protein;
+    }
+
+    public Integer getFat() {
+        return fat;
+    }
+
+    public Integer getCalories() {
+        return calories;
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nameUa='" + nameUa + '\'' +
+                ", carbs=" + carbs +
+                ", protein=" + protein +
+                ", fat=" + fat +
+                ", calories=" + calories +
+                '}';
+    }
+
     ////////////////////
     public static class Builder {
         private Food food;

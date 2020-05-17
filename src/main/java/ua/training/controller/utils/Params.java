@@ -1,7 +1,10 @@
 package ua.training.controller.utils;
 
-public interface Params {
-    String ERROR = "error";
-    String LOGOUT = "logout";
+public enum Params {
+    ERROR,
+    LOGOUT;
 
+    public String getParam(){
+        return this.name().toLowerCase();
+    }
 }

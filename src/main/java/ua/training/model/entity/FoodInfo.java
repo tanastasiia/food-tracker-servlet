@@ -1,8 +1,6 @@
 package ua.training.model.entity;
 
-import java.time.LocalDateTime;
-
-public class FoodAccessInfo {
+public class FoodInfo {
     private Long id;
     private Food food;
     private User user;
@@ -42,34 +40,34 @@ public class FoodAccessInfo {
 
     ///////////////////////////////////////
     public static class Builder {
-        private FoodAccessInfo foodAccessInfo;
+        private FoodInfo foodInfo;
 
         public Builder() {
-            foodAccessInfo = new FoodAccessInfo();
+            foodInfo = new FoodInfo();
         }
 
         public Builder setId(Long id) {
-            foodAccessInfo.id = id;
+            foodInfo.id = id;
             return this;
         }
 
         public Builder setUser(User user) {
-            foodAccessInfo.user = user;
+            foodInfo.user = user;
             return this;
         }
 
         public Builder setFood(Food food) {
-            foodAccessInfo.food = food;
+            foodInfo.food = food;
             return this;
         }
 
         public Builder setIsGlobal(Boolean isGlobal) {
-            foodAccessInfo.isGlobal = isGlobal;
+            foodInfo.isGlobal = isGlobal;
             return this;
         }
 
-        public FoodAccessInfo build() {
-            return foodAccessInfo;
+        public FoodInfo build() {
+            return foodInfo;
         }
     }
 }

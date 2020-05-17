@@ -27,8 +27,7 @@ public class LoginCommand implements Command {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        //LOGGER.info("name: " + username + "\npass: " + password);
-        System.out.println("username: " + username + "\npassword: " + password);
+
 
         Optional<User> user = UserService.getInstance().findByUsername(username);
 

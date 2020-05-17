@@ -1,6 +1,10 @@
 package ua.training.model;
 
+import ua.training.model.dao.FoodDao;
+import ua.training.model.dao.FoodInfoDao;
 import ua.training.model.dao.UserDao;
+import ua.training.model.jdbc.JDBCFoodDao;
+import ua.training.model.jdbc.JDBCFoodInfoDao;
 import ua.training.model.jdbc.JDBCUserDao;
 
 import javax.sql.DataSource;
@@ -14,6 +18,16 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public UserDao createUserDao() {
         return new JDBCUserDao(getConnection());
+    }
+
+    @Override
+    public FoodDao createFoodDao() {
+        return new JDBCFoodDao(getConnection());
+    }
+
+    @Override
+    public FoodInfoDao createFoodInfoDao() {
+        return new JDBCFoodInfoDao(getConnection());
     }
 
     private Connection getConnection(){

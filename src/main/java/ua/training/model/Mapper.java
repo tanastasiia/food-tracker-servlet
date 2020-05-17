@@ -1,5 +1,9 @@
 package ua.training.model;
 
+import ua.training.model.constants.FoodConst;
+import ua.training.model.constants.FoodInfoConst;
+import ua.training.model.entity.Food;
+import ua.training.model.entity.FoodInfo;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.model.constants.UserConst;
@@ -22,6 +26,23 @@ public interface Mapper {
                 .setGender(resultSet.getString(UserConst.GENDER))
                 .setActivityLevel(resultSet.getString(UserConst.ACTIVITY_LEVEL))
                 .setAge(resultSet.getInt(UserConst.AGE))
+                .build();
+    }
+    static Food foodMap(ResultSet resultSet) throws SQLException {
+        return new Food.Builder()
+                .setName(resultSet.getString(FoodConst.NAME))
+                .setNameUa(resultSet.getString(FoodConst.NAME_UA))
+                .setCarbs(resultSet.getInt(FoodConst.CARBS))
+                .setFat(resultSet.getInt(FoodConst.FAT))
+                .setProtein(resultSet.getInt(FoodConst.PROTEIN))
+                .setCalories(resultSet.getInt(FoodConst.CALORIES))
+                .build();
+    }
+    static FoodInfo foodInfoMap(ResultSet resultSet) throws SQLException {
+        return new FoodInfo.Builder()
+                .setFood(foodMap(resultSet))
+                .setUser(userMap(resultSet))
+                .setIsGlobal(resultSet.getBoolean(FoodInfoConst.IS_GLOBAL))
                 .build();
     }
 }

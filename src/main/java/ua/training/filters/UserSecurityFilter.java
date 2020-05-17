@@ -1,7 +1,6 @@
 package ua.training.filters;
 
 import ua.training.controller.utils.Endpoints;
-import ua.training.controller.utils.PagesToForward;
 import ua.training.model.entity.Role;
 
 import javax.servlet.*;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/api/home"})
+@WebFilter(urlPatterns = {"/api/home", "/api/statistics"})
 public class UserSecurityFilter implements Filter {
 
     @Override

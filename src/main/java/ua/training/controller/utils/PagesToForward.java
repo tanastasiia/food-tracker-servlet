@@ -1,6 +1,6 @@
 package ua.training.controller.utils;
 
-public enum PagesToForward {
+public enum PagesToForward implements Paths {
 
     LOGIN("/WEB-INF/login.jsp"),
     REGISTRATION("/WEB-INF/registration.jsp"),
@@ -10,7 +10,11 @@ public enum PagesToForward {
     STATISTICS("/WEB-INF/user/statistics.jsp"),
 
     ADMIN("/WEB-INF/admin/admin.jsp"),
-    NONE("");
+    NONE(""),
+
+    HOMEHOME("/api/home"),
+
+    ADD_FOOD("/api/add_food" );
 
     private String path;
 

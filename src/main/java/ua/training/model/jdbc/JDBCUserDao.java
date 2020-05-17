@@ -18,7 +18,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void create(User user) throws ServerException {
+    public User create(User user) throws ServerException {
         //"username, first_name, last_name, password, role, height, weight,  activity_level, age, gender"
         try (PreparedStatement query = connection.prepareStatement(UserConst.CREATE, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -38,6 +38,7 @@ public class JDBCUserDao implements UserDao {
             if (keys.next()) {
                 user.setId(keys.getLong(1));
             }
+            return user;
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());
         }

@@ -3,6 +3,7 @@ package ua.training;
 import ua.training.controller.command.*;
 import ua.training.controller.utils.Endpoints;
 import ua.training.controller.utils.PagesToForward;
+import ua.training.controller.utils.Paths;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -64,7 +65,7 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path, new EmptyCommand());//CommandEnum.valueOf(path).getCommand();//
         System.out.println("command:"+command.getClass());
 
-        PagesToForward page = command.execute(request, response);
+        Paths page = command.execute(request, response);
         System.out.println("page: " + page);
 
         if (page != null && !page.equals(PagesToForward.NONE)) {

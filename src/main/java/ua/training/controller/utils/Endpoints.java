@@ -1,6 +1,6 @@
 package ua.training.controller.utils;
 
-public enum Endpoints {
+public enum Endpoints implements Paths {
 
     APP("/api"),
     LOGIN (APP.getPath()+ "/login" ),

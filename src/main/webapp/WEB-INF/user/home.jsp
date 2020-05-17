@@ -9,6 +9,7 @@
 </c:if>
 <fmt:setBundle basename="messages"/>
 
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -94,16 +95,6 @@
                   method="post" style="margin-bottom: 30px"
                   name="form" autocomplete="off">
 
-
-                <%--<div th:if="${param.success}">
-                    <div class="alert alert-info"><p th:text="#{messages.alert.food.added}"></p></div>
-                </div>
-
-                <div th:if="${param.error}">
-                    <div class="alert alert-danger"><p th:text="#{messages.error.no.such.food.in.db}"></p>
-                    </div>
-                </div>--%>
-
                 <div class="form-group">
                     <label for="food-name">
                         <fmt:message key="messages.enter.food.name"/>
@@ -128,6 +119,84 @@
         </div>
     </div>
 
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2 class="page-header" >
+                <fmt:message key="messages.title.food.to.db"/>
+            </h2>
+
+            <c:if test="${formSuccess == 'foodAdded'}">
+                <div class="alert alert-info"><p>
+                    <fmt:message key="messages.alert.food.added"/></p></div>
+            </c:if>
+            <c:if test="${formSuccess=='foodNotAdded'}">
+                <div class="alert alert-info"><p>
+                    <fmt:message key="messages.error.such.food.in.db"/></p></div>
+            </c:if>
+
+            <form action="${pageContext.request.contextPath}/api/add_food" method="post" style="margin-bottom: 30px" id="addFoodForm"
+                  autocomplete="off">
+
+                <div class="form-group">
+                    <label for="new-food-name">
+                        <fmt:message key="messages.enter.food.name"/>
+                    </label>
+                    <input class="form-control form-control-lg" id="new-food-name" type="text"
+                           placeholder="" name="name" >
+                </div>
+
+                <div class="form-group">
+                    <label for="food-name-ua">
+                        <fmt:message key="messages.enter.food.name.ua"/>
+                    </label>
+                    <input class="form-control form-control-lg" id="food-name-ua" type="text" placeholder=""
+                           name="name_ua" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="carbs" >
+                        <fmt:message key="messages.enter.food.carbs"/>
+                    </label>
+                    <input class="form-control form-control-lg" id="carbs" type="number" placeholder=""
+                           name="carbs">
+                </div>
+
+                <div class="form-group">
+                    <label for="protein" >
+                        <fmt:message key="messages.enter.food.protein"/>
+                    </label>
+                    <input class="form-control form-control-lg" id="protein" type="number" placeholder=""
+                           name="protein">
+                </div>
+
+                <div class="form-group">
+                    <label for="fat" >
+                        <fmt:message key="messages.enter.food.fat"/>
+                    </label>
+                    <input class="form-control form-control-lg" id="fat" type="number" placeholder=""
+                           name="fat">
+                </div>
+
+                <div class="form-group">
+                    <label for="calories" >
+                        <fmt:message key="messages.enter.food.calories"/>
+                    </label>
+                    <input class="form-control form-control-lg" id="calories" type="number" placeholder=""
+                           name="calories">
+                </div>
+
+                <button type="submit" class="btn btn-primary"
+                        style="margin-top:30px" >
+                    <fmt:message key="messages.button.submit"/>
+                </button>
+
+
+
+            </form>
+
+        </div>
+    </div>
 
 </div>
 

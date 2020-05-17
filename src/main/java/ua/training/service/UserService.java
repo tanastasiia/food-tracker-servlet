@@ -2,8 +2,11 @@ package ua.training.service;
 
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.UserDao;
+import ua.training.model.entity.Food;
+import ua.training.model.entity.Meal;
 import ua.training.model.entity.User;
 
+import javax.servlet.http.HttpSession;
 import java.rmi.ServerException;
 import java.util.Optional;
 
@@ -36,6 +39,14 @@ public class UserService {
             dao.create(user);
             return true;
         }
+    }
+
+    public void addFood(Food food, User adder){
+
+
+    }
+    public void addMeal(Meal food){
+
     }
 
 
