@@ -7,6 +7,7 @@ import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
 
 import java.rmi.ServerException;
+import java.util.Optional;
 
 public class FoodService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -22,6 +23,17 @@ public class FoodService {
     public Food addFood(Food food) throws ServerException {
         try (FoodDao dao = daoFactory.createFoodDao()) {
             return dao.create(food);
+        }
+    }
+
+    public Optional<Food> findById(Long id) throws ServerException {
+        try (FoodDao dao = daoFactory.createFoodDao()) {
+            return dao.findById(id);
+        }
+    }
+    public Optional<Food> findByName(String name) throws ServerException {
+        try (FoodDao dao = daoFactory.createFoodDao()) {
+            return dao.findByName(name);
         }
     }
 }

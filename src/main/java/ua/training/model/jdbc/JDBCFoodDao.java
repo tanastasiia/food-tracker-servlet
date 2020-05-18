@@ -45,8 +45,8 @@ public class JDBCFoodDao implements FoodDao {
     }
 
     @Override
-    public Food findById(int id) {
-        return null;
+    public Optional<Food> findById(Long id) {
+        return Optional.empty();
     }
 
     @Override
@@ -60,7 +60,7 @@ public class JDBCFoodDao implements FoodDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
 
     }
 
@@ -71,7 +71,17 @@ public class JDBCFoodDao implements FoodDao {
 
     @Override
     public Optional<Food> findByName(String name) throws ServerException {
-        return Optional.empty();
+        Optional<Food> food = Optional.empty();
+        try (PreparedStatement query = connection.prepareStatement(FoodConst.FIND_BY_NAME)) {
+            query.setString(1, name);
+            ResultSet resultSet = query.executeQuery();
+            if (resultSet.next()) {
+                food = Optional.of(Mapper.foodMap(resultSet));
+            }
+        } catch (Exception e) {
+            throw new ServerException(e.getMessage());
+        }
+        return food;
     }
 
     @Override

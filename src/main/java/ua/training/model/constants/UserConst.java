@@ -14,7 +14,7 @@ public interface UserConst {
     String GENDER = "gender";
 
     String FIND_ALL_BY_USERNAME = "select * from users where username = ?";
-
+    String FIND_BY_ID = "select * from food WHERE id=?";
     String CREATE ="INSERT INTO users (" +
             "username, first_name, last_name, password, role, height, weight,  activity_level, age, gender" +
             ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

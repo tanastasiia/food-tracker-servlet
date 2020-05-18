@@ -45,8 +45,18 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public User findById(int id) {
-        return null;
+    public Optional<User> findById(Long id) throws ServerException {
+        Optional<User> user = Optional.empty();
+        try (PreparedStatement query = connection.prepareStatement(UserConst.FIND_BY_ID)) {
+            query.setLong(1, id);
+            ResultSet resultSet = query.executeQuery();
+            if (resultSet.next()) {
+                user = Optional.of(Mapper.userMap(resultSet));
+            }
+        } catch (Exception e) {
+            throw new ServerException(e.getMessage());
+        }
+        return user;
     }
 
     @Override
@@ -60,7 +70,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
 
     }
 
@@ -83,6 +93,8 @@ public class JDBCUserDao implements UserDao {
         }
         return user;
     }
+
+
 
 
     public Optional<User> findByField(String field, String value) throws ServerException {

@@ -2,9 +2,11 @@ package ua.training.model.jdbc;
 
 import org.apache.logging.log4j.core.util.JsonUtils;
 import ua.training.model.Mapper;
+import ua.training.model.constants.FoodConst;
 import ua.training.model.constants.FoodInfoConst;
 import ua.training.model.constants.UserConst;
 import ua.training.model.dao.FoodInfoDao;
+import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
 import ua.training.model.entity.User;
 
@@ -43,8 +45,8 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
     }
 
     @Override
-    public FoodInfo findById(int id) {
-        return null;
+    public Optional<FoodInfo> findById(Long id) {
+        return Optional.empty();
     }
 
     @Override
@@ -58,7 +60,7 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
 
     }
 
@@ -74,7 +76,6 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
                 FoodInfoConst.FIND_ALL_BY_FOOD_NAME_FILTER_BY_USER_ID_OR_GLOBAL)) {
             query.setString(1, foodName);
             query.setLong(2, userId);
-            System.out.println("Query: " + query.toString());
 
             ResultSet resultSet = query.executeQuery();
             if (resultSet.next()) {
@@ -95,4 +96,47 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
     public Optional<FoodInfo> findByFoodNameUa(Long foodNameUa) throws ServerException {
         return Optional.empty();
     }
+
+    @Override
+    public boolean saveFood(FoodInfo foodInfo) throws SQLException, ServerException {
+
+        Food food = foodInfo.getFood();
+        System.out.println("Food in dao: " + food.toString());
+
+        try(PreparedStatement createFoodInfoSt = connection.prepareStatement(FoodInfoConst.CREATE, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement createFoodSt = connection.prepareStatement(FoodConst.CREATE, Statement.RETURN_GENERATED_KEYS)) {
+            connection.setAutoCommit(false);
+
+            createFoodSt.setString(1, food.getName());
+            createFoodSt.setString(2, food.getNameUa());
+            createFoodSt.setInt(3, food.getCarbs());
+            createFoodSt.setInt(4, food.getFat());
+            createFoodSt.setInt(5, food.getProtein());
+            createFoodSt.setInt(6, food.getCalories());
+            createFoodSt.executeUpdate();
+
+            ResultSet foodKeys = createFoodSt.getGeneratedKeys();
+            if (foodKeys.next()) {
+                food.setId(foodKeys.getLong(1));
+            }
+            createFoodInfoSt.setLong(1, food.getId());
+            createFoodInfoSt.setLong(2, foodInfo.getUser().getId());
+            createFoodInfoSt.setBoolean(3, foodInfo.isGlobal());
+            createFoodInfoSt.executeUpdate();
+
+            ResultSet foodInfoKeys = createFoodInfoSt.getGeneratedKeys();
+            if (foodInfoKeys.next()) {
+                foodInfo.setId(foodInfoKeys.getLong(1));
+            }
+            connection.commit();
+        } catch (SQLException e ) {
+            if (connection != null) {
+                connection.rollback();
+            }
+            throw new ServerException(e.getMessage());
+        }
+        connection.setAutoCommit(true);
+        return true;
+    }
+
 }

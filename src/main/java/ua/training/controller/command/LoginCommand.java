@@ -4,8 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.training.controller.utils.Endpoints;
 import ua.training.controller.utils.PagesToForward;
+import ua.training.model.dto.UserDto;
+import ua.training.model.dto.UserAuthDto;
 import ua.training.model.entity.Role;
-import ua.training.model.entity.User;
 import ua.training.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,27 +29,20 @@ public class LoginCommand implements Command {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-
-        Optional<User> user = UserService.getInstance().findByUsername(username);
-
-        if (user.isPresent() && user.get().getPassword().equals(password)) {
-
+        Optional<UserDto> user = UserService.getInstance().authentication(new UserAuthDto(username, password));
+        if(user.isPresent()){
             HttpSession session = request.getSession();
             session.setAttribute("role", user.get().getRole());
             session.setAttribute("user", user.get());
+            session.setAttribute("userId", user.get().getId());
             session.setAttribute("isAdmin", user.get().getRole().equals(Role.ADMIN.name()));
 
-            System.out.println("redirecting to HOME");
-            System.out.println("HOME endpoint: "+ request.getContextPath()+Endpoints.HOME.getPath());
-            response.sendRedirect(/*request.getContextPath()+*/Endpoints.HOME.getPath());
-            System.out.println("redirected");
+            response.sendRedirect(Endpoints.HOME.getPath());
             return PagesToForward.NONE;
-
-        } else {
-            request.setAttribute("auth_error", true);
+        } else{
+            request.setAttribute("authError", true);
             return PagesToForward.LOGIN;
         }
-
 
     }
 }

@@ -9,7 +9,6 @@ import java.util.Optional;
 public class HomeCommand implements Command {
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("HOME command");
 
         String lastAdd = (String) request.getSession().getAttribute("lastAdd");
         if (lastAdd != null) {

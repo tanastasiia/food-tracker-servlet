@@ -30,6 +30,7 @@ public interface Mapper {
     }
     static Food foodMap(ResultSet resultSet) throws SQLException {
         return new Food.Builder()
+                .setId(resultSet.getLong(FoodConst.ID))
                 .setName(resultSet.getString(FoodConst.NAME))
                 .setNameUa(resultSet.getString(FoodConst.NAME_UA))
                 .setCarbs(resultSet.getInt(FoodConst.CARBS))
@@ -40,6 +41,7 @@ public interface Mapper {
     }
     static FoodInfo foodInfoMap(ResultSet resultSet) throws SQLException {
         return new FoodInfo.Builder()
+                .setId(resultSet.getLong(FoodInfoConst.ID))
                 .setFood(foodMap(resultSet))
                 .setUser(userMap(resultSet))
                 .setIsGlobal(resultSet.getBoolean(FoodInfoConst.IS_GLOBAL))

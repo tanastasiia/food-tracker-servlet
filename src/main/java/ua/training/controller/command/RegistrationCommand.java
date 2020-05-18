@@ -28,8 +28,6 @@ public class RegistrationCommand implements Command {
 
         User user = parseForm(request);
 
-        LOGGER.info("User: " + user.toString());
-
         request.setAttribute("success", UserService.getInstance().register(user));
 
         return PagesToForward.REGISTRATION;

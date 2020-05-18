@@ -11,6 +11,7 @@ public interface FoodConst {
 
     String FIND_ALL = "select * from food";
     String FIND_BY_NAME = "select * from food WHERE name=?";
+
     String FIND_BY_NAME_UA = "select * from food WHERE name_ua=?";
 
     String CREATE = "INSERT INTO food (name, name_ua, carbs_mg, fat_mg, protein_mg, calories) " +

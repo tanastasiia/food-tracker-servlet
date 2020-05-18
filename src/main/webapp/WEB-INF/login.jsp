@@ -23,7 +23,6 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}?lang=en">English</a></li>
         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}?lang=ua">Українська</a></li>
-        <li class="breadcrumb-item"><p> ${helloworld}</p></li>
     </ol>
 </nav>
 
@@ -55,7 +54,7 @@
                     <div class="alert alert-info"><p><fmt:message key="messages.alert.loged.out"/></p></div>
                 </c:if>
 
-                <c:if test="${auth_error}">
+                <c:if test="${authError}">
                     <div class="alert alert-info"><p>
                         <fmt:message key="messages.error.invalid.username.or.password"/></p></div>
                 </c:if>

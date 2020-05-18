@@ -82,6 +82,7 @@
             </div>--%>
 
 
+
             <div>
                 <div class="alert alert-light">
                     <p><strong><fmt:message key="messages.todays.calories"/></strong>
@@ -95,12 +96,22 @@
                   method="post" style="margin-bottom: 30px"
                   name="form" autocomplete="off">
 
+                <c:if test="${formSuccess == 'mealAdded'}">
+                    <div class="alert alert-info"><p>
+                        <fmt:message key="messages.alert.food.added"/></p></div>
+                </c:if>
+                <c:if test="${formSuccess=='mealNotAdded'}">
+                    <div class="alert alert-danger"><p>
+                        <fmt:message key="messages.error.no.such.food.in.db"/></p></div>
+                </c:if>
+
+
                 <div class="form-group">
                     <label for="food-name">
                         <fmt:message key="messages.enter.food.name"/>
                     </label>
                     <input class="form-control form-control-lg" id="food-name" type="text" placeholder=""
-                           name="addMealFood" required>
+                           name="foodName" required>
                 </div>
 
                 <div class="form-group">
@@ -108,7 +119,7 @@
                         <fmt:message key="messages.enter.food.amount"/>
                     </label>
                     <input class="form-control form-control-lg" id="food-amount" type="number" placeholder=""
-                           name="addMealAmount" required>
+                           name="amount" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="margin-top:30px">

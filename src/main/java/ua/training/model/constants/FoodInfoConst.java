@@ -31,5 +31,7 @@ public interface FoodInfoConst {
             "WHERE users.username=? OR food_info.is_global=TRUE";*/
 
     String CREATE ="INSERT INTO food_info (food_id, adder_user_id,  is_global) VALUES (?, ?, ?)";
+    String CREATE_FOOD = "INSERT INTO food (name, name_ua, carbs_mg, fat_mg, protein_mg, calories) " +
+            "VALUES(?, ?, ?, ?, ?, ?)";
 
 }

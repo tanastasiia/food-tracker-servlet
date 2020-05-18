@@ -49,7 +49,18 @@ public class Meal {
         this.dateTime = dateTime;
     }
 
-//////////////////////////////////////////////////
+    @Override
+    public String toString() {
+        return "Meal{" +
+                "id=" + id +
+                ", user=" + user.toString() +
+                ", food=" + food.toString() +
+                ", amount=" + amount +
+                ", dateTime=" + dateTime +
+                '}';
+    }
+
+    //////////////////////////////////////////////////
     public static class Builder {
         private Meal meal;
 
