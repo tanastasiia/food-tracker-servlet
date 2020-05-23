@@ -1,6 +1,6 @@
 package ua.training.filters;
 
-import ua.training.controller.utils.Endpoints;
+import ua.training.controller.utils.Routes;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -29,7 +29,7 @@ public class GuestSecurityFilter implements Filter {
         System.out.println("auth filter");
 
         if(role!=null){
-            res.sendRedirect(Endpoints.HOME.getPath());
+            res.sendRedirect(Routes.HOME.getPath());
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);

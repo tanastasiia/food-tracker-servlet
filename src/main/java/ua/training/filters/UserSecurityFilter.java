@@ -1,6 +1,6 @@
 package ua.training.filters;
 
-import ua.training.controller.utils.Endpoints;
+import ua.training.controller.utils.Routes;
 import ua.training.model.entity.Role;
 
 import javax.servlet.*;
@@ -32,7 +32,7 @@ public class UserSecurityFilter implements Filter {
         System.out.println("role:" + role);
 
         if (role == null || (!role.equals(Role.USER.name()) && !role.equals(Role.ADMIN.name()))) {
-            res.sendRedirect(Endpoints.LOGIN.getPath());
+            res.sendRedirect(Routes.LOGIN.getPath());
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);

@@ -1,10 +1,8 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.Constants;
-import ua.training.controller.utils.Endpoints;
+import ua.training.controller.utils.Routes;
 import ua.training.controller.utils.PagesToForward;
 import ua.training.controller.utils.Params;
-import ua.training.model.entity.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +20,7 @@ public class LogoutCommand implements Command {
 
         //session.setAttribute("logout", true);
 
-        response.sendRedirect(Endpoints.LOGIN.getPath() + "?" + Params.LOGOUT.getParam()+"=true");
+        response.sendRedirect(Routes.LOGIN.getPath() + "?" + Params.LOGOUT.getParam()+"=true");
 
         return PagesToForward.NONE;
     }

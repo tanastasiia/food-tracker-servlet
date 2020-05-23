@@ -3,10 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-
-<c:if test="${not empty param.lang}">
+<%--<c:if test="${not empty param.lang}">
     <fmt:setLocale value="${param.lang}" scope="session"/>
-</c:if>
+</c:if>--%>
+
+<fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="messages"/>
 
 
@@ -15,44 +16,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title><fmt:message key="messages.title.login"/></title>
+    <title><fmt:message key="messages.menu.home"/></title>
 </head>
 <body>
 
-<%--<c:import url="/WEB-INF/user/menu.jsp" charEncoding="utf-8" />--%>
-
-
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="${pageContext.request.contextPath}/api/home">
-                <fmt:message key="messages.menu.home"/>
-            </a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="${pageContext.request.contextPath}/api/account">
-                <fmt:message key="messages.menu.account"/>
-            </a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="${pageContext.request.contextPath}/api/statistics" >
-                <fmt:message key="messages.menu.statistics"/>
-            </a>
-        </li>
-        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/api/logout">
-            <fmt:message key="messages.menu.logout"/>
-        </a></li>
-
-        <c:if test="${isAdmin}">
-            <a href="${pageContext.request.contextPath}/api/admin">
-                <fmt:message key="messages.menu.admin"/>
-            </a>
-        </c:if>
-
-        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}?lang=en">English</a></li>
-        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}?lang=ua">Українська</a></li>
-    </ol>
-</nav>
+<c:import url="/WEB-INF/user/menu.jsp" charEncoding="utf-8" />
 
 
 <div class="container" style="margin-top: 60px">
@@ -86,9 +54,9 @@
             <div>
                 <div class="alert alert-light">
                     <p><strong><fmt:message key="messages.todays.calories"/></strong>
-                        ${userStat.calories}</p>
+                        ${todaysCalories}</p>
                     <p><strong><fmt:message key="messages.calories.norm"/></strong>
-                        ${userStat.caloriesNorm}</p>
+                        ${caloriesNorm}</p>
                 </div>
             </div>
 
@@ -156,20 +124,20 @@
                     <input class="form-control form-control-lg" id="new-food-name" type="text"
                            placeholder="" name="name" >
                 </div>
-
+<%--
                 <div class="form-group">
                     <label for="food-name-ua">
                         <fmt:message key="messages.enter.food.name.ua"/>
                     </label>
                     <input class="form-control form-control-lg" id="food-name-ua" type="text" placeholder=""
-                           name="name_ua" required>
-                </div>
+                           name="nameUa" required>
+                </div>--%>
 
                 <div class="form-group">
                     <label for="carbs" >
                         <fmt:message key="messages.enter.food.carbs"/>
                     </label>
-                    <input class="form-control form-control-lg" id="carbs" type="number" placeholder=""
+                    <input class="form-control form-control-lg" id="carbs" type="number" step="0.1" placeholder=""
                            name="carbs">
                 </div>
 
@@ -177,7 +145,7 @@
                     <label for="protein" >
                         <fmt:message key="messages.enter.food.protein"/>
                     </label>
-                    <input class="form-control form-control-lg" id="protein" type="number" placeholder=""
+                    <input class="form-control form-control-lg" id="protein" type="number" step="0.1" placeholder=""
                            name="protein">
                 </div>
 
@@ -185,7 +153,7 @@
                     <label for="fat" >
                         <fmt:message key="messages.enter.food.fat"/>
                     </label>
-                    <input class="form-control form-control-lg" id="fat" type="number" placeholder=""
+                    <input class="form-control form-control-lg" id="fat" type="number"step="0.1"  placeholder=""
                            name="fat">
                 </div>
 

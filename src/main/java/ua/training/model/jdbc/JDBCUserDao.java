@@ -13,14 +13,19 @@ import java.util.Optional;
 public class JDBCUserDao implements UserDao {
     private Connection connection;
 
+    String FIND_ALL_BY_USERNAME = "select * from users where username = ?";
+    String FIND_BY_ID = "select * from food WHERE id=?";
+    String CREATE ="INSERT INTO users (" +
+            "username, first_name, last_name, password, role, height, weight,  activity_level, age, gender" +
+            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
 
     @Override
     public User create(User user) throws ServerException {
-        //"username, first_name, last_name, password, role, height, weight,  activity_level, age, gender"
-        try (PreparedStatement query = connection.prepareStatement(UserConst.CREATE, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement query = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS)) {
 
             query.setString(1, user.getUsername());
             query.setString(2, user.getFirstName());
@@ -47,7 +52,7 @@ public class JDBCUserDao implements UserDao {
     @Override
     public Optional<User> findById(Long id) throws ServerException {
         Optional<User> user = Optional.empty();
-        try (PreparedStatement query = connection.prepareStatement(UserConst.FIND_BY_ID)) {
+        try (PreparedStatement query = connection.prepareStatement(FIND_BY_ID)) {
             query.setLong(1, id);
             ResultSet resultSet = query.executeQuery();
             if (resultSet.next()) {
@@ -75,14 +80,18 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void close() {
-
+    public void close() throws ServerException {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
     }
 
     @Override
     public Optional<User> findByUsername(String username) throws ServerException {
         Optional<User> user = Optional.empty();
-        try (PreparedStatement query = connection.prepareStatement(UserConst.FIND_ALL_BY_USERNAME)) {
+        try (PreparedStatement query = connection.prepareStatement(FIND_ALL_BY_USERNAME)) {
             query.setString(1, username);
             ResultSet resultSet = query.executeQuery();
             if (resultSet.next()) {
@@ -97,7 +106,7 @@ public class JDBCUserDao implements UserDao {
 
 
 
-    public Optional<User> findByField(String field, String value) throws ServerException {
+/*    public Optional<User> findByField(String field, String value) throws ServerException {
         Optional<User> user = Optional.empty();
         String FIND_BY_FIELD = "select * from users where %s = ?";
         try (PreparedStatement query = connection.prepareStatement(String.format(FIND_BY_FIELD, field))) {
@@ -110,5 +119,5 @@ public class JDBCUserDao implements UserDao {
             throw new ServerException(e.getMessage());
         }
         return user;
-    }
+    }*/
 }

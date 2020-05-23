@@ -3,10 +3,7 @@ package ua.training.service;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.UserDao;
 import ua.training.model.dto.UserDto;
-import ua.training.model.dto.UserAuthDto;
-import ua.training.model.entity.Food;
-import ua.training.model.entity.Meal;
-import ua.training.model.entity.User;
+import ua.training.model.entity.*;
 
 import java.rmi.ServerException;
 import java.util.Optional;
@@ -31,11 +28,11 @@ public class UserService {
 
     }
 
-    public Optional<UserDto> authentication(UserAuthDto userAuthDto) throws ServerException {
+    public Optional<UserDto> authentication(String username, String password) throws ServerException {
 
         try (UserDao dao = daoFactory.createUserDao()) {
-            return  dao.findByUsername(userAuthDto.getUsername())
-                    .filter(u -> u.getPassword().equals(userAuthDto.getPassword()))
+            return  dao.findByUsername(username)
+                    .filter(u -> u.getPassword().equals(password))
                     .map(UserDto::new);
 
 
@@ -55,5 +52,12 @@ public class UserService {
     }
 
 
+    public int countCaloriesNorm(User user) {
+        return (int) (ActivityLevel.valueOf(user.getActivityLevel()).getValue()
+                * (Gender.valueOf(user.getGender()).getValue()
+                + 10 * user.getWeight()
+                + 6.25 * user.getHeight()
+                - 5 * user.getAge()));
+    }
 
 }

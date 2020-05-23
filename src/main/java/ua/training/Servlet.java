@@ -1,7 +1,7 @@
 package ua.training;
 
 import ua.training.controller.command.*;
-import ua.training.controller.utils.Endpoints;
+import ua.training.controller.utils.Routes;
 import ua.training.controller.utils.PagesToForward;
 import ua.training.controller.utils.Paths;
 
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 //TODO use patterns in project!!!
@@ -28,12 +27,16 @@ public class Servlet extends HttpServlet {
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
 
-        commands.put(Endpoints.LOGIN.getPath(), new LoginCommand());
-        commands.put(Endpoints.LOGOUT.getPath(), new LogoutCommand());
-        commands.put(Endpoints.HOME.getPath(), new HomeCommand());
-        commands.put(Endpoints.ADD_MEAL.getPath(), new AddMealCommand());
-        commands.put(Endpoints.ADD_FOOD.getPath(), new AddFoodCommand());
-        commands.put(Endpoints.REGISTRATION.getPath(), new RegistrationCommand());
+        commands.put(Routes.LOGIN.getPath(), new LoginCommand());
+        commands.put(Routes.LOGOUT.getPath(), new LogoutCommand());
+        commands.put(Routes.HOME.getPath(), new HomeCommand());
+        commands.put(Routes.ADD_MEAL.getPath(), new AddMealCommand());
+        commands.put(Routes.ADD_FOOD.getPath(), new AddFoodCommand());
+        commands.put(Routes.REGISTRATION.getPath(), new RegistrationCommand());
+        commands.put(Routes.ACCOUNT.getPath(), new AccountCommand());
+        commands.put(Routes.STATISTICS.getPath(), new StatisticsCommand());
+        commands.put(Routes.ADMIN.getPath(), new AdminPageCommand());
+
 
     }
 
@@ -41,8 +44,6 @@ public class Servlet extends HttpServlet {
             throws IOException, ServletException {
 
         System.out.println("doGet");
-        System.out.println(request);
-
         processRequest(request, response);
     }
 
@@ -50,8 +51,6 @@ public class Servlet extends HttpServlet {
             throws IOException, ServletException {
 
         System.out.println("doPost");
-        System.out.println("req: " + request.getRequestURI());
-
         processRequest(request, response);
 
     }
@@ -62,11 +61,9 @@ public class Servlet extends HttpServlet {
         String path = request.getRequestURI();
         System.out.println(path);
 
-        Command command = commands.getOrDefault(path, new EmptyCommand());//CommandEnum.valueOf(path).getCommand();//
-        System.out.println("command:"+command.getClass());
+        Command command = commands.getOrDefault(path, new EmptyCommand());
 
         Paths page = command.execute(request, response);
-        System.out.println("page: " + page);
 
         if (page != null && !page.equals(PagesToForward.NONE)) {
             System.out.println("forwarding: " + page.getPath());

@@ -1,31 +1,15 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: work
-  Date: 08.05.2020
-  Time: 14:29
-  To change this template use File | Settings | File Templates.
 
-  id int AI PK
-username varchar(45)
-password varchar(45)
-role varchar(45)
-first_name varchar(45)
-last_name varchar(45)
-height int
-weight int
-gender varchar(45)
-activity_level varchar(45)
-age int
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
 
-<c:if test="${not empty param.lang}">
+<%--<c:if test="${not empty param.lang}">
     <fmt:setLocale value="${param.lang}" scope="session"/>
-</c:if>
+</c:if>--%>
+
+<fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="messages"/>
 
 <html>
@@ -71,14 +55,14 @@ age int
                     <label for="firstName" class="control-label">
                         <fmt:message key="messages.enter.first.name"/>
                     </label>
-                    <input id="firstName" class="form-control" type=text name="first_name" required/>
+                    <input id="firstName" class="form-control" type=text name="firstName" required/>
                 </div>
 
                 <div class="form-group">
                     <label for="lastName" class="control-label">
                         <fmt:message key="messages.enter.last.name"/>
                     </label>
-                    <input id="lastName" class="form-control" type=text name="last_name" required/>
+                    <input id="lastName" class="form-control" type=text name="lastName" required/>
                 </div>
 
                 <div class="form-group">
@@ -116,35 +100,35 @@ age int
                 </label>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="radios1"
-                           name="activity_level" value="FIRST" checked>
+                           name="activityLevel" value="FIRST" checked>
                     <label class="form-check-label" for="radios1">
                         <fmt:message key="messages.enter.activity1"/>
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="radios2"
-                           name="activity_level" value="SECOND" checked>
+                           name="activityLevel" value="SECOND" checked>
                     <label class="form-check-label" for="radios2">
                         <fmt:message key="messages.enter.activity2"/>
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="radios3"
-                           name="activity_level" value="THIRD" checked>
+                           name="activityLevel" value="THIRD" checked>
                     <label class="form-check-label" for="radios3">
                         <fmt:message key="messages.enter.activity3"/>
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="radios4"
-                           name="activity_level" value="FORTH" checked>
+                           name="activityLevel" value="FORTH" checked>
                     <label class="form-check-label" for="radios4">
                         <fmt:message key="messages.enter.activity4"/>
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="radios5"
-                           name="activity_evel" value="FIFTH" checked>
+                           name="activityLevel" value="FIFTH" checked>
                     <label class="form-check-label" for="radios5">
                         <fmt:message key="messages.enter.activity5"/>
                     </label>

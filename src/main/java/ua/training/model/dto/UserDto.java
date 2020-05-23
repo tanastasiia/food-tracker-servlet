@@ -112,4 +112,20 @@ public class UserDto implements GenericDto<UserDto, User> {
         return new User.Builder().setFirstName(firstName).setLastName(lastName).setUsername(username).setActivityLevel(activityLevel)
                 .setAge(age).setGender(gender).setHeight(height).setRole(role).setWeight(weight).setId(id).build();
     }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role='" + role + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", gender='" + gender + '\'' +
+                ", activityLevel='" + activityLevel + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

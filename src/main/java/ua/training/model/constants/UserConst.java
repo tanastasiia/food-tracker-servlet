@@ -1,21 +1,45 @@
 package ua.training.model.constants;
 
-public interface UserConst {
-    String ID = "id";
-    String USERNAME = "username";
-    String FIRST_NAME = "first_name";
-    String LAST_NAME = "last_name";
-    String PASSWORD = "password";
-    String ROLE = "role";
-    String HEIGHT = "height";
-    String WEIGHT = "weight";
-    String ACTIVITY_LEVEL = "activity_level";
-    String AGE = "age";
-    String GENDER = "gender";
+import ua.training.model.entity.FoodInfo;
+import ua.training.model.entity.User;
 
-    String FIND_ALL_BY_USERNAME = "select * from users where username = ?";
-    String FIND_BY_ID = "select * from food WHERE id=?";
-    String CREATE ="INSERT INTO users (" +
-            "username, first_name, last_name, password, role, height, weight,  activity_level, age, gender" +
-            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+import java.util.function.Function;
+
+public enum UserConst implements EntityConst<User> {
+    ID("id","id", User::getId),
+    USERNAME("username", "username", User::getUsername),
+    FIRST_NAME("firstName", "first_name", User::getFirstName),
+    LAST_NAME("lastName", "last_name", User::getLastName),
+    ROLE("role", "role", User::getRole),
+    PASSWORD("password", "password", User::getPassword),
+    HEIGHT("height", "height", User::getHeight),
+    WEIGHT("weight", "weight", User::getWeight),
+    GENDER("gender", "gender", User::getGender),
+    ACTIVITY_LEVEL("activityLevel", "activity_level", User::getActivityLevel),
+    AGE("age", "age", User::getAge);
+
+
+    UserConst(String field, String column, Function<User, ?> fieldGetter){
+        this.field = field;
+        this.column = column;
+        this.fieldGetter = fieldGetter;
+    }
+    private String column;
+    private String field;
+    private Function<User, ?> fieldGetter;
+
+    @Override
+    public String getColumn() {
+        return column;
+    }
+
+    @Override
+    public String getField() {
+        return field;
+    }
+
+    @Override
+    public Function<User, ?> fieldGetter() {
+        return fieldGetter;
+    }
 }

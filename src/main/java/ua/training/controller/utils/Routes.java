@@ -1,12 +1,12 @@
 package ua.training.controller.utils;
 
-public enum Endpoints implements Paths {
+public enum Routes implements Paths {
 
     APP("/api"),
     LOGIN (APP.getPath()+ "/login" ),
     LOGOUT (APP.getPath()+ "/logout" ),
     REGISTRATION (APP.getPath()+ "/registration" ),
-    HOME( /*APP.getPath() + */"/api/home" ),
+    HOME( APP.getPath() + "/home" ),
     ACCOUNT(APP.getPath()+ "/account"),
     STATISTICS(APP.getPath() + "/statistics"),
     ADMIN(APP.getPath()+ "/admin"),
@@ -17,7 +17,7 @@ public enum Endpoints implements Paths {
     EMPTY("");
 
     private String path;
-    Endpoints(String path){
+    Routes(String path){
         this.path = path;
     }
     public String getPath(){

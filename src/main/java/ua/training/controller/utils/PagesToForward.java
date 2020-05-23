@@ -9,12 +9,9 @@ public enum PagesToForward implements Paths {
     ACCOUNT("/WEB-INF/user/account.jsp"),
     STATISTICS("/WEB-INF/user/statistics.jsp"),
 
-    ADMIN("/WEB-INF/admin/admin.jsp"),
-    NONE(""),
+    ADMIN("/WEB-INF/admin/admin_page.jsp"),
+    NONE("");
 
-    HOMEHOME("/api/home"),
-
-    ADD_FOOD("/api/add_food" );
 
     private String path;
 

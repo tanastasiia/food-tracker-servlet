@@ -1,37 +1,38 @@
 package ua.training.model.constants;
 
-public interface FoodInfoConst {
-    String TABLE_NAME = "food_info";
+import ua.training.model.entity.Food;
+import ua.training.model.entity.FoodInfo;
 
-    String ID = "id";
-    String USER_ID = "user_id";
-    String FOOD_ID = "food_id";
-    String IS_GLOBAL = "is_global";
+import java.util.function.Function;
 
-    String FIND_ALL = "select * from food_info";
-
-    String FIND_ALL_GLOBAL = "select * from food_info where is_global=TRUE";
-
-    String FIND_ALL_BY_FOOD_NAME_FILTER_BY_USER_ID_OR_GLOBAL = "SELECT * FROM food_info " +
-            "INNER JOIN food ON food_info.food_id=food.id " +
-            "LEFT OUTER JOIN users ON food_info.adder_user_id=users.id " +
-            "WHERE  food.name=? AND (food_info.adder_user_id=? OR food_info.is_global=TRUE)";
-
-    String FIND_ALL_BY_FOOD_NAME_FILTER_BY_USER_ID_OR_GLOBAL_UA = "SELECT * FROM food_info " +
-            "INNER JOIN food ON food_info.food_id=food.id " +
-            "LEFT OUTER JOIN users ON food_info.adder_user_id=users.id " +
-            "WHERE  food.name_ua=? AND (food_info.adder_user_id=? OR food_info.is_global=TRUE)";
+public enum FoodInfoConst implements EntityConst<FoodInfo>{
+    ID("id","id", FoodInfo::getId),
+    FOOD("food", "food_id", FoodInfo::getFood),
+    USER("user", "adder_user_id", FoodInfo::getUser),
+    IS_GLOBAL("user", "adder_user_id", FoodInfo::isGlobal);
 
 
+    FoodInfoConst(String field, String column, Function<FoodInfo, ?> fieldGetter){
+        this.field = field;
+        this.column = column;
+        this.fieldGetter = fieldGetter;
+    }
+    private String column;
+    private String field;
+    private Function<FoodInfo, ?> fieldGetter;
 
-    /*String FIND_FOOD_BY_USERNAME_OR_GLOBAL_UA ="SELECT food.name_ua, food.fat, food.carbs, food.protein, food.calories " +
-            "FROM food_info " +
-            "INNER JOIN food ON food_info.food_id=food.id " +
-            "LEFT OUTER JOIN users ON food_info.adder_user_id=users.id " +
-            "WHERE users.username=? OR food_info.is_global=TRUE";*/
+    @Override
+    public String getColumn() {
+        return column;
+    }
 
-    String CREATE ="INSERT INTO food_info (food_id, adder_user_id,  is_global) VALUES (?, ?, ?)";
-    String CREATE_FOOD = "INSERT INTO food (name, name_ua, carbs_mg, fat_mg, protein_mg, calories) " +
-            "VALUES(?, ?, ?, ?, ?, ?)";
+    @Override
+    public String getField() {
+        return field;
+    }
 
+    @Override
+    public  Function<FoodInfo, ?> fieldGetter() {
+        return fieldGetter;
+    }
 }
