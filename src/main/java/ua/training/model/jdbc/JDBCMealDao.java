@@ -31,19 +31,46 @@ public class JDBCMealDao implements MealDao {
                     "food.name_ua, food.carbs_mg, food.fat_mg, food.protein_mg, food.calories " +
                     "FROM meals " +
                     "INNER JOIN food ON meals.food_id=food.id " +
-                    "WHERE  meals.user_id=?";
+                    "WHERE  meals.user_id=? " +
+                    "ORDER BY meals.date_time";
 
     private static String FIND_ALL_BY_USER_ID_AND_DATE_TIME_BETWEEN =
             "SELECT * " +
                     "FROM meals " +
                     "INNER JOIN food ON meals.food_id=food.id " +
-                    "WHERE  meals.user_id=? AND meals.date_time BETWEEN ? AND ?";
+                    "WHERE  meals.user_id=? AND meals.date_time BETWEEN ? AND ? " +
+                    "ORDER BY meals.date_time";
+
+    private static String FIND_ALL_BY_USER_ID_PAGINATION =
+            "SELECT meals.id, user_id, food_id, amount_g, date_time, food.name, " +
+                    "food.name_ua, food.carbs_mg, food.fat_mg, food.protein_mg, food.calories " +
+                    "FROM meals " +
+                    "INNER JOIN food ON meals.food_id=food.id " +
+                    "WHERE  meals.user_id=? " +
+                    "ORDER BY meals.date_time " +
+                    "LIMIT ? OFFSET ?";
+
+    private static String FIND_ALL_BY_USER_ID_AND_DATE_TIME_BETWEEN_PAGINATION =
+            "SELECT * " +
+                    "FROM meals " +
+                    "INNER JOIN food ON meals.food_id=food.id " +
+                    "WHERE  meals.user_id=? AND meals.date_time BETWEEN ? AND ? " +
+                    "ORDER BY meals.date_time " +
+                    "LIMIT ? OFFSET ?";
+
 
     private static String FIND_ALL_STATISTICS_BY_USER_ID_AND_DATE_TIME_BETWEEN =
             "SELECT meals.amount, food.fat, food.carbs, food.protein, food.calories " +
                     "FROM meals " +
                     "INNER JOIN food ON meals.food_id=food.id " +
-                    "WHERE  meals.user_id=?";
+                    "WHERE  meals.user_id=? " +
+                    "ORDER BY meals.date_time";
+
+    private static String COUNT_BY_USER_ID =  "SELECT COUNT(*) AS count FROM meals WHERE user_id=?";
+    private static String COUNT_BY_USER_ID_AND_DATE_TIME_BETWEEN =
+            "SELECT COUNT(*) AS count " +
+                    "FROM meals " +
+                    "WHERE user_id=? AND date_time BETWEEN ? AND ?";
 
     @Override
     public Meal create(Meal meal) throws ServerException {
@@ -108,6 +135,36 @@ public class JDBCMealDao implements MealDao {
         }
         return meals;
     }
+    @Override
+    public List<Meal> findByUserId(Long userId, int limit, int offset) throws ServerException {
+        List<Meal> meals = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(FIND_ALL_BY_USER_ID_PAGINATION)) {
+            query.setLong(1, userId);
+            query.setInt(2, limit);
+            query.setInt(3, offset);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                meals.add(Mapper.mealFoodMap(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return meals;
+    }
+    @Override
+    public int countAllUserMeals(Long userId) throws ServerException {
+        int count = 0;
+        try (PreparedStatement query = connection.prepareStatement(COUNT_BY_USER_ID)) {
+            query.setLong(1, userId);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt( "count");
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return count;
+    }
 
     @Override
     public List<Meal> findByUserIdAndDateTimeBetween(Long userId, LocalDateTime dateTime1, LocalDateTime dateTime2) throws ServerException {
@@ -116,6 +173,26 @@ public class JDBCMealDao implements MealDao {
             query.setLong(1, userId);
             query.setObject(2, dateTime1);
             query.setObject(3, dateTime2);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                meals.add(Mapper.mealFoodMap(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return meals;
+    }
+
+    @Override
+    public List<Meal> findByUserIdAndDateTimeBetween(Long userId, LocalDateTime dateTime1, LocalDateTime dateTime2,
+                                                     int limit, int offset) throws ServerException {
+        List<Meal> meals = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(FIND_ALL_BY_USER_ID_AND_DATE_TIME_BETWEEN_PAGINATION)) {
+            query.setLong(1, userId);
+            query.setObject(2, dateTime1);
+            query.setObject(3, dateTime2);
+            query.setInt(4, limit);
+            query.setInt(5, offset);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
                 meals.add(Mapper.mealFoodMap(resultSet));

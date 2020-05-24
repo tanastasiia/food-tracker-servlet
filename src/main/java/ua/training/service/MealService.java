@@ -56,7 +56,8 @@ public class MealService {
         }
     }
 
-    public List<MealDto> fildAllUserMeals(Long userId, Locale locale) throws ServerException {
+
+    public List<MealDto> findAllUserMeals(Long userId, Locale locale) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.findByUserId(userId).stream().map(meal ->
                     new MealDto(
@@ -70,7 +71,25 @@ public class MealService {
         }
     }
 
-    //TODO method udate todays user stat
+    public List<MealDto> findAllUserMeals(Long userId, Locale locale, int limit, int offset) throws ServerException {
+        try (MealDao dao = daoFactory.createMealDao()) {
+            return dao.findByUserId(userId, limit, offset).stream().map(meal ->
+                    new MealDto(
+                            locale.equals(Constants.LOCALE_UA) ? meal.getFood().getNameUa() : meal.getFood().getName(),
+                            meal.getAmount(),
+                            meal.getDateTime().toLocalDate(),
+                            meal.getDateTime().toLocalTime()
+                    ))
+                    .collect(Collectors.toList());
+
+        }
+    }
+
+    public int countAllUsersMeals(Long userId) throws ServerException {
+        try (MealDao dao = daoFactory.createMealDao()) {
+            return dao.countAllUserMeals(userId);
+        }
+    }
 
 
     public UserMealStatDto todaysUserStatistics(Long userId) throws ServerException {
@@ -79,9 +98,9 @@ public class MealService {
                     LocalDateTime.of(LocalDate.now(), LocalTime.MAX));
             return new UserMealStatDto(
                     sumFoodCalories(meals),
-                    sumFoodElements(meals, Food::getFat) ,
-                    sumFoodElements(meals, Food::getProtein) ,
-                    sumFoodElements(meals, Food::getCarbs) );
+                    sumFoodElements(meals, Food::getFat),
+                    sumFoodElements(meals, Food::getProtein),
+                    sumFoodElements(meals, Food::getCarbs));
 
         }
     }
@@ -98,19 +117,18 @@ public class MealService {
 
     private Integer sumFoodCalories(List<Meal> meals) throws ServerException {
         return meals.stream()
-                    .mapToInt(meal -> meal.getFood().getCalories() * meal.getAmount() / 100)
-                    .reduce(Integer::sum)
-                    .orElse(0);
+                .mapToInt(meal -> meal.getFood().getCalories() * meal.getAmount() / 100)
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 
 
-    private   BigDecimal sumFoodElements(List<Meal> meals, Function<Food, Integer> getter){
-        return   meals.stream()
+    private BigDecimal sumFoodElements(List<Meal> meals, Function<Food, Integer> getter) {
+        return meals.stream()
                 .map(meal -> new BigDecimal(getter.apply(meal.getFood()) * meal.getAmount()).divide(HUNDRED, 1))
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO).divide(THOUSAND, 1, RoundingMode.HALF_UP);
     }
-
 
 
 }

@@ -50,7 +50,6 @@
             </div>--%>
 
 
-
             <div>
                 <div class="alert alert-light">
                     <p><strong><fmt:message key="messages.todays.calories"/></strong>

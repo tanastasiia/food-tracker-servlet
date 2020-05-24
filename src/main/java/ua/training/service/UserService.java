@@ -1,5 +1,6 @@
 package ua.training.service;
 
+import org.mindrot.jbcrypt.BCrypt;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.UserDao;
 import ua.training.model.dto.UserDto;
@@ -32,7 +33,7 @@ public class UserService {
 
         try (UserDao dao = daoFactory.createUserDao()) {
             return  dao.findByUsername(username)
-                    .filter(u -> u.getPassword().equals(password))
+                    .filter(u -> BCrypt.checkpw(password, u.getPassword()))
                     .map(UserDto::new);
 
 
@@ -44,6 +45,7 @@ public class UserService {
 
         if (!findByUsername(user.getUsername()).isPresent()){
             try (UserDao dao = daoFactory.createUserDao()) {
+                user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
                 dao.create(user);
                 return true;
             }
