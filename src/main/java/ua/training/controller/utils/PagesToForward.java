@@ -10,6 +10,7 @@ public enum PagesToForward implements Paths {
     STATISTICS("/WEB-INF/user/statistics.jsp"),
 
     ADMIN("/WEB-INF/admin/admin_page.jsp"),
+    CHANGE_ACCOUNT("/WEB-INF/user/change_account.jsp"),
     NONE("");
 
 

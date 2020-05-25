@@ -1,14 +1,53 @@
 package ua.training.controller.command;
 
+import ua.training.controller.utils.ControllerUtil;
+import ua.training.controller.utils.Constants;
 import ua.training.controller.utils.PagesToForward;
+import ua.training.service.FoodInfoService;
+import ua.training.service.MealService;
+import ua.training.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class AdminPageCommand implements Command {
+
+
+
+    private ControllerUtil controllerUtil = ControllerUtil.getInst();
+    private MealService mealService = MealService.getInstance();
+    private UserService userService = UserService.getInstance();
+    private FoodInfoService foodInfoService = FoodInfoService.getInstance();
+
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+        int page = controllerUtil.getPage(request);
+        int offset = controllerUtil.getOffset(page, Constants.PAGE_SIZE);
+
+
+
+        if (request.getParameter("tab").equals("3")) {
+
+            request.setAttribute("meals", mealService.findAllMeals(Constants.PAGE_SIZE, offset));
+            request.setAttribute("numOfPages",
+                    controllerUtil.countNumOfPages(mealService.countAllMeals(), Constants.PAGE_SIZE));
+
+
+        } else if (request.getParameter("tab").equals("2")) {
+
+            request.setAttribute("foods", foodInfoService.findAllFood(Constants.PAGE_SIZE, offset));
+            request.setAttribute("numOfPages",
+                    controllerUtil.countNumOfPages(foodInfoService.countAllFood(), Constants.PAGE_SIZE));
+
+        } else {
+            request.setAttribute("users", userService.findAllUsers(Constants.PAGE_SIZE, offset));
+            request.setAttribute("numOfPages",
+                    controllerUtil.countNumOfPages(userService.countAllUsers(), Constants.PAGE_SIZE));
+
+        }
         return PagesToForward.ADMIN;
     }
 }

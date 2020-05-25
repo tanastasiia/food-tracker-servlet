@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/api/login","/api/login?logout=true", "/api/registration", "/api"})
+@WebFilter(urlPatterns = {"/api/login", "/api/login?logout=true", "/api/registration", "/api"})
 public class GuestSecurityFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
@@ -26,14 +26,13 @@ public class GuestSecurityFilter implements Filter {
         HttpSession session = req.getSession();
         String role = (String) session.getAttribute("role");
 
-        System.out.println("auth filter");
-
-        if(role!=null){
+        if (role != null) {
             res.sendRedirect(Routes.HOME.getPath());
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
     @Override
     public void destroy() {
     }

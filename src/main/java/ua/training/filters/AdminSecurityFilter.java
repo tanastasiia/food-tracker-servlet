@@ -1,5 +1,6 @@
 package ua.training.filters;
 
+import org.apache.log4j.Logger;
 import ua.training.controller.utils.Routes;
 import ua.training.model.entity.Role;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
 @WebFilter(urlPatterns = {"/api/admin"})
 public class AdminSecurityFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
     }
 
     @Override
@@ -27,9 +28,8 @@ public class AdminSecurityFilter implements Filter {
         HttpSession session = req.getSession();
         String role = (String) session.getAttribute("role");
 
-        System.out.println("auth filter");
-
-        if(!role.equals(Role.ADMIN.name())){
+        if(role == null || (!role.equals(Role.ADMIN.name()))){
+            Logger.getRootLogger().warn("Unauthorized request for admin page");
             res.sendRedirect(Routes.HOME.getPath());
             return;
         }

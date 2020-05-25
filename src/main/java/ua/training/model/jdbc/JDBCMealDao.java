@@ -67,10 +67,18 @@ public class JDBCMealDao implements MealDao {
                     "ORDER BY meals.date_time";
 
     private static String COUNT_BY_USER_ID =  "SELECT COUNT(*) AS count FROM meals WHERE user_id=?";
+    private static String COUNT_ALL =  "SELECT COUNT(*) AS count FROM meals";
     private static String COUNT_BY_USER_ID_AND_DATE_TIME_BETWEEN =
             "SELECT COUNT(*) AS count " +
                     "FROM meals " +
                     "WHERE user_id=? AND date_time BETWEEN ? AND ?";
+
+    private String FIND_ALL_PAGINATION = "SELECT * " +
+            "FROM meals " +
+            "INNER JOIN food ON meals.food_id=food.id " +
+            "INNER JOIN users ON meals.user_id=users.id " +
+            "ORDER BY meals.date_time " +
+            "LIMIT ? OFFSET ?";
 
     @Override
     public Meal create(Meal meal) throws ServerException {
@@ -100,6 +108,35 @@ public class JDBCMealDao implements MealDao {
     @Override
     public List<Meal> findAll() {
         return null;
+    }
+
+    @Override
+    public List<Meal> findAll(int limit, int offset) throws ServerException {
+        List<Meal> meals = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(FIND_ALL_PAGINATION)) {
+            query.setInt(1, limit);
+            query.setInt(2, offset);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                meals.add(Mapper.mealFoodMap(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return meals;
+    }
+    @Override
+    public int countAllMeals() throws ServerException {
+        int count = 0;
+        try (PreparedStatement query = connection.prepareStatement(COUNT_ALL)) {
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt( "count");
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return count;
     }
 
     @Override

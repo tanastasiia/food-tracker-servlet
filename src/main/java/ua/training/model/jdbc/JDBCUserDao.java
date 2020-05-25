@@ -3,21 +3,38 @@ package ua.training.model.jdbc;
 import ua.training.model.dao.UserDao;
 import ua.training.model.entity.User;
 import ua.training.model.Mapper;
-import ua.training.model.constants.UserConst;
 
 import java.rmi.ServerException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;
 
-    String FIND_ALL_BY_USERNAME = "select * from users where username = ?";
-    String FIND_BY_ID = "select * from food WHERE id=?";
-    String CREATE ="INSERT INTO users (" +
-            "username, first_name, last_name, password, role, height, weight,  activity_level, age, gender" +
-            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private String FIND_ALL_BY_USERNAME = "select * from users where username = ?";
+    private String FIND_BY_ID = "select * from food WHERE id=?";
+    private String CREATE =
+            "INSERT INTO users (username, first_name, last_name, password, role, height, weight,  activity_level, age, gender) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    private String COUNT_ALL = "SELECT COUNT(*) AS count FROM users";
+    private String FIND_ALL_PAGINATION =
+            "SELECT * " +
+                    "FROM users " +
+                    "LIMIT ? OFFSET ?";
+
+    private String UPDATE_USER =
+            "UPDATE users " +
+                    "SET first_name=?, last_name=?, height=?, weight=?, age=?, activity_level=?, gender=? " +
+                    "WHERE users.id = ?";
+
+    private String UPDATE_USER_ROLE =
+            "UPDATE users " +
+                    "SET role=? " +
+                    "WHERE users.id = ?";
+
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -75,9 +92,38 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
+    public void updateUser(User newUser) throws ServerException {
+        try (PreparedStatement query = connection.prepareStatement(UPDATE_USER)) {
+            query.setString(1, newUser.getFirstName());
+            query.setString(2, newUser.getLastName());
+            query.setInt(3, newUser.getHeight());
+            query.setInt(4, newUser.getWeight());
+            query.setInt(5, newUser.getAge());
+            query.setString(6, newUser.getActivityLevel());
+            query.setString(7, newUser.getGender());
+            query.setLong(8, newUser.getId());
+            query.executeUpdate();
+        } catch (Exception e) {
+            throw new ServerException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateUserRole(long userId, String role) throws ServerException {
+        try (PreparedStatement query = connection.prepareStatement(UPDATE_USER_ROLE)) {
+            query.setString(1, role);
+            query.setLong(2, userId);
+            query.executeUpdate();
+        } catch (Exception e) {
+            throw new ServerException(e.getMessage());
+        }
+    }
+
+    @Override
     public void delete(Long id) {
 
     }
+
 
     @Override
     public void close() throws ServerException {
@@ -86,6 +132,36 @@ public class JDBCUserDao implements UserDao {
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<User> findAll(int limit, int offset) throws ServerException {
+        List<User> users = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(FIND_ALL_PAGINATION)) {
+            query.setInt(1, limit);
+            query.setInt(2, offset);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                users.add(Mapper.userMap(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return users;
+    }
+
+    @Override
+    public int countAll() throws ServerException {
+        int count = 0;
+        try (PreparedStatement query = connection.prepareStatement(COUNT_ALL)) {
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt("count");
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return count;
     }
 
     @Override

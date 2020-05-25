@@ -5,21 +5,20 @@ import ua.training.model.entity.FoodInfo;
 
 import java.util.function.Function;
 
-public enum FoodInfoConst implements EntityConst<FoodInfo>{
-    ID("id","id", FoodInfo::getId),
-    FOOD("food", "food_id", FoodInfo::getFood),
-    USER("user", "adder_user_id", FoodInfo::getUser),
-    IS_GLOBAL("user", "adder_user_id", FoodInfo::isGlobal);
+public enum FoodInfoConst implements EntityConst {
+    ID("id", "id"),
+    FOOD("food", "food_id"),
+    USER("user", "adder_user_id"),
+    IS_GLOBAL("isGlobal", "is_global");
 
 
-    FoodInfoConst(String field, String column, Function<FoodInfo, ?> fieldGetter){
+    FoodInfoConst(String field, String column) {
         this.field = field;
         this.column = column;
-        this.fieldGetter = fieldGetter;
     }
+
     private String column;
     private String field;
-    private Function<FoodInfo, ?> fieldGetter;
 
     @Override
     public String getColumn() {
@@ -31,8 +30,4 @@ public enum FoodInfoConst implements EntityConst<FoodInfo>{
         return field;
     }
 
-    @Override
-    public  Function<FoodInfo, ?> fieldGetter() {
-        return fieldGetter;
-    }
 }

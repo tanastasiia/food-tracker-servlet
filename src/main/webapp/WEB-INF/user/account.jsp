@@ -71,7 +71,7 @@
             <th>
                 <fmt:message key="messages.enter.activity"/>
             </th>
-            <td>${user.activityLevel}</td>
+            <td><fmt:message key="${user.activityLevel}"/></td>
         </tr>
         <tr>
             <th>
@@ -86,6 +86,11 @@
             onclick="location.href='/account/change'" type="button"
             th:text=>
     </button>-->
+
+    <button class="btn btn-primary" style="margin-top:30px"
+            onclick="location.href='/api/change_account'" type="button">
+        <fmt:message key="messages.button.change.account"/>
+    </button>
 
     <button class="btn btn-primary" style="margin-top:30px"
             onclick="location.href='/account/change/password'" type="button">

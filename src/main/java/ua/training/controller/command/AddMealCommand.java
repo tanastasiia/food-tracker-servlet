@@ -1,10 +1,9 @@
 package ua.training.controller.command;
 
+import ua.training.controller.utils.ControllerUtil;
 import ua.training.controller.utils.Routes;
 import ua.training.controller.utils.PagesToForward;
 import ua.training.model.dto.MealDto;
-import ua.training.model.dto.UserDto;
-import ua.training.model.dto.UserMealStatDto;
 import ua.training.model.entity.FoodInfo;
 import ua.training.model.entity.Meal;
 import ua.training.model.entity.User;
@@ -19,11 +18,13 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 public class AddMealCommand implements Command {
+    private ControllerUtil controllerUtil = ControllerUtil.getInst();
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         MealDto mealDto = parseMeal(request);
-        User user = ((UserDto) request.getSession().getAttribute("user")).toEntity();
+
+        User user = controllerUtil.getUser(request).toEntity();
 
         Optional<FoodInfo> foodInfo = FoodInfoService.getInstance().findFoodByFoodNameAndUser(mealDto.getFoodName(), user.getId());
 
@@ -36,7 +37,6 @@ public class AddMealCommand implements Command {
 
             MealService.getInstance().saveMeal(meal);
 
-            request.getSession().setAttribute("userStat", MealService.getInstance().todaysUserStatistics(user.getId()));
             request.getSession().setAttribute("formSuccess", "mealAdded");
 
         } else {

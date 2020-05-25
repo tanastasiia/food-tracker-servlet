@@ -1,5 +1,6 @@
 package ua.training.model.jdbc;
 
+import ua.training.controller.command.LogoutCommand;
 import ua.training.model.Mapper;
 import ua.training.model.dao.FoodDao;
 import ua.training.model.entity.Food;
@@ -10,6 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class JDBCFoodDao implements FoodDao {
 
@@ -52,6 +54,7 @@ public class JDBCFoodDao implements FoodDao {
             }
             return food;
         } catch (SQLException e) {
+            Logger.getLogger(JDBCFoodDao.class.getName()).severe("Food creation error: " + e.getMessage());
             throw new ServerException(e.getMessage());
         }
 
@@ -96,13 +99,10 @@ public class JDBCFoodDao implements FoodDao {
                 food = Optional.of(Mapper.foodMap(resultSet));
             }
         } catch (Exception e) {
+            Logger.getLogger(JDBCFoodDao.class.getName()).severe("findByName eror: " + e.getMessage());
             throw new ServerException(e.getMessage());
         }
         return food;
     }
 
-    @Override
-    public Optional<Food> findByNameUa(String nameUa) throws ServerException {
-        return Optional.empty();
-    }
 }

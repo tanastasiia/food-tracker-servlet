@@ -138,9 +138,10 @@
             </table>
 
 
-            <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <c:choose>
+
                         <c:when test="${not empty param.page && param.page>1}">
                             <li class="page-item">
                                 <a class="page-link" href="${pageContext.request.contextPath}\api\statistics?tab=2&page=${param.page-1}"
@@ -150,6 +151,7 @@
                                 </a>
                             </li>
                         </c:when>
+
                         <c:otherwise>
                             <li class="page-item disabled">
                                 <a class="page-link" href="" aria-label="Previous">
@@ -158,6 +160,7 @@
                                 </a>
                             </li>
                         </c:otherwise>
+
                     </c:choose>
 
 
@@ -195,6 +198,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:when>
+
                         <c:otherwise>
                             <li class="page-item">
                                 <a class="page-link" href="${pageContext.request.contextPath}\api\statistics?tab=2&page=${2}" aria-label="Previous">
@@ -203,6 +207,7 @@
                                 </a>
                             </li>
                         </c:otherwise>
+
                     </c:choose>
 
                 </ul>

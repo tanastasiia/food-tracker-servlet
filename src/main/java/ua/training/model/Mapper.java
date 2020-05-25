@@ -57,9 +57,9 @@ public interface Mapper {
     }*/
 
     static Meal mealFoodMap(ResultSet resultSet) throws SQLException {
-        LocalDateTime dateTime = resultSet.getTimestamp(MealConst.DATE_TIME.getColumn()).toLocalDateTime();
         return new Meal.Builder()
                 .setFood(foodMap(resultSet))
+                .setUser(userMap(resultSet))
                 .setAmount(resultSet.getInt(MealConst.AMOUNT.getColumn()))
                 .setDateTime(resultSet.getTimestamp(MealConst.DATE_TIME.getColumn()).toLocalDateTime())
                 .build();

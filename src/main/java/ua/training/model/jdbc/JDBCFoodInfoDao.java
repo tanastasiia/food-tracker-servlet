@@ -7,6 +7,7 @@ import ua.training.model.entity.FoodInfo;
 
 import java.rmi.ServerException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,12 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
             "LEFT OUTER JOIN users ON food_info.adder_user_id=users.id " +
             "WHERE  (food.name=? OR food.name_ua=?)AND (food_info.adder_user_id=? OR food_info.is_global=TRUE)";
 
+    private static String COUNT_ALL =  "SELECT COUNT(*) AS count FROM food_info";
+   private String FIND_ALL_PAGINATION = "SELECT * " +
+            "FROM food_info " +
+            "LEFT OUTER JOIN food ON food_info.food_id=food.id " +
+            "LEFT OUTER JOIN users ON food_info.adder_user_id=users.id " +
+            "LIMIT ? OFFSET ?";
 
     /*String FIND_FOOD_BY_USERNAME_OR_GLOBAL_UA ="SELECT food.name_ua, food.fat, food.carbs, food.protein, food.calories " +
             "FROM food_info " +
@@ -71,7 +78,7 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
 
             query.setLong(1, foodInfo.getFood().getId());
             query.setLong(2, foodInfo.getUser().getId());
-            query.setBoolean(3, foodInfo.isGlobal());
+            query.setBoolean(3, foodInfo.getIsGlobal());
             query.executeUpdate();
 
             ResultSet keys = query.getGeneratedKeys();
@@ -114,6 +121,34 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
         }
     }
 
+    @Override
+    public List<FoodInfo> findAll(int limit, int offset) throws ServerException {
+        List<FoodInfo> foodInfos = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(FIND_ALL_PAGINATION)) {
+            query.setInt(1, limit);
+            query.setInt(2, offset);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                foodInfos.add(Mapper.foodInfoMap(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return foodInfos;
+    }
+    @Override
+    public int countAll() throws ServerException {
+        int count = 0;
+        try (PreparedStatement query = connection.prepareStatement(COUNT_ALL)) {
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt( "count");
+            }
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
+        return count;
+    }
 
     /**
      * food by food name(eng) if it is available for user
@@ -189,7 +224,7 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
 
             createFoodInfoSt.setLong(1, food.getId());
             createFoodInfoSt.setLong(2, foodInfo.getUser().getId());
-            createFoodInfoSt.setBoolean(3, foodInfo.isGlobal());
+            createFoodInfoSt.setBoolean(3, foodInfo.getIsGlobal());
             createFoodInfoSt.executeUpdate();
 
             ResultSet foodInfoKeys = createFoodInfoSt.getGeneratedKeys();

@@ -1,5 +1,7 @@
 package ua.training.controller.command;
 
+import ua.training.controller.utils.ControllerUtil;
+import ua.training.controller.utils.Constants;
 import ua.training.controller.utils.PagesToForward;
 import ua.training.model.dto.UserDto;
 import ua.training.service.MealService;
@@ -12,35 +14,35 @@ import java.util.Locale;
 
 public class StatisticsCommand implements Command {
 
-    private int pageSize = 2;
+    private ControllerUtil controllerUtil = ControllerUtil.getInst();
+    private MealService mealService = MealService.getInstance();
+
+
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        UserDto userDto = (UserDto) request.getSession().getAttribute("user");
+        UserDto userDto = controllerUtil.getUser(request);
+        Locale locale = controllerUtil.getLocale(request);
 
         request.setAttribute("caloriesNorm", UserService.getInstance().countCaloriesNorm(userDto.toEntity()));
-        request.setAttribute("userStat", MealService.getInstance().todaysUserStatistics(userDto.getId()));
+        request.setAttribute("userStat", mealService.todaysUserStatistics(userDto.getId()));
 
+        if (request.getParameter("tab").equals("2")) {
 
+            int page = controllerUtil.getPage(request);
+            int offset = controllerUtil.getOffset(page, Constants.PAGE_SIZE);
 
+            request.setAttribute("allMeals",
+                    mealService.findAllUserMeals(userDto.getId(), locale, Constants.PAGE_SIZE, offset));
+            request.setAttribute("numOfMealsPages",
+                    controllerUtil.countNumOfPages(mealService.countAllUsersMeals(userDto.getId()), Constants.PAGE_SIZE));
 
-        request.setAttribute("todaysMeals",
-                    MealService.getInstance().todaysUserMeals(userDto.getId(), (Locale)request.getSession().getAttribute("lang")));
-
-
-
-        int page=1;
-        if(request.getParameter("page")!=null){
-            page = Integer.parseInt(request.getParameter("page"));
+        } else {
+            request.setAttribute("todaysMeals", mealService.todaysUserMeals(userDto.getId(), locale));
         }
-        int offset = (page-1)*pageSize;
-        int numOfMeals = MealService.getInstance().countAllUsersMeals(userDto.getId());
-
-        request.setAttribute("allMeals", MealService.getInstance().findAllUserMeals(userDto.getId(),
-                (Locale) request.getSession().getAttribute("lang"), pageSize, offset));
-        request.setAttribute("numOfMealsPages" , (int)Math.ceil((double)numOfMeals / pageSize));
-
 
         return PagesToForward.STATISTICS;
     }
+
+
 }

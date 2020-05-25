@@ -1,5 +1,6 @@
 package ua.training.model.dto;
 
+import ua.training.controller.utils.Constants;
 import ua.training.model.dao.GenericDao;
 import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
@@ -18,10 +19,9 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
     private Integer calories;
     private Locale locale;
 
+
     private final Integer MILLIGRAMS_TO_GRAMS = 1000;
     private final BigDecimal GRAMS_TO_MILLIGRAMS = BigDecimal.valueOf(1000);
-
-    private static final Locale uaLocale= new Locale("ua");
 
 
     private BigDecimal toMilligrams(Integer grams){
@@ -36,7 +36,7 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
 
     }
     public FoodDto(Food food, Locale locale) {
-        this.name = locale.equals(uaLocale)? food.getNameUa():food.getName();
+        this.name = locale.equals(Constants.LOCALE_UA)? food.getNameUa():food.getName();
         this.carbs = toMilligrams(food.getCarbs());
         this.protein = toMilligrams(food.getProtein());
         this.fat = toMilligrams(food.getFat());
@@ -47,8 +47,8 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
     @Override
     public Food toEntity() {
         return new Food.Builder()
-                .setName(locale.equals(uaLocale)? null : name)
-                .setNameUa(locale.equals(uaLocale)? name : null)
+                .setName(locale.equals(Constants.LOCALE_UA)? null : name)
+                .setNameUa(locale.equals(Constants.LOCALE_UA)? name : null)
                 .setCarbs(toGrams(carbs))
                 .setProtein(toGrams(protein))
                 .setFat(toGrams(fat))
@@ -56,8 +56,8 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
     }
     public Food toEntity(Locale locale) {
         return new Food.Builder()
-                .setName(locale.equals(uaLocale)? null : name)
-                .setNameUa(locale.equals(uaLocale)? name : null)
+                .setName(locale.equals(Constants.LOCALE_UA)? null : name)
+                .setNameUa(locale.equals(Constants.LOCALE_UA)? name : null)
                 .setCarbs(toGrams(carbs))
                 .setProtein(toGrams(protein))
                 .setFat(toGrams(fat))
@@ -100,9 +100,6 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
         return protein;
     }
 
-    public Locale getLocale() {
-        return locale;
-    }
     public void setProtein(BigDecimal protein) {
         this.protein = protein;
     }

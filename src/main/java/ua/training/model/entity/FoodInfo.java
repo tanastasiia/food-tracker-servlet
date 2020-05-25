@@ -30,7 +30,7 @@ public class FoodInfo {
         this.user = user;
     }
 
-    public boolean isGlobal() {
+    public boolean getIsGlobal() {
         return isGlobal;
     }
 

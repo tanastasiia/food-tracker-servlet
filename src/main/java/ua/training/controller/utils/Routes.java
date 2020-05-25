@@ -13,6 +13,8 @@ public enum Routes implements Paths {
 
     ADD_MEAL( APP.getPath() + "/add_meal" ),
     ADD_FOOD( APP.getPath() + "/add_food" ),
+    CHANGE_ACCOUNT( APP.getPath() + "/change_account" ),
+    CHANGE_USER_ROLE( APP.getPath() + "/change_role" ),
 
     EMPTY("");
 

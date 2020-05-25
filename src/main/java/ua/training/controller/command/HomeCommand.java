@@ -1,21 +1,21 @@
 package ua.training.controller.command;
 
+import ua.training.controller.utils.ControllerUtil;
 import ua.training.controller.utils.PagesToForward;
 import ua.training.model.dto.UserDto;
-import ua.training.model.entity.User;
 import ua.training.service.MealService;
 import ua.training.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.rmi.ServerException;
-import java.util.Optional;
 
 public class HomeCommand implements Command {
+    private ControllerUtil controllerUtil = ControllerUtil.getInst();
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
 
-        UserDto userDto = (UserDto)request.getSession().getAttribute("user");
+        UserDto userDto = controllerUtil.getUser(request);
         request.setAttribute("caloriesNorm", UserService.getInstance().countCaloriesNorm(userDto.toEntity()));
         request.getSession().setAttribute("todaysCalories", MealService.getInstance().todaysUserCalories(userDto.getId()));
 

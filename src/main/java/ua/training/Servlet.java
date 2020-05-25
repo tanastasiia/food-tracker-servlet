@@ -1,5 +1,6 @@
 package ua.training;
 
+//import org.apache.logging.log4j.LogManager;
 import ua.training.controller.command.*;
 import ua.training.controller.utils.Routes;
 import ua.training.controller.utils.PagesToForward;
@@ -36,6 +37,8 @@ public class Servlet extends HttpServlet {
         commands.put(Routes.ACCOUNT.getPath(), new AccountCommand());
         commands.put(Routes.STATISTICS.getPath(), new StatisticsCommand());
         commands.put(Routes.ADMIN.getPath(), new AdminPageCommand());
+        commands.put(Routes.CHANGE_ACCOUNT.getPath(), new ChangeAccountCommand());
+        commands.put(Routes.CHANGE_USER_ROLE.getPath(), new ChangeUserRoleCommand());
 
 
     }
@@ -43,14 +46,12 @@ public class Servlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        System.out.println("doGet");
         processRequest(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        System.out.println("doPost");
         processRequest(request, response);
 
     }
@@ -59,21 +60,16 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        System.out.println(path);
 
         Command command = commands.getOrDefault(path, new EmptyCommand());
 
         Paths page = command.execute(request, response);
 
         if (page != null && !page.equals(PagesToForward.NONE)) {
-            System.out.println("forwarding: " + page.getPath());
             request.getRequestDispatcher(page.getPath()).forward(request, response);
         }
     }
 
-    private void pareseParams(){
-
-    }
 
 
 }

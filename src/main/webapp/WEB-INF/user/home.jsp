@@ -123,14 +123,16 @@
                     <input class="form-control form-control-lg" id="new-food-name" type="text"
                            placeholder="" name="name" >
                 </div>
-<%--
-                <div class="form-group">
-                    <label for="food-name-ua">
-                        <fmt:message key="messages.enter.food.name.ua"/>
-                    </label>
-                    <input class="form-control form-control-lg" id="food-name-ua" type="text" placeholder=""
-                           name="nameUa" required>
-                </div>--%>
+                <c:if test="${isAdmin}">
+                    <div class="form-group">
+                        <label for="food-name-ua">
+                            <fmt:message key="messages.enter.food.name.ua"/>
+                        </label>
+                        <input class="form-control form-control-lg" id="food-name-ua" type="text" placeholder=""
+                               name="nameUa" required>
+                    </div>
+                </c:if>
+
 
                 <div class="form-group">
                     <label for="carbs" >
@@ -163,6 +165,12 @@
                     <input class="form-control form-control-lg" id="calories" type="number" placeholder=""
                            name="calories">
                 </div>
+                <c:if test="${isAdmin}">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="isGlobal">
+                    <label class="form-check-label" for="exampleCheck1"><fmt:message key="messages.enter.is.global"/></label>
+                </div>
+                </c:if>
 
                 <button type="submit" class="btn btn-primary"
                         style="margin-top:30px" >

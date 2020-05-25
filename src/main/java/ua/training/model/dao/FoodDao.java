@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface FoodDao extends GenericDao<Food> {
     Optional<Food> findByName(String name) throws ServerException;
-    Optional<Food> findByNameUa(String nameUa) throws ServerException;
 }
