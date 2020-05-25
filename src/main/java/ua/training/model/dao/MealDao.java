@@ -12,6 +12,8 @@ public interface MealDao extends GenericDao<Meal> {
 
     int countAllMeals() throws ServerException;
 
+    List<Meal> findByUserId(Long userId) throws ServerException;
+
     List<Meal> findByUserId(Long userId, int limit, int offset) throws ServerException;
 
     int countAllUserMeals(Long userId) throws ServerException;

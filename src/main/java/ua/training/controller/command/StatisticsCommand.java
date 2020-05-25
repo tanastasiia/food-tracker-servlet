@@ -27,8 +27,11 @@ public class StatisticsCommand implements Command {
         request.setAttribute("caloriesNorm", UserService.getInstance().countCaloriesNorm(userDto.toEntity()));
         request.setAttribute("userStat", mealService.todaysUserStatistics(userDto.getId()));
 
-        if (request.getParameter("tab").equals("2")) {
+        if (request.getParameter("tab")==null ||request.getParameter("tab").equals("1")) {
 
+            request.setAttribute("todaysMeals", mealService.todaysUserMeals(userDto.getId(), locale));
+
+        } else {
             int page = controllerUtil.getPage(request);
             int offset = controllerUtil.getOffset(page, Constants.PAGE_SIZE);
 
@@ -36,9 +39,6 @@ public class StatisticsCommand implements Command {
                     mealService.findAllUserMeals(userDto.getId(), locale, Constants.PAGE_SIZE, offset));
             request.setAttribute("numOfMealsPages",
                     controllerUtil.countNumOfPages(mealService.countAllUsersMeals(userDto.getId()), Constants.PAGE_SIZE));
-
-        } else {
-            request.setAttribute("todaysMeals", mealService.todaysUserMeals(userDto.getId(), locale));
         }
 
         return PagesToForward.STATISTICS;

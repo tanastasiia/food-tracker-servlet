@@ -165,7 +165,7 @@ public class JDBCMealDao implements MealDao {
             query.setLong(1, userId);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
-                meals.add(Mapper.mealFoodMap(resultSet));
+                meals.add(Mapper.mealFoodWithoutUserMap(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());
@@ -181,7 +181,7 @@ public class JDBCMealDao implements MealDao {
             query.setInt(3, offset);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
-                meals.add(Mapper.mealFoodMap(resultSet));
+                meals.add(Mapper.mealFoodWithoutUserMap(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());
@@ -212,7 +212,7 @@ public class JDBCMealDao implements MealDao {
             query.setObject(3, dateTime2);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
-                meals.add(Mapper.mealFoodMap(resultSet));
+                meals.add(Mapper.mealFoodWithoutUserMap(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());
@@ -232,7 +232,7 @@ public class JDBCMealDao implements MealDao {
             query.setInt(5, offset);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
-                meals.add(Mapper.mealFoodMap(resultSet));
+                meals.add(Mapper.mealFoodWithoutUserMap(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());
@@ -249,7 +249,7 @@ public class JDBCMealDao implements MealDao {
             query.setObject(3, dateTime2);
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
-                meals.add(Mapper.mealFoodMap(resultSet));
+                meals.add(Mapper.mealFoodWithoutUserMap(resultSet));
             }
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());

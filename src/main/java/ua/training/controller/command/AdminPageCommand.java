@@ -29,12 +29,12 @@ public class AdminPageCommand implements Command {
 
 
 
-        if (request.getParameter("tab").equals("3")) {
+        if (request.getParameter("tab")==null || request.getParameter("tab").equals("1")){
 
-            request.setAttribute("meals", mealService.findAllMeals(Constants.PAGE_SIZE, offset));
+
+            request.setAttribute("users", userService.findAllUsers(Constants.PAGE_SIZE, offset));
             request.setAttribute("numOfPages",
-                    controllerUtil.countNumOfPages(mealService.countAllMeals(), Constants.PAGE_SIZE));
-
+                    controllerUtil.countNumOfPages(userService.countAllUsers(), Constants.PAGE_SIZE));
 
         } else if (request.getParameter("tab").equals("2")) {
 
@@ -43,10 +43,9 @@ public class AdminPageCommand implements Command {
                     controllerUtil.countNumOfPages(foodInfoService.countAllFood(), Constants.PAGE_SIZE));
 
         } else {
-            request.setAttribute("users", userService.findAllUsers(Constants.PAGE_SIZE, offset));
+            request.setAttribute("meals", mealService.findAllMeals(Constants.PAGE_SIZE, offset));
             request.setAttribute("numOfPages",
-                    controllerUtil.countNumOfPages(userService.countAllUsers(), Constants.PAGE_SIZE));
-
+                    controllerUtil.countNumOfPages(mealService.countAllMeals(), Constants.PAGE_SIZE));
         }
         return PagesToForward.ADMIN;
     }

@@ -16,7 +16,7 @@ public class ChangeUserRoleCommand implements Command {
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         long userId = Long.parseLong(request.getParameter("id"));
-        String role = controllerUtil.getRole(request);
+        String role = request.getParameter("role");
 
         if (userId != controllerUtil.getUserId(request)) {
             UserService.getInstance().changeRole(userId, role);

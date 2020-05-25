@@ -65,4 +65,12 @@ public interface Mapper {
                 .build();
     }
 
+    static Meal mealFoodWithoutUserMap(ResultSet resultSet) throws SQLException {
+        return new Meal.Builder()
+                .setFood(foodMap(resultSet))
+                .setAmount(resultSet.getInt(MealConst.AMOUNT.getColumn()))
+                .setDateTime(resultSet.getTimestamp(MealConst.DATE_TIME.getColumn()).toLocalDateTime())
+                .build();
+    }
+
 }
