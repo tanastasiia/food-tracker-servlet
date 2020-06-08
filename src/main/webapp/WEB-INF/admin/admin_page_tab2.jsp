@@ -10,8 +10,7 @@
 <div id="tabs-2">
 
 
-
-    <table class="table" >
+    <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">
@@ -33,7 +32,7 @@
                 <fmt:message key="messages.enter.food.calories"/>
             </th>
             <th scope="col">
-                <fmt:message key="messages.enter.username"/>
+                <fmt:message key="messages.adder.user"/>
             </th>
             <th scope="col">
                 <fmt:message key="messages.global"/>
@@ -43,15 +42,36 @@
         <tbody>
         <c:forEach var="foodInfo" items="${foods}" varStatus="status">
             <tr>
-                <td>${foodInfo.food.name}</td>
-                <td>${foodInfo.food.nameUa}</td>
-                <td>${foodInfo.food.carbs}</td>
-                <td>${foodInfo.food.protein}</td>
-                <td>${foodInfo.food.fat}</td>
+                <c:choose>
+                    <c:when test="${not empty foodInfo.food.name}">
+                        <td>${foodInfo.food.name}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><fmt:message key="messages.absent"/></td>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${not empty foodInfo.food.nameUa}">
+                        <td>${foodInfo.food.nameUa}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><fmt:message key="messages.absent"/></td>
+                    </c:otherwise>
+                </c:choose>
+                <td>${foodInfo.food.carbs/1000.}</td>
+                <td>${foodInfo.food.protein/1000.}</td>
+                <td>${foodInfo.food.fat/1000.}</td>
                 <td>${foodInfo.food.calories}</td>
+                <c:choose>
+                    <c:when test="${not empty foodInfo.user.username}">
+                        <td>${foodInfo.user.username}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><fmt:message key="messages.absent"/></td>
+                    </c:otherwise>
+                </c:choose>
 
-                <td>${foodInfo.user.username}</td>
-                <td>${foodInfo.isGlobal}</td>
+                <td><fmt:message key="${foodInfo.isGlobal}"/></td>
             </tr>
         </c:forEach>
         </tbody>
@@ -60,16 +80,14 @@
 </div>
 
 
-
-
-
 <nav aria-label="Page navigation">
     <ul class="pagination">
         <c:choose>
 
             <c:when test="${not empty param.page && param.page>1}">
                 <li class="page-item">
-                    <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=2&page=${param.page-1}"
+                    <a class="page-link"
+                       href="${pageContext.request.contextPath}\foodtracker\admin?tab=2&page=${param.page-1}"
                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only"><fmt:message key="masseges.previous"/></span>
@@ -90,12 +108,12 @@
 
 
         <li class="page-item">
-            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=2&page=1">
+            <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=2&page=1">
                 <fmt:message key="messages.button.first"/>
             </a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=2&page=${numOfPages}">
+            <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=2&page=${numOfPages}">
                 <fmt:message key="messages.button.last"/>
             </a>
         </li>
@@ -106,7 +124,8 @@
                 <c:choose>
                     <c:when test="${param.page < numOfPages}">
                         <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=2&page=${param.page+1}"
+                            <a class="page-link"
+                               href="${pageContext.request.contextPath}\foodtracker\admin?tab=2&page=${param.page+1}"
                                aria-label="Previous">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only"><fmt:message key="masseges.next"/></span>
@@ -128,7 +147,8 @@
                 <c:choose>
                     <c:when test="${numOfPages>1}">
                         <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=2&page=${2}"
+                            <a class="page-link"
+                               href="${pageContext.request.contextPath}\foodtracker\admin?tab=2&page=${2}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only"><fmt:message key="masseges.next"/></span>

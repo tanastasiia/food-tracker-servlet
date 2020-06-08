@@ -23,13 +23,6 @@ public class UserService {
         return Holder.INSTANCE;
     }
 
-    public Optional<User> findByUsername(String username) throws ServerException {
-
-        try (UserDao dao = daoFactory.createUserDao()) {
-            return dao.findByUsername(username);
-        }
-
-    }
 
     public List<User> findAllUsers(int limit, int offset) throws ServerException {
         try (UserDao dao = daoFactory.createUserDao()) {
@@ -54,6 +47,14 @@ public class UserService {
 
     }
 
+    private Optional<User> findByUsername(String username) throws ServerException {
+
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.findByUsername(username);
+        }
+
+    }
+
     public boolean register(User user) throws ServerException {
 
         if (!findByUsername(user.getUsername()).isPresent()) {
@@ -67,6 +68,7 @@ public class UserService {
     }
 
     public void updateAccount(User newUser, UserDto user) throws ServerException {
+
         newUser.setId(user.getId());
         try (UserDao dao = daoFactory.createUserDao()) {
             dao.updateUser(newUser);
@@ -82,18 +84,14 @@ public class UserService {
     }
 
     public void changeRole(long userId, String role) throws ServerException {
-        if(role.equals(Role.ADMIN.name())){
-            role = Role.USER.name();
-        }
-        else{
-            role = Role.ADMIN.name();
-        }
+
+        role = role.equals(Role.ROLE_ADMIN.name()) ? Role.ROLE_USER.name() : Role.ROLE_ADMIN.name();
+
         try (UserDao dao = daoFactory.createUserDao()) {
             dao.updateUserRole(userId, role);
         }
 
     }
-
 
 
     public int countCaloriesNorm(User user) {

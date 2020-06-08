@@ -7,13 +7,14 @@ import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
 
 import java.rmi.ServerException;
+import java.util.List;
 import java.util.Optional;
 
 public class FoodService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     private static class Holder {
-        private static final FoodService INSTANCE  = new FoodService();
+        private static final FoodService INSTANCE = new FoodService();
     }
 
     public static FoodService getInstance() {
@@ -26,14 +27,11 @@ public class FoodService {
         }
     }
 
-    public Optional<Food> findById(Long id) throws ServerException {
+    public Optional<Food> findById(long foodId) throws ServerException {
         try (FoodDao dao = daoFactory.createFoodDao()) {
-            return dao.findById(id);
+            return dao.findById(foodId);
+
         }
     }
-    public Optional<Food> findByName(String name) throws ServerException {
-        try (FoodDao dao = daoFactory.createFoodDao()) {
-            return dao.findByName(name);
-        }
-    }
+
 }

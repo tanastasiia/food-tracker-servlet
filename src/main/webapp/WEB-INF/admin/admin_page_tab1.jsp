@@ -34,6 +34,10 @@
             <th scope="col">
                 <fmt:message key="messages.enter.activity"/>
             </th>
+
+            <th scope="col">
+                <fmt:message key="messages.role"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -47,9 +51,9 @@
                 <td>${user.age}</td>
                 <td><fmt:message key="${user.activityLevel}"/></td>
                 <td>
-                    <div>${user.role}</div>
+                    <div><fmt:message key="${user.role}"/></div>
                     <div>
-                        <button type="submit" class="btn btn-success"  onclick="location.href='/api/change_role?id=${user.id}&role=${user.role}'">
+                        <button type="submit" class="btn btn-success"  onclick="location.href='/foodtracker/change_role?id=${user.id}&role=${user.role}'">
                             <fmt:message key="messages.button.change.role"/>
                         </button>
                     </div>
@@ -69,7 +73,7 @@
             <%--previous--%>
             <c:when test="${not empty param.page && param.page>1}">
                 <li class="page-item">
-                    <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=1&page=${param.page-1}"
+                    <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=1&page=${param.page-1}"
                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only"><fmt:message key="masseges.previous"/></span>
@@ -90,12 +94,12 @@
 
         <%--first and last--%>
         <li class="page-item">
-            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=1&page=1">
+            <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=1&page=1">
                 <fmt:message key="messages.button.first"/>
             </a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=1&page=${numOfPages}">
+            <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=1&page=${numOfPages}">
                 <fmt:message key="messages.button.last"/>
             </a>
         </li>
@@ -107,7 +111,7 @@
                     <c:when test="${param.page < numOfPages}">
                         <li class="page-item">
                             <a class="page-link"
-                               href="${pageContext.request.contextPath}\api\admin?tab=1&page=${param.page+1}"
+                               href="${pageContext.request.contextPath}\foodtracker\admin?tab=1&page=${param.page+1}"
                                aria-label="Previous">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only"><fmt:message key="masseges.next"/></span>
@@ -129,7 +133,7 @@
                 <c:choose>
                     <c:when test="${numOfPages>1}">
                         <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=1&page=${2}"
+                            <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=1&page=${2}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only"><fmt:message key="masseges.next"/></span>

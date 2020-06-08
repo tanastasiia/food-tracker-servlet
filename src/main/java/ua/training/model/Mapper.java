@@ -13,9 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-public interface Mapper {
+public class Mapper {
 
-    static User userMap(ResultSet resultSet) throws SQLException {
+    public static User userMap(ResultSet resultSet) throws SQLException {
         return new User.Builder()
                 .setId(resultSet.getLong(UserConst.ID.getColumn()))
                 .setUsername(resultSet.getString(UserConst.USERNAME.getColumn()))
@@ -30,8 +30,9 @@ public interface Mapper {
                 .setAge(resultSet.getInt(UserConst.AGE.getColumn()))
                 .build();
     }
-    static Food foodMap(ResultSet resultSet) throws SQLException {
+    public static Food foodMap(ResultSet resultSet) throws SQLException {
         return new Food.Builder()
+                //TODO id
                 .setId(resultSet.getLong(FoodInfoConst.FOOD.getColumn()))
                 .setName(resultSet.getString(FoodConst.NAME.getColumn()))
                 .setNameUa(resultSet.getString(FoodConst.NAME_UA.getColumn()))
@@ -41,7 +42,7 @@ public interface Mapper {
                 .setCalories(resultSet.getInt(FoodConst.CALORIES.getColumn()))
                 .build();
     }
-    static FoodInfo foodInfoMap(ResultSet resultSet) throws SQLException {
+    public static FoodInfo foodInfoMap(ResultSet resultSet) throws SQLException {
         return new FoodInfo.Builder()
                 .setId(resultSet.getLong(FoodInfoConst.ID.getColumn()))
                 .setFood(foodMap(resultSet))
@@ -49,14 +50,15 @@ public interface Mapper {
                 .setIsGlobal(resultSet.getBoolean(FoodInfoConst.IS_GLOBAL.getColumn()))
                 .build();
     }
+    public static FoodInfo foodInfoWithoutUserMap(ResultSet resultSet) throws SQLException {
+        return new FoodInfo.Builder()
+                .setId(resultSet.getLong(FoodInfoConst.ID.getColumn()))
+                .setFood(foodMap(resultSet))
+                .setIsGlobal(resultSet.getBoolean(FoodInfoConst.IS_GLOBAL.getColumn()))
+                .build();
+    }
 
-    /*static MealFoodDto mealFoodMap(ResultSet resultSet) throws SQLException {
-        LocalDateTime dateTime = resultSet.getTimestamp(MealConst.DATE_TIME).toLocalDateTime();
-        return new MealFoodDto(foodMap(resultSet), resultSet.getInt(MealConst.AMOUNT),
-                dateTime.toLocalDate(), dateTime.toLocalTime());
-    }*/
-
-    static Meal mealFoodMap(ResultSet resultSet) throws SQLException {
+    public static Meal mealFoodMap(ResultSet resultSet) throws SQLException {
         return new Meal.Builder()
                 .setFood(foodMap(resultSet))
                 .setUser(userMap(resultSet))
@@ -65,7 +67,7 @@ public interface Mapper {
                 .build();
     }
 
-    static Meal mealFoodWithoutUserMap(ResultSet resultSet) throws SQLException {
+    public static Meal mealFoodWithoutUserMap(ResultSet resultSet) throws SQLException {
         return new Meal.Builder()
                 .setFood(foodMap(resultSet))
                 .setAmount(resultSet.getInt(MealConst.AMOUNT.getColumn()))

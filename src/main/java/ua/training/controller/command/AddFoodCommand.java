@@ -1,8 +1,8 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.ControllerUtil;
-import ua.training.controller.utils.Routes;
-import ua.training.controller.utils.PagesToForward;
+import ua.training.utils.ControllerUtil;
+import ua.training.controller.Routes;
+import ua.training.controller.PagesToForward;
 import ua.training.model.constants.FoodConst;
 import ua.training.model.constants.FoodInfoConst;
 import ua.training.model.dto.FoodDto;
@@ -18,13 +18,15 @@ import java.util.Locale;
 import java.util.Optional;
 
 public class AddFoodCommand implements Command {
+
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
+
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         FoodDto foodDto = parseFoodDto(request);
 
         UserDto user = controllerUtil.getUser(request);
-        Boolean isGlobal = request.getParameter(FoodInfoConst.IS_GLOBAL.getField()).equals("on");
+        Boolean isGlobal = request.getParameter(FoodInfoConst.IS_GLOBAL.getField()) != null;
 
         Optional<FoodInfo> savedFoodInfo = FoodInfoService.getInstance().saveFood(foodDto, user.toEntity(), isGlobal);
 
@@ -35,7 +37,7 @@ public class AddFoodCommand implements Command {
         return PagesToForward.NONE;
     }
 
-    private FoodDto parseFoodDto(HttpServletRequest request){
+    private FoodDto parseFoodDto(HttpServletRequest request) {
         return new FoodDto.Builder()
                 .setProtein(new BigDecimal(request.getParameter(FoodConst.PROTEIN.getField())))
                 .setFat(new BigDecimal(request.getParameter(FoodConst.FAT.getField())))

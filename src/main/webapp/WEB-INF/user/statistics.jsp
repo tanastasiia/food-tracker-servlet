@@ -26,7 +26,7 @@
 <div class="container" style="margin-top: 60px">
 
 
-    <c:import url="/WEB-INF/user/page_pieces/food_elements_sum.jsp" charEncoding="utf-8"/>
+    <c:import url="/WEB-INF/user/food_elements_sum.jsp" charEncoding="utf-8"/>
 
 
     <h2 class="page-header">
@@ -35,12 +35,12 @@
     <div id="tabs">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link" id="home-tab" data-toggle="tab" href="${pageContext.request.contextPath}\api\statistics?tab=1" role="tab" aria-controls="home"
+                <a class="nav-link" id="home-tab" data-toggle="tab" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=1" role="tab" aria-controls="home"
                    aria-selected="true">Today</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="${pageContext.request.contextPath}\api\statistics?tab=2" role="tab" aria-controls="contact"
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2" role="tab" aria-controls="contact"
                    aria-selected="false">All time</a>
             </li>
         </ul>
@@ -70,37 +70,6 @@
                 </c:forEach>
                 </tbody>
             </table>
-
-            <%--    <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="" aria-label="Previous"
-                               ng-click="todaysFoodPage=(todaysFoodPage>0)?todaysFoodPage-1:todaysFoodPage;getTodaysFood()">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href=""
-                                                 ng-click="todaysFoodPage=0;getTodaysFood()">
-                            <fmt:message key="messages.button.first"/>
-                        </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href=""
-                                                 ng-click="todaysFoodPage=todaysFoodPageMax;getTodaysFood()">
-                                <fmt:message key="messages.button.last"/>
-                            </a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="" aria-label="Next"
-                               ng-click="todaysFoodPage=(todaysFoodPage<todaysFoodPageMax)?todaysFoodPage+1:todaysFoodPage;getTodaysFood()">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>--%>
 
         </div>
     </c:when>
@@ -144,7 +113,7 @@
 
                         <c:when test="${not empty param.page && param.page>1}">
                             <li class="page-item">
-                                <a class="page-link" href="${pageContext.request.contextPath}\api\statistics?tab=2&page=${param.page-1}"
+                                <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${param.page-1}"
                                    aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Previous</span>
@@ -165,12 +134,12 @@
 
 
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}\api\statistics?tab=2&page=1">
+                        <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=1">
                             <fmt:message key="messages.button.first"/>
                         </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}\api\statistics?tab=2&page=${numOfMealsPages}">
+                        <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${numOfMealsPages}">
                             <fmt:message key="messages.button.last"/>
                         </a>
                     </li>
@@ -181,7 +150,7 @@
                             <c:choose>
                                 <c:when test="${param.page < numOfMealsPages}">
                                     <li class="page-item">
-                                        <a class="page-link" href="${pageContext.request.contextPath}\api\statistics?tab=2&page=${param.page+1}"
+                                        <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${param.page+1}"
                                            aria-label="Previous">
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
@@ -201,7 +170,7 @@
 
                         <c:otherwise>
                             <li class="page-item">
-                                <a class="page-link" href="${pageContext.request.contextPath}\api\statistics?tab=2&page=${2}" aria-label="Previous">
+                                <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${2}" aria-label="Previous">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>

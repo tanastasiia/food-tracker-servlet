@@ -1,9 +1,6 @@
-package ua.training.controller.utils;
+package ua.training.utils;
 
-import java.util.Enumeration;
 import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
 
 public class Constants {
 

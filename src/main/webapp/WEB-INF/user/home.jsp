@@ -32,24 +32,6 @@
                 <fmt:message key="messages.title.food.consumed"/>
             </h2>
 
-            <%--<div ng-show="showAddUserSuccess">
-                <div class="alert alert-info">
-                    <p><fmt:message key="messages.alert.food.added"/></p>
-                </div>
-            </div>--%>
-
-            <%--<div ng-show="showAddUserError">
-                <div class="alert alert-danger"><p th:text="#{messages.error.no.such.food.in.db}"></p>
-                </div>
-            </div>--%>
-
-            <%--<div ng-if="userStat.calories > userStat.caloriesNorm">
-                <div class="alert alert-warning">
-                    <p th:text="#{messages.alert.norm.exceeded}"></p>
-                </div>
-            </div>--%>
-
-
             <div>
                 <div class="alert alert-light">
                     <p><strong><fmt:message key="messages.todays.calories"/></strong>
@@ -59,7 +41,7 @@
                 </div>
             </div>
 
-            <form action="${pageContext.request.contextPath}/api/add_meal"
+            <form action="${pageContext.request.contextPath}/foodtracker/add_meal"
                   method="post" style="margin-bottom: 30px"
                   name="form" autocomplete="off">
 
@@ -90,7 +72,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="margin-top:30px">
-                    <p><fmt:message key="messages.button.submit"/></p>
+                    <fmt:message key="messages.button.submit"/>
                 </button>
             </form>
 
@@ -113,7 +95,7 @@
                     <fmt:message key="messages.error.such.food.in.db"/></p></div>
             </c:if>
 
-            <form action="${pageContext.request.contextPath}/api/add_food" method="post" style="margin-bottom: 30px" id="addFoodForm"
+            <form action="${pageContext.request.contextPath}/foodtracker/add_food" method="post" style="margin-bottom: 30px" id="addFoodForm"
                   autocomplete="off">
 
                 <div class="form-group">
@@ -123,7 +105,7 @@
                     <input class="form-control form-control-lg" id="new-food-name" type="text"
                            placeholder="" name="name" >
                 </div>
-                <c:if test="${isAdmin}">
+<%--                <c:if test="${isAdmin}">
                     <div class="form-group">
                         <label for="food-name-ua">
                             <fmt:message key="messages.enter.food.name.ua"/>
@@ -131,7 +113,7 @@
                         <input class="form-control form-control-lg" id="food-name-ua" type="text" placeholder=""
                                name="nameUa" required>
                     </div>
-                </c:if>
+                </c:if>--%>
 
 
                 <div class="form-group">
@@ -154,7 +136,7 @@
                     <label for="fat" >
                         <fmt:message key="messages.enter.food.fat"/>
                     </label>
-                    <input class="form-control form-control-lg" id="fat" type="number"step="0.1"  placeholder=""
+                    <input class="form-control form-control-lg" id="fat" type="number" step="0.1"  placeholder=""
                            name="fat">
                 </div>
 

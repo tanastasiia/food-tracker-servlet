@@ -1,18 +1,15 @@
 package ua.training.model.dto;
 
-import ua.training.controller.utils.Constants;
-import ua.training.model.dao.GenericDao;
+import ua.training.utils.Constants;
 import ua.training.model.entity.Food;
-import ua.training.model.entity.FoodInfo;
-import ua.training.model.entity.User;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 public class FoodDto implements GenericDto<FoodDto, Food> {
     private String name;
+    private String nameUa;
     private BigDecimal carbs;
     private BigDecimal protein;
     private BigDecimal fat;
@@ -148,6 +145,10 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
         }
         public FoodDto.Builder setName(String name) {
             this.foodDto.name = name;
+            return this;
+        }
+        public FoodDto.Builder setNameUa(String nameUa) {
+            this.foodDto.nameUa = nameUa;
             return this;
         }
 

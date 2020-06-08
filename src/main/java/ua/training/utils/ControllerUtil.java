@@ -1,4 +1,4 @@
-package ua.training.controller.utils;
+package ua.training.utils;
 
 import ua.training.model.dto.UserDto;
 
@@ -42,6 +42,7 @@ public class ControllerUtil {
         }
         return page;
     }
+
     public int getOffset(int page, int pageSize) {
         return (page - 1) * pageSize;
     }

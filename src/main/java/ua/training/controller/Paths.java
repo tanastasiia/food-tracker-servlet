@@ -1,4 +1,4 @@
-package ua.training.controller.utils;
+package ua.training.controller;
 
 public interface Paths {
     public String getPath();

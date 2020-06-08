@@ -1,8 +1,9 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.ControllerUtil;
-import ua.training.controller.utils.Routes;
-import ua.training.controller.utils.PagesToForward;
+import ua.training.model.dto.UserDto;
+import ua.training.utils.ControllerUtil;
+import ua.training.controller.Routes;
+import ua.training.controller.PagesToForward;
 import ua.training.model.dto.MealDto;
 import ua.training.model.entity.FoodInfo;
 import ua.training.model.entity.Meal;
@@ -23,22 +24,12 @@ public class AddMealCommand implements Command {
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         MealDto mealDto = parseMeal(request);
-
-        User user = controllerUtil.getUser(request).toEntity();
-
+        UserDto user = controllerUtil.getUser(request);
         Optional<FoodInfo> foodInfo = FoodInfoService.getInstance().findFoodByFoodNameAndUser(mealDto.getFoodName(), user.getId());
 
         if (foodInfo.isPresent()) {
-            Meal meal = new Meal.Builder()
-                    .setAmount(mealDto.getAmount())
-                    .setDateTime(mealDto.getDate().atTime(mealDto.getTime()))
-                    .setUser(user)
-                    .setFood(foodInfo.get().getFood()).build();
-
-            MealService.getInstance().saveMeal(meal);
-
+            MealService.getInstance().saveMeal(mealDto, foodInfo.get(), user);
             request.getSession().setAttribute("formSuccess", "mealAdded");
-
         } else {
             request.getSession().setAttribute("formSuccess", "mealNotAdded");
         }

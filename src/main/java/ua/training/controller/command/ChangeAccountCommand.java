@@ -1,8 +1,8 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.ControllerUtil;
-import ua.training.controller.utils.PagesToForward;
-import ua.training.controller.utils.Routes;
+import ua.training.utils.ControllerUtil;
+import ua.training.controller.PagesToForward;
+import ua.training.controller.Routes;
 import ua.training.model.constants.UserConst;
 import ua.training.model.entity.User;
 import ua.training.service.UserService;

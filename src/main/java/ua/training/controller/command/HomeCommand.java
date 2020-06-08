@@ -1,7 +1,7 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.ControllerUtil;
-import ua.training.controller.utils.PagesToForward;
+import ua.training.utils.ControllerUtil;
+import ua.training.controller.PagesToForward;
 import ua.training.model.dto.UserDto;
 import ua.training.service.MealService;
 import ua.training.service.UserService;

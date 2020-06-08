@@ -2,9 +2,9 @@ package ua.training;
 
 //import org.apache.logging.log4j.LogManager;
 import ua.training.controller.command.*;
-import ua.training.controller.utils.Routes;
-import ua.training.controller.utils.PagesToForward;
-import ua.training.controller.utils.Paths;
+import ua.training.controller.Routes;
+import ua.training.controller.PagesToForward;
+import ua.training.controller.Paths;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ import java.util.Map;
 //TODO patterns usage in java libraries
 //TODO learn how to run from command line (jar)
 
-@WebServlet("/api/*")
+@WebServlet("/foodtracker/*")
 public class Servlet extends HttpServlet {
 
     private Map<String, Command> commands = new HashMap<>();
@@ -65,7 +65,7 @@ public class Servlet extends HttpServlet {
 
         Paths page = command.execute(request, response);
 
-        if (page != null && !page.equals(PagesToForward.NONE)) {
+        if (!page.equals(PagesToForward.NONE)) {
             request.getRequestDispatcher(page.getPath()).forward(request, response);
         }
     }

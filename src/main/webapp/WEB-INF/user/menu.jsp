@@ -14,34 +14,34 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="${pageContext.request.contextPath}/api/home">
+            <a href="${pageContext.request.contextPath}/foodtracker/home">
                 <fmt:message key="messages.menu.home"/>
             </a>
         </li>
         <li class="breadcrumb-item">
-            <a href="${pageContext.request.contextPath}/api/account">
+            <a href="${pageContext.request.contextPath}/foodtracker/account">
                 <fmt:message key="messages.menu.account"/>
             </a>
         </li>
         <li class="breadcrumb-item">
-            <a href="${pageContext.request.contextPath}/api/statistics">
+            <a href="${pageContext.request.contextPath}/foodtracker/statistics">
                 <fmt:message key="messages.menu.statistics"/>
-            </a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="${pageContext.request.contextPath}/api/logout">
-                <fmt:message key="messages.menu.logout"/>
             </a>
         </li>
 
         <c:if test="${isAdmin}">
             <li class="breadcrumb-item">
-                <a href="${pageContext.request.contextPath}/api/admin">
+                <a href="${pageContext.request.contextPath}/foodtracker/admin">
                     <fmt:message key="messages.menu.admin"/>
                 </a>
             </li>
         </c:if>
 
+        <li class="breadcrumb-item">
+            <a href="${pageContext.request.contextPath}/foodtracker/logout">
+                <fmt:message key="messages.menu.logout"/>
+            </a>
+        </li>
         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}?lang=en">English</a></li>
         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}?lang=ua">Українська</a></li>
     </ol>

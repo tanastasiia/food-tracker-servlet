@@ -42,7 +42,7 @@
             </c:choose>
 
 
-            <form action="${pageContext.request.contextPath}/api/change_account" method="post">
+            <form action="${pageContext.request.contextPath}/foodtracker/change_account" method="post">
 
                 <div class="form-group">
                     <label for="firstName" class="control-label">
@@ -83,10 +83,11 @@
 
                 </div>
 
-
-                <label class="control-label">
-                    <fmt:message key="messages.enter.activity"/>
-                </label>
+                <div>
+                    <label class="control-label">
+                        <fmt:message key="messages.enter.activity"/>
+                    </label>
+                </div>
                 <c:choose>
                     <c:when test="${user.activityLevel=='FIRST'}">
                         <div class="form-check">
@@ -98,11 +99,13 @@
                         </div>
                     </c:when>
                     <c:otherwise>
-                        <input class="form-check-input" type="radio" id="radios1"
-                               name="activityLevel" value="FIRST">
-                        <label class="form-check-label" for="radios1">
-                            <fmt:message key="messages.enter.activity1"/>
-                        </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="radios1"
+                                   name="activityLevel" value="FIRST">
+                            <label class="form-check-label" for="radios1">
+                                <fmt:message key="messages.enter.activity1"/>
+                            </label>
+                        </div>
                     </c:otherwise>
                 </c:choose>
 

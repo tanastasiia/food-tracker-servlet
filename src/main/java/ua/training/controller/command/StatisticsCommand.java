@@ -1,8 +1,8 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.ControllerUtil;
-import ua.training.controller.utils.Constants;
-import ua.training.controller.utils.PagesToForward;
+import ua.training.utils.ControllerUtil;
+import ua.training.utils.Constants;
+import ua.training.controller.PagesToForward;
 import ua.training.model.dto.UserDto;
 import ua.training.service.MealService;
 import ua.training.service.UserService;
@@ -28,9 +28,7 @@ public class StatisticsCommand implements Command {
         request.setAttribute("userStat", mealService.todaysUserStatistics(userDto.getId()));
 
         if (request.getParameter("tab")==null ||request.getParameter("tab").equals("1")) {
-
             request.setAttribute("todaysMeals", mealService.todaysUserMeals(userDto.getId(), locale));
-
         } else {
             int page = controllerUtil.getPage(request);
             int offset = controllerUtil.getOffset(page, Constants.PAGE_SIZE);

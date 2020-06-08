@@ -1,6 +1,6 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.PagesToForward;
+import ua.training.controller.PagesToForward;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

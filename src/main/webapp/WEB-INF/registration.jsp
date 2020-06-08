@@ -49,7 +49,7 @@
             </c:choose>
 
 
-            <form action="${pageContext.request.contextPath}/api/registration" method="post">
+            <form action="${pageContext.request.contextPath}/foodtracker/registration" method="post">
 
                 <div class="form-group">
                     <label for="firstName" class="control-label">
@@ -169,7 +169,7 @@
                 <div class="form-group">
 						<span>
                             <p><fmt:message key="messages.text.already.registered"/></p>
-                            <a href="${pageContext.request.contextPath}/api/login">
+                            <a href="${pageContext.request.contextPath}/foodtracker/login">
                                 <fmt:message key="messages.link.login"/></a>
                         </span>
                 </div>

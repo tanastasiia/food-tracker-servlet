@@ -1,8 +1,8 @@
 package ua.training.controller.command;
 
-import ua.training.controller.utils.ControllerUtil;
-import ua.training.controller.utils.Routes;
-import ua.training.controller.utils.PagesToForward;
+import ua.training.utils.ControllerUtil;
+import ua.training.controller.Routes;
+import ua.training.controller.PagesToForward;
 import ua.training.model.dto.UserDto;
 import ua.training.model.entity.Role;
 import ua.training.service.UserService;
@@ -34,7 +34,7 @@ public class LoginCommand implements Command {
             session.setAttribute("role", user.get().getRole());
             session.setAttribute("user", user.get());
             session.setAttribute("userId", user.get().getId());
-            session.setAttribute("isAdmin", user.get().getRole().equals(Role.ADMIN.name()));
+            session.setAttribute("isAdmin", user.get().getRole().equals(Role.ROLE_ADMIN.name()));
 
             Logger.getLogger(LoginCommand.class.getName()).info("User logged in: " + user.get());
             response.sendRedirect(Routes.HOME.getPath());

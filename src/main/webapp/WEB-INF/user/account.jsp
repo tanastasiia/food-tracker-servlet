@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
@@ -24,16 +25,13 @@
 <c:import url="/WEB-INF/user/menu.jsp" charEncoding="utf-8" />
 
 
-<div class="container" style="margin-top: 60px" ng-init="getUser()">
-    <p>
-        Welcome <span></span>
-    </p>
+<div class="container" style="margin-top: 60px">
 
-    <table class="table" ng-model="user">
+    <table class="table">
         <tbody>
         <tr>
             <th scope="col" >
-                <fmt:message key="messages.enter.name"/>
+                <fmt:message key="messages.enter.first.name"/>
             </th>
             <td> ${user.firstName}</td>
         </tr>
@@ -77,25 +75,20 @@
             <th>
                 <fmt:message key="messages.enter.gender"/>
             </th>
-            <td>${user.gender}</td>
+            <td><fmt:message key="${user.gender}"/></td>
         </tr>
         </tbody>
     </table>
 
-    <!--<button class="btn btn-primary" style="margin-top:30px"
-            onclick="location.href='/account/change'" type="button"
-            th:text=>
-    </button>-->
-
     <button class="btn btn-primary" style="margin-top:30px"
-            onclick="location.href='/api/change_account'" type="button">
+            onclick="location.href='/foodtracker/change_account'" type="button">
         <fmt:message key="messages.button.change.account"/>
     </button>
 
-    <button class="btn btn-primary" style="margin-top:30px"
+<%--    <button class="btn btn-primary" style="margin-top:30px"
             onclick="location.href='/account/change/password'" type="button">
         <fmt:message key="messages.button.change.password"/>
-    </button>
+    </button>--%>
 
 </body>
 </html>

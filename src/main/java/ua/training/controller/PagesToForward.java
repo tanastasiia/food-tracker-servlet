@@ -1,4 +1,4 @@
-package ua.training.controller.utils;
+package ua.training.controller;
 
 public enum PagesToForward implements Paths {
 
@@ -11,6 +11,7 @@ public enum PagesToForward implements Paths {
 
     ADMIN("/WEB-INF/admin/admin_page.jsp"),
     CHANGE_ACCOUNT("/WEB-INF/user/change_account.jsp"),
+
     NONE("");
 
 

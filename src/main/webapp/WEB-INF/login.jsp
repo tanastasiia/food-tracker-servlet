@@ -32,7 +32,7 @@
 
             <h1 class="page-header"><fmt:message key="messages.title.login"/></h1>
 
-            <form action="${pageContext.request.contextPath}/api/login" method="POST" style="margin-bottom: 30px"
+            <form action="${pageContext.request.contextPath}/foodtracker/login" method="POST" style="margin-bottom: 30px"
                   name="form"
                   autocomplete="off">
 
@@ -85,7 +85,7 @@
                 <div class="form-group">
 						<span>
                             <p><fmt:message key="messages.text.new.user"/></p>
-                            <a href="${pageContext.request.contextPath}/api/registration">
+                            <a href="${pageContext.request.contextPath}/foodtracker/registration">
                                 <fmt:message key="messages.link.register"/></a>
                         </span>
                 </div>

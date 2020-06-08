@@ -1,6 +1,7 @@
 package ua.training.service;
 
-import ua.training.controller.utils.Constants;
+import ua.training.model.dto.UserDto;
+import ua.training.utils.Constants;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.MealDao;
 import ua.training.model.dto.MealDto;
@@ -13,7 +14,6 @@ import java.rmi.ServerException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -34,15 +34,20 @@ public class MealService {
         return MealService.Holder.INSTANCE;
     }
 
-    public void saveMeal(Meal meal) throws ServerException {
+    public void saveMeal(MealDto mealDto, FoodInfo foodInfo, UserDto user) throws ServerException {
+        Meal meal = new Meal.Builder()
+                .setAmount(mealDto.getAmount())
+                .setDateTime(mealDto.getDate().atTime(mealDto.getTime()))
+                .setUser(user.toEntity())
+                .setFood(foodInfo.getFood()).build();
         try (MealDao dao = daoFactory.createMealDao()) {
             dao.create(meal);
         }
     }
+
     public List<Meal> findAllMeals(int limit, int offset) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.findAll(limit, offset);
-
         }
     }
 
@@ -71,9 +76,9 @@ public class MealService {
 
     public List<MealDto> findAllUserMeals(Long userId, Locale locale, int limit, int offset) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
-            return dao.findByUserId(userId, limit, offset).stream().map(meal ->
+            return dao.findAllByUserId(userId, limit, offset).stream().map(meal ->
                     new MealDto(
-                            locale.equals(Constants.LOCALE_UA) ? meal.getFood().getNameUa() : meal.getFood().getName(),
+                            getNameByLocale(meal, locale),
                             meal.getAmount(),
                             meal.getDateTime().toLocalDate(),
                             meal.getDateTime().toLocalTime()
@@ -88,9 +93,6 @@ public class MealService {
             return dao.countAllUserMeals(userId);
         }
     }
-
-
-
 
     public UserMealStatDto todaysUserStatistics(Long userId) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
@@ -115,7 +117,7 @@ public class MealService {
     }
 
 
-    private Integer sumFoodCalories(List<Meal> meals) throws ServerException {
+    private Integer sumFoodCalories(List<Meal> meals) {
         return meals.stream()
                 .mapToInt(meal -> meal.getFood().getCalories() * meal.getAmount() / 100)
                 .reduce(Integer::sum)
@@ -133,6 +135,7 @@ public class MealService {
     private String getNameByLocale(Meal meal, Locale locale) {
         Optional<String> nameUa = Optional.ofNullable(meal.getFood().getNameUa());
         Optional<String> name = Optional.ofNullable(meal.getFood().getName());
+        //TODO orElseThrow
         return locale.equals(Constants.LOCALE_UA) ? nameUa.orElse(name.orElse("")) : name.orElse(nameUa.orElse(""));
 
     }

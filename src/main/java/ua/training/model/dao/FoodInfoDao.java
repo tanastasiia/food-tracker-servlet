@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public interface FoodInfoDao  extends GenericDao<FoodInfo>  {
+public interface FoodInfoDao  extends GenericDao<FoodInfo> {
 
     List<FoodInfo> findAll(int limit, int offset) throws ServerException;
 
     int countAll() throws ServerException;
 
-    Optional<FoodInfo> findAllByFoodNameFilterByUserIdOrGlobal(String foodName, Long userId) throws ServerException;
-    Optional<FoodInfo> findAllByFoodNameUaFilterByUserIdOrGlobal(String foodNameUa, Long userId) throws ServerException;
+    FoodInfo create(FoodInfo foodInfo) throws ServerException;
+
     FoodInfo saveFood(FoodInfo foodInfo) throws ServerException, SQLException;
 
     Optional<FoodInfo> findAllByFoodNameOrFoodNameUaAndUserIdOrGlobal(String foodNameUa, Long userId) throws ServerException;

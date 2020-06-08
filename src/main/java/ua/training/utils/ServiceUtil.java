@@ -1,4 +1,4 @@
-package ua.training.controller.utils;
+package ua.training.utils;
 
 public class ServiceUtil {
     private static class UtilityHolder {

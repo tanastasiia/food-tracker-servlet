@@ -3,6 +3,9 @@ package ua.training.model;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import javax.sql.DataSource;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class ConnectionPoolHolder {
     private static volatile DataSource dataSource;
@@ -11,7 +14,7 @@ public class ConnectionPoolHolder {
         if (dataSource == null){
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
-                    System.out.println("creating data source");
+                    Logger.getGlobal().info("creating data source");
                     BasicDataSource ds = new BasicDataSource();
                     ds.setUrl("jdbc:mysql://localhost:3306/food_tracker");
                     ds.setUsername("root");
@@ -21,7 +24,7 @@ public class ConnectionPoolHolder {
                     ds.setMaxOpenPreparedStatements(100);
                     dataSource = ds;
 
-                    System.out.println("created");
+                    Logger.getGlobal().info("created");
                 }
             }
         }

@@ -29,20 +29,20 @@
     <div id="tabs" >
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" >
-                <a class="nav-link" id="home-tab" data-toggle="tab" href="${pageContext.request.contextPath}\api\admin?tab=1" role="tab" aria-controls="home"
+                <a class="nav-link" id="home-tab" data-toggle="tab" href="${pageContext.request.contextPath}\foodtracker\admin?tab=1" role="tab" aria-controls="home"
                    aria-selected="true" >
                     <fmt:message key="messages.users"/>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="${pageContext.request.contextPath}\api\admin?tab=2" role="tab" aria-controls="contact"
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="${pageContext.request.contextPath}\foodtracker\admin?tab=2" role="tab" aria-controls="contact"
                    aria-selected="false">
                     <fmt:message key="messages.food"/>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="${pageContext.request.contextPath}\api\admin?tab=3" role="tab" aria-controls="profile"
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="${pageContext.request.contextPath}\foodtracker\admin?tab=3" role="tab" aria-controls="profile"
                    aria-selected="false">
                     <fmt:message key="messages.users.food"/>
                 </a>

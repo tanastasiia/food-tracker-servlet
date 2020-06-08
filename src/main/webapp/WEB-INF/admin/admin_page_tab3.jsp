@@ -16,7 +16,7 @@
 
 
 
-    <table class="table" ng-model="meals">
+    <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">
@@ -46,8 +46,22 @@
         <c:forEach var="meal" items="${meals}" varStatus="status">
             <tr >
                 <td>${meal.user.username}</td>
-                <td>${meal.food.name}</td>
-                <td>${meal.food.nameUa}</td>
+                <c:choose>
+                    <c:when test="${not empty meal.food.name}">
+                        <td>${meal.food.name}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><fmt:message key="messages.absent"/></td>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${not empty meal.food.nameUa}">
+                        <td>${meal.food.nameUa}</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><fmt:message key="messages.absent"/></td>
+                    </c:otherwise>
+                </c:choose>
                 <td>${meal.amount}</td>
                 <td>${meal.dateTime.toLocalDate()}</td>
                 <td>${meal.dateTime.toLocalTime()}</td>
@@ -70,7 +84,7 @@
 
             <c:when test="${not empty param.page && param.page>1}">
                 <li class="page-item">
-                    <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=3&page=${param.page-1}"
+                    <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=3&page=${param.page-1}"
                        aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only"><fmt:message key="masseges.previous"/></span>
@@ -91,12 +105,12 @@
 
 
         <li class="page-item">
-            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=3&page=1">
+            <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=3&page=1">
                 <fmt:message key="messages.button.first"/>
             </a>
         </li>
         <li class="page-item">
-            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=3&page=${numOfPages}">
+            <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=3&page=${numOfPages}">
                 <fmt:message key="messages.button.last"/>
             </a>
         </li>
@@ -107,7 +121,7 @@
                 <c:choose>
                     <c:when test="${param.page < numOfPages}">
                         <li class="page-item">
-                            <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=3&page=${param.page+1}"
+                            <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=3&page=${param.page+1}"
                                aria-label="Previous">
                                 <span aria-hidden="true">&raquo;</span>
                                 <span class="sr-only"><fmt:message key="masseges.next"/></span>
@@ -127,7 +141,7 @@
 
             <c:otherwise>
                 <li class="page-item">
-                    <a class="page-link" href="${pageContext.request.contextPath}\api\admin?tab=3&page=${2}" aria-label="Previous">
+                    <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\admin?tab=3&page=${2}" aria-label="Previous">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only"><fmt:message key="masseges.next"/></span>
                     </a>
