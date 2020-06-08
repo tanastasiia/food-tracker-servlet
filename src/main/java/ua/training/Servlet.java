@@ -16,10 +16,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-//TODO use patterns in project!!!
-//TODO patterns usage in java libraries
-//TODO learn how to run from command line (jar)
-
 @WebServlet("/foodtracker/*")
 public class Servlet extends HttpServlet {
 
