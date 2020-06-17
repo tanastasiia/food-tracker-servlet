@@ -14,6 +14,7 @@ public class ControllerUtil {
     public static ControllerUtil getInst(){
         return Holder.INSTANCE;
     }
+
     public Locale getLocale(HttpServletRequest request){
         return (Locale) request.getSession().getAttribute("lang");
     }
@@ -21,12 +22,15 @@ public class ControllerUtil {
     public UserDto getUser(HttpServletRequest request){
         return (UserDto) request.getSession().getAttribute("user");
     }
+
     public long getUserId(HttpServletRequest request){
         return (long) request.getSession().getAttribute("userId");
     }
+
     public String getRole(HttpServletRequest request){
         return (String) request.getSession().getAttribute("role");
     }
+
     public boolean isMethodGet(HttpServletRequest request){
         return request.getMethod().equalsIgnoreCase("GET");
     }

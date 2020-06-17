@@ -33,6 +33,14 @@ public class FoodInfoService {
         }
     }
 
+    /**
+     * Savw food to database
+     * @param foodDto food to save
+     * @param user adder
+     * @param isGlobal true if visible for all users, fasle if only for adder
+     * @return Optional of saved food
+     * @throws ServerException
+     */
     public Optional<FoodInfo> saveFood(FoodDto foodDto, User user, Boolean isGlobal) throws ServerException {
 
         foodDto.setName(ServiceUtil.getInstance().capitalizeFirstLetter(foodDto.getName()));
@@ -48,9 +56,15 @@ public class FoodInfoService {
             }
         }
         return Optional.empty();
-
     }
 
+    /**
+     * Get all food infos page
+     *
+     * @param limit  amount of elements
+     * @param offset number of first item
+     * @return list if food infos
+     */
     public List<FoodInfo> findAllFood(int limit, int offset) throws ServerException {
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
             return dao.findAll(limit, offset);
@@ -58,7 +72,9 @@ public class FoodInfoService {
         }
     }
 
-
+    /**
+     * Count all food
+     */
     public int countAllFood() throws ServerException {
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
             return dao.countAll();

@@ -24,6 +24,13 @@ public class UserService {
     }
 
 
+    /**
+     * Get users page
+     * @param limit number of elements
+     * @param offset number of first item
+     * @return users
+     * @throws ServerException
+     */
     public List<User> findAllUsers(int limit, int offset) throws ServerException {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findAll(limit, offset);
@@ -31,12 +38,22 @@ public class UserService {
         }
     }
 
+    /**
+     * Count all users in database
+     */
     public int countAllUsers() throws ServerException {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.countAll();
         }
     }
 
+    /**
+     * Authentication by username
+     * @param username username of user
+     * @param password password of user
+     * @return optional of sighed in user
+     * @throws ServerException
+     */
     public Optional<UserDto> authentication(String username, String password) throws ServerException {
 
         try (UserDao dao = daoFactory.createUserDao()) {
@@ -47,6 +64,9 @@ public class UserService {
 
     }
 
+    /**
+     * Finding user by username
+     */
     private Optional<User> findByUsername(String username) throws ServerException {
 
         try (UserDao dao = daoFactory.createUserDao()) {
@@ -55,6 +75,12 @@ public class UserService {
 
     }
 
+    /**
+     * Registration of user
+     * @param user user to registrate
+     * @return true if succecfully registered false if user with such username already exists
+     * @throws ServerException
+     */
     public boolean register(User user) throws ServerException {
 
         if (!findByUsername(user.getUsername()).isPresent()) {
@@ -67,6 +93,12 @@ public class UserService {
         return false;
     }
 
+    /**
+     * Updating user account information
+     * @param newUser user with updated data
+     * @param user user to update
+     * @throws ServerException
+     */
     public void updateAccount(User newUser, UserDto user) throws ServerException {
 
         newUser.setId(user.getId());
@@ -83,6 +115,12 @@ public class UserService {
 
     }
 
+    /**
+     * Change role of user to opposite
+     * @param userId of user whose role is being changed
+     * @param role current user role
+     * @throws ServerException
+     */
     public void changeRole(long userId, String role) throws ServerException {
 
         role = role.equals(Role.ROLE_ADMIN.name()) ? Role.ROLE_USER.name() : Role.ROLE_ADMIN.name();
@@ -93,6 +131,11 @@ public class UserService {
 
     }
 
+    /**
+     *Count calories norm based on user info
+     *@param user user for which norm is being counted
+     *@return calories norm
+     */
 
     public int countCaloriesNorm(User user) {
         return (int) (ActivityLevel.valueOf(user.getActivityLevel()).getValue()

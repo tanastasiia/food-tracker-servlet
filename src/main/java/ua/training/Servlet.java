@@ -22,7 +22,7 @@ public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
     @Override
-    public void init(ServletConfig servletConfig) throws ServletException {
+    public void init(ServletConfig servletConfig) {
 
         commands.put(Routes.LOGIN.getPath(), new LoginCommand());
         commands.put(Routes.LOGOUT.getPath(), new LogoutCommand());
@@ -35,7 +35,6 @@ public class Servlet extends HttpServlet {
         commands.put(Routes.ADMIN.getPath(), new AdminPageCommand());
         commands.put(Routes.CHANGE_ACCOUNT.getPath(), new ChangeAccountCommand());
         commands.put(Routes.CHANGE_USER_ROLE.getPath(), new ChangeUserRoleCommand());
-
 
     }
 

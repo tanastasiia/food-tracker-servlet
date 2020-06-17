@@ -32,7 +32,6 @@ public class Mapper {
     }
     public static Food foodMap(ResultSet resultSet) throws SQLException {
         return new Food.Builder()
-                //TODO id
                 .setId(resultSet.getLong(FoodInfoConst.FOOD.getColumn()))
                 .setName(resultSet.getString(FoodConst.NAME.getColumn()))
                 .setNameUa(resultSet.getString(FoodConst.NAME_UA.getColumn()))

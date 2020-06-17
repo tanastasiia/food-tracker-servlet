@@ -34,6 +34,13 @@ public class MealService {
         return MealService.Holder.INSTANCE;
     }
 
+    /**
+     * Save meal to database
+     *
+     * @param mealDto  meal
+     * @param foodInfo food info
+     * @param user     user which consumed food
+     */
     public void saveMeal(MealDto mealDto, FoodInfo foodInfo, UserDto user) throws ServerException {
         Meal meal = new Meal.Builder()
                 .setAmount(mealDto.getAmount())
@@ -45,18 +52,35 @@ public class MealService {
         }
     }
 
+    /**
+     * Get meals page
+     *
+     * @param limit  amount of elements
+     * @param offset number of first item
+     * @return list of meals
+     */
     public List<Meal> findAllMeals(int limit, int offset) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.findAll(limit, offset);
         }
     }
 
+    /**
+     * Count all meals
+     */
     public int countAllMeals() throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.countAllMeals();
         }
     }
 
+    /**
+     * Get todays users meals
+     *
+     * @param userId user id
+     * @param locale locale for food name
+     * @return list of meals
+     */
     public List<MealDto> todaysUserMeals(Long userId, Locale locale) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.findByUserIdAndDateTimeBetween(userId, LocalDateTime.of(LocalDate.now(), LocalTime.MIN),
@@ -73,7 +97,13 @@ public class MealService {
         }
     }
 
-
+    /**
+     * Get all users meals page
+     *
+     * @param limit  amount of elements
+     * @param offset number of first item
+     * @return list if meals
+     */
     public List<MealDto> findAllUserMeals(Long userId, Locale locale, int limit, int offset) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.findAllByUserId(userId, limit, offset).stream().map(meal ->
@@ -88,12 +118,21 @@ public class MealService {
         }
     }
 
+    /**
+     * Count all users meals
+     */
     public int countAllUsersMeals(Long userId) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.countAllUserMeals(userId);
         }
     }
 
+    /**
+     * Count todays consumed calories, fat, protein, carbs for user
+     *
+     * @param userId user id of user
+     * @return sum of calories, fat, protein, carbs of consumed today food
+     */
     public UserMealStatDto todaysUserStatistics(Long userId) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             List<Meal> meals = dao.findByUserIdAndDateTimeBetween(userId, LocalDateTime.of(LocalDate.now(), LocalTime.MIN),
@@ -107,6 +146,12 @@ public class MealService {
         }
     }
 
+    /**
+     * Count todays consumed calories for user
+     *
+     * @param userId user id of user
+     * @return sum of calories of consumed today food
+     */
     public Integer todaysUserCalories(Long userId) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             List<Meal> meals = dao.findByUserIdAndDateTimeBetween(userId, LocalDateTime.of(LocalDate.now(), LocalTime.MIN),
@@ -116,7 +161,12 @@ public class MealService {
         }
     }
 
-
+    /**
+     * Sum food calories in meals
+     *
+     * @param meals meals to take food from
+     * @return sum of calories
+     */
     private Integer sumFoodCalories(List<Meal> meals) {
         return meals.stream()
                 .mapToInt(meal -> meal.getFood().getCalories() * meal.getAmount() / 100)
@@ -125,6 +175,13 @@ public class MealService {
     }
 
 
+    /**
+     * Sum food elements (fat, carbs or protein) in meals
+     *
+     * @param meals  meals to take food from
+     * @param getter food element getter
+     * @return sum of food elements in grams
+     */
     private BigDecimal sumFoodElements(List<Meal> meals, Function<Food, Integer> getter) {
         return meals.stream()
                 .map(meal -> new BigDecimal(getter.apply(meal.getFood()) * meal.getAmount()).divide(HUNDRED, 1))
@@ -132,10 +189,17 @@ public class MealService {
                 .orElse(BigDecimal.ZERO).divide(THOUSAND, 1, RoundingMode.HALF_UP);
     }
 
+    /**
+     * Get food name by locale
+     *
+     * @param meal   meal
+     * @param locale locale of needed name
+     * @return if locale is ua then name in ukrainian else in english. If needed is null then another
+     */
     private String getNameByLocale(Meal meal, Locale locale) {
         Optional<String> nameUa = Optional.ofNullable(meal.getFood().getNameUa());
         Optional<String> name = Optional.ofNullable(meal.getFood().getName());
-        //TODO orElseThrow
+
         return locale.equals(Constants.LOCALE_UA) ? nameUa.orElse(name.orElse("")) : name.orElse(nameUa.orElse(""));
 
     }
