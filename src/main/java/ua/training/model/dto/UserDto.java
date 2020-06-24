@@ -2,6 +2,8 @@ package ua.training.model.dto;
 
 import ua.training.model.entity.User;
 
+import java.util.Objects;
+
 public class UserDto implements GenericDto<UserDto, User> {
     private Long id;
     private String username;
@@ -127,5 +129,27 @@ public class UserDto implements GenericDto<UserDto, User> {
                 ", activityLevel='" + activityLevel + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return Objects.equals(id, userDto.id) &&
+                Objects.equals(username, userDto.username) &&
+                Objects.equals(firstName, userDto.firstName) &&
+                Objects.equals(lastName, userDto.lastName) &&
+                Objects.equals(role, userDto.role) &&
+                Objects.equals(height, userDto.height) &&
+                Objects.equals(weight, userDto.weight) &&
+                Objects.equals(gender, userDto.gender) &&
+                Objects.equals(activityLevel, userDto.activityLevel) &&
+                Objects.equals(age, userDto.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, firstName, lastName, role, height, weight, gender, activityLevel, age);
     }
 }

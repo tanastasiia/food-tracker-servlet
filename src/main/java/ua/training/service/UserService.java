@@ -34,7 +34,6 @@ public class UserService {
     public List<User> findAllUsers(int limit, int offset) throws ServerException {
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findAll(limit, offset);
-
         }
     }
 

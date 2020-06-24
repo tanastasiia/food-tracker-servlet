@@ -2,8 +2,10 @@ package ua.training.model.entity;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Food {
+
     private Long id;
     private String name;
     private String nameUa;
@@ -79,6 +81,25 @@ public class Food {
                 ", fat=" + fat +
                 ", calories=" + calories +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Food food = (Food) o;
+        return Objects.equals(id, food.id) &&
+                Objects.equals(name, food.name) &&
+                Objects.equals(nameUa, food.nameUa) &&
+                Objects.equals(carbs, food.carbs) &&
+                Objects.equals(protein, food.protein) &&
+                Objects.equals(fat, food.fat) &&
+                Objects.equals(calories, food.calories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, nameUa, carbs, protein, fat, calories);
     }
 
     ////////////////////

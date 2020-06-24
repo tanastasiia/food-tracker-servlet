@@ -1,6 +1,9 @@
 package ua.training.model.entity;
 
+import java.util.Objects;
+
 public class FoodInfo {
+
     private Long id;
     private Food food;
     private User user;
@@ -36,6 +39,32 @@ public class FoodInfo {
 
     public void setGlobal(Boolean global) {
         isGlobal = global;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FoodInfo foodInfo = (FoodInfo) o;
+        return Objects.equals(id, foodInfo.id) &&
+                Objects.equals(food, foodInfo.food) &&
+                Objects.equals(user, foodInfo.user) &&
+                Objects.equals(isGlobal, foodInfo.isGlobal);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, food, user, isGlobal);
+    }
+
+    @Override
+    public String toString() {
+        return "FoodInfo{" +
+                "id=" + id +
+                ", food=" + food +
+                ", user=" + user +
+                ", isGlobal=" + isGlobal +
+                '}';
     }
 
     ///////////////////////////////////////

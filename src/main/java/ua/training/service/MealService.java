@@ -167,7 +167,7 @@ public class MealService {
      * @param meals meals to take food from
      * @return sum of calories
      */
-    private Integer sumFoodCalories(List<Meal> meals) {
+    public Integer sumFoodCalories(List<Meal> meals) {
         return meals.stream()
                 .mapToInt(meal -> meal.getFood().getCalories() * meal.getAmount() / 100)
                 .reduce(Integer::sum)
@@ -182,7 +182,7 @@ public class MealService {
      * @param getter food element getter
      * @return sum of food elements in grams
      */
-    private BigDecimal sumFoodElements(List<Meal> meals, Function<Food, Integer> getter) {
+    public BigDecimal sumFoodElements(List<Meal> meals, Function<Food, Integer> getter) {
         return meals.stream()
                 .map(meal -> new BigDecimal(getter.apply(meal.getFood()) * meal.getAmount()).divide(HUNDRED, 1))
                 .reduce(BigDecimal::add)

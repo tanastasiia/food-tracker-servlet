@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
 public class User {
     private Long id;
@@ -33,6 +34,29 @@ public class User {
                 ", activityLevel='" + activityLevel + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id) &&
+                username.equals(user.username) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(role, user.role) &&
+                password.equals(user.password) &&
+                Objects.equals(height, user.height) &&
+                Objects.equals(weight, user.weight) &&
+                Objects.equals(gender, user.gender) &&
+                Objects.equals(activityLevel, user.activityLevel) &&
+                Objects.equals(age, user.age);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, firstName, lastName, role, password, height, weight, gender, activityLevel, age);
     }
 
     public static class Builder {
