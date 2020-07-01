@@ -5,6 +5,7 @@ import ua.training.controller.PagesToForward;
 import ua.training.model.dto.UserDto;
 import ua.training.service.MealService;
 import ua.training.service.UserService;
+import ua.training.utils.ServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ public class HomeCommand implements Command {
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
 
         UserDto userDto = controllerUtil.getUser(request);
-        request.setAttribute("caloriesNorm", UserService.getInstance().countCaloriesNorm(userDto.toEntity()));
+        request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(userDto.toEntity()));
         request.getSession().setAttribute("todaysCalories", MealService.getInstance().todaysUserCalories(userDto.getId()));
 
         if (request.getSession().getAttribute("lastAdd") != null) {

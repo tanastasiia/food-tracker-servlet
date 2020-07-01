@@ -8,6 +8,8 @@ import ua.training.model.dto.UserDto;
 import ua.training.model.entity.*;
 
 import java.rmi.ServerException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,7 +110,7 @@ public class UserService {
         user.setLastName(newUser.getLastName());
         user.setHeight(newUser.getHeight());
         user.setWeight(newUser.getWeight());
-        user.setAge(newUser.getAge());
+        user.setDateOfBirth(newUser.getDateOfBirth());
         user.setActivityLevel(newUser.getActivityLevel());
         user.setGender(newUser.getGender());
 
@@ -128,20 +130,6 @@ public class UserService {
             dao.updateUserRole(userId, role);
         }
 
-    }
-
-    /**
-     *Count calories norm based on user info
-     *@param user user for which norm is being counted
-     *@return calories norm
-     */
-
-    public int countCaloriesNorm(User user) {
-        return (int) (ActivityLevel.valueOf(user.getActivityLevel()).getValue()
-                * (Gender.valueOf(user.getGender()).getValue()
-                + 10 * user.getWeight()
-                + 6.25 * user.getHeight()
-                - 5 * user.getAge()));
     }
 
 }

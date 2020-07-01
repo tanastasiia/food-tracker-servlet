@@ -3,16 +3,24 @@ package ua.training.model.dto;
 import ua.training.utils.Constants;
 import ua.training.model.entity.Food;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
 
 public class FoodDto implements GenericDto<FoodDto, Food> {
+
+   // @NotNull
     private String name;
+
     private String nameUa;
+
     private BigDecimal carbs;
     private BigDecimal protein;
     private BigDecimal fat;
+
+    @Min(value = 0, message="calories negative")
     private Integer calories;
     private Locale locale;
 

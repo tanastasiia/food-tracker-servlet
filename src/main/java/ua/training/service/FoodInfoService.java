@@ -7,10 +7,12 @@ import ua.training.model.dto.FoodDto;
 import ua.training.model.entity.FoodInfo;
 import ua.training.model.entity.User;
 
+import javax.validation.*;
 import java.rmi.ServerException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class FoodInfoService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -42,9 +44,6 @@ public class FoodInfoService {
      * @throws ServerException
      */
     public Optional<FoodInfo> saveFood(FoodDto foodDto, User user, Boolean isGlobal) throws ServerException {
-
-        foodDto.setName(ServiceUtil.getInstance().capitalizeFirstLetter(foodDto.getName()));
-
         if (!findFoodByFoodNameAndUser(foodDto.getName(), user.getId()).isPresent()) {
             try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
                 return Optional.of(dao.saveFood(new FoodInfo.Builder()

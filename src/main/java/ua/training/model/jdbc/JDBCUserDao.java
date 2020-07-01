@@ -17,7 +17,7 @@ public class JDBCUserDao implements UserDao {
     private String FIND_ALL_BY_USERNAME = "select * from users where username = ?";
 
     private String CREATE =
-            "INSERT INTO users (username, first_name, last_name, password, role, height, weight,  activity_level, age, gender) " +
+            "INSERT INTO users (username, first_name, last_name, password, role, height, weight,  activity_level, date_of_birth, gender) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private String COUNT_ALL = "SELECT COUNT(*) AS count FROM users";
@@ -29,7 +29,7 @@ public class JDBCUserDao implements UserDao {
 
     private String UPDATE_USER =
             "UPDATE users " +
-                    "SET first_name=?, last_name=?, height=?, weight=?, age=?, activity_level=?, gender=? " +
+                    "SET first_name=?, last_name=?, height=?, weight=?, date_of_birth=?, activity_level=?, gender=? " +
                     "WHERE users.id = ?";
 
     private String UPDATE_USER_ROLE =
@@ -64,7 +64,7 @@ public class JDBCUserDao implements UserDao {
             query.setInt(6, user.getHeight());
             query.setInt(7, user.getWeight());
             query.setString(8, user.getActivityLevel());
-            query.setInt(9, user.getAge());
+            query.setObject(9, user.getDateOfBirth());
             query.setString(10, user.getGender());
             query.executeUpdate();
 
@@ -86,7 +86,7 @@ public class JDBCUserDao implements UserDao {
             query.setString(2, newUser.getLastName());
             query.setInt(3, newUser.getHeight());
             query.setInt(4, newUser.getWeight());
-            query.setInt(5, newUser.getAge());
+            query.setObject(5, newUser.getDateOfBirth());
             query.setString(6, newUser.getActivityLevel());
             query.setString(7, newUser.getGender());
             query.setLong(8, newUser.getId());

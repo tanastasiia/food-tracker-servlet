@@ -113,9 +113,9 @@ public class FoodInfoServiceTest {
         when(foodInfoDao.findAll(anyInt(), anyInt())).thenReturn(foodInfoTestData.FOOD_INFO_LIST);
 
         List<FoodInfo> expected = foodInfoTestData.FOOD_INFO_LIST.subList(0, 5);
-        List<FoodInfo> actual = foodInfoService.findAllFood(5,0);
+        List<FoodInfo> actual = foodInfoService.findAllFood(5, 0);
 
-        verify(foodInfoDao).findAll(5,0);
+        verify(foodInfoDao).findAll(5, 0);
         assertThat(actual, is(expected));
     }
 

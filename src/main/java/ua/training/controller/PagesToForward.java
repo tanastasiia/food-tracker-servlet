@@ -12,7 +12,8 @@ public enum PagesToForward implements Paths {
     ADMIN("/WEB-INF/admin/admin_page.jsp"),
     CHANGE_ACCOUNT("/WEB-INF/user/change_account.jsp"),
 
-    NONE("");
+    NONE(""),
+    REFERER("");
 
 
     private String path;

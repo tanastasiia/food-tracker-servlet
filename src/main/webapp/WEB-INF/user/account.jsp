@@ -61,9 +61,9 @@
         </tr>
         <tr>
             <th >
-                <fmt:message key="messages.enter.age"/>
+                <fmt:message key="messages.enter.date.of.birth"/>
             </th>
-            <td>${user.age}</td>
+            <td>${user.dateOfBirth}</td>
         </tr>
         <tr>
             <th>

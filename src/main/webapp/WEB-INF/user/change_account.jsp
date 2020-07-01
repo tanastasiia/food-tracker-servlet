@@ -3,11 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-
-<%--<c:if test="${not empty param.lang}">
-    <fmt:setLocale value="${param.lang}" scope="session"/>
-</c:if>--%>
-
 <fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="messages"/>
 
@@ -40,9 +35,15 @@
                 <c:otherwise>
                 </c:otherwise>
             </c:choose>
+            <c:if test="${not empty user_input_error}">
+                <div class="alert alert-danger"><p>
+                    <fmt:message key="${user_input_error}"/></p>
+                </div>
+            </c:if>
 
 
             <form action="${pageContext.request.contextPath}/foodtracker/change_account" method="post">
+
 
                 <div class="form-group">
                     <label for="firstName" class="control-label">
@@ -50,7 +51,13 @@
                     </label>
                     <input id="firstName" class="form-control" type=text name="firstName" value="${user.firstName}"
                            required/>
+                    <c:if test="${not empty error_firstName}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_firstName}"/></p>
+                        </div>
+                    </c:if>
                 </div>
+
 
                 <div class="form-group">
                     <label for="lastName" class="control-label">
@@ -58,6 +65,11 @@
                     </label>
                     <input id="lastName" class="form-control" type=text name="lastName" value="${user.lastName}"
                            required/>
+                    <c:if test="${not empty error_lastName}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_lastName}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
 
@@ -66,6 +78,11 @@
                         <fmt:message key="messages.enter.height"/>
                     </label>
                     <input id="height" class="form-control" type=number name="height" value="${user.height}" required/>
+                    <c:if test="${not empty error_height}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_height}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
                 <div class="form-group">
@@ -73,13 +90,23 @@
                         <fmt:message key="messages.enter.weight"/>
                     </label>
                     <input id="weight" class="form-control" type=number name="weight" value="${user.weight}" required/>
+                    <c:if test="${not empty error_weight}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_weight}"/></p>
+                        </div>
+                    </c:if>
 
                 </div>
                 <div class="form-group">
-                    <label for="age" class="control-label">
-                        <fmt:message key="messages.enter.age"/>
+                    <label for="dateOfBirth" class="control-label">
+                        <fmt:message key="messages.enter.date.of.birth"/>
                     </label>
-                    <input id="age" class="form-control" type=number name="age" value="${user.age}" required/>
+                    <input id="dateOfBirth" class="form-control" type=date name="dateOfBirth" value="${user.dateOfBirth}" required/>
+                    <c:if test="${not empty error_dateOfBirth}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_dateOfBirth}"/></p>
+                        </div>
+                    </c:if>
 
                 </div>
 

@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class User {
@@ -18,6 +19,7 @@ public class User {
     private String gender;
     private String activityLevel;
     private Integer age;
+    private LocalDate dateOfBirth;
 
     @Override
     public String toString() {
@@ -32,7 +34,7 @@ public class User {
                 ", weight=" + weight +
                 ", gender='" + gender + '\'' +
                 ", activityLevel='" + activityLevel + '\'' +
-                ", age=" + age +
+                ", dateOfBirth=" + dateOfBirth +
                 '}';
     }
 
@@ -51,12 +53,12 @@ public class User {
                 Objects.equals(weight, user.weight) &&
                 Objects.equals(gender, user.gender) &&
                 Objects.equals(activityLevel, user.activityLevel) &&
-                Objects.equals(age, user.age);
+                Objects.equals(dateOfBirth, user.dateOfBirth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, firstName, lastName, role, password, height, weight, gender, activityLevel, age);
+        return Objects.hash(id, username, firstName, lastName, role, password, height, weight, gender, activityLevel, dateOfBirth);
     }
 
     public static class Builder {
@@ -111,8 +113,8 @@ public class User {
             user.activityLevel = activityLevel;
             return this;
         }
-        public Builder setAge(Integer age) {
-            user.age = age;
+        public Builder setDateOfBirth(LocalDate dateOfBirth) {
+            user.dateOfBirth = dateOfBirth;
             return this;
         }
         public User build() {
@@ -200,11 +202,11 @@ public class User {
         this.activityLevel = activityLevel;
     }
 
-    public Integer getAge() {
-        return age;
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

@@ -2,6 +2,7 @@ package ua.training.model.dto;
 
 import ua.training.model.entity.User;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class UserDto implements GenericDto<UserDto, User> {
@@ -14,7 +15,7 @@ public class UserDto implements GenericDto<UserDto, User> {
     private Integer weight;
     private String gender;
     private String activityLevel;
-    private Integer age;
+    private LocalDate dateOfBirth;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -26,7 +27,7 @@ public class UserDto implements GenericDto<UserDto, User> {
         this.weight = user.getWeight();
         this.gender = user.getGender();
         this.activityLevel = user.getActivityLevel();
-        this.age = user.getAge();
+        this.dateOfBirth = user.getDateOfBirth();
     }
 
     public Long getId() {
@@ -101,18 +102,18 @@ public class UserDto implements GenericDto<UserDto, User> {
         this.activityLevel = activityLevel;
     }
 
-    public Integer getAge() {
-        return age;
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     @Override
     public User toEntity() {
         return new User.Builder().setFirstName(firstName).setLastName(lastName).setUsername(username).setActivityLevel(activityLevel)
-                .setAge(age).setGender(gender).setHeight(height).setRole(role).setWeight(weight).setId(id).build();
+                .setDateOfBirth(dateOfBirth).setGender(gender).setHeight(height).setRole(role).setWeight(weight).setId(id).build();
     }
 
     @Override
@@ -127,7 +128,7 @@ public class UserDto implements GenericDto<UserDto, User> {
                 ", weight=" + weight +
                 ", gender='" + gender + '\'' +
                 ", activityLevel='" + activityLevel + '\'' +
-                ", age=" + age +
+                ", dateOfBirth=" + dateOfBirth +
                 '}';
     }
 
@@ -145,11 +146,11 @@ public class UserDto implements GenericDto<UserDto, User> {
                 Objects.equals(weight, userDto.weight) &&
                 Objects.equals(gender, userDto.gender) &&
                 Objects.equals(activityLevel, userDto.activityLevel) &&
-                Objects.equals(age, userDto.age);
+                Objects.equals(dateOfBirth, userDto.dateOfBirth);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, firstName, lastName, role, height, weight, gender, activityLevel, age);
+        return Objects.hash(id, username, firstName, lastName, role, height, weight, gender, activityLevel, dateOfBirth);
     }
 }

@@ -29,7 +29,7 @@
                 <fmt:message key="messages.enter.weight"/>
             </th>
             <th scope="col">
-                <fmt:message key="messages.enter.age"/>
+                <fmt:message key="messages.enter.date.of.birth"/>
             </th>
             <th scope="col">
                 <fmt:message key="messages.enter.activity"/>
@@ -48,7 +48,7 @@
                 <td>${user.lastName}</td>
                 <td>${user.height}</td>
                 <td>${user.weight}</td>
-                <td>${user.age}</td>
+                <td>${user.dateOfBirth}</td>
                 <td><fmt:message key="${user.activityLevel}"/></td>
                 <td>
                     <div><fmt:message key="${user.role}"/></div>

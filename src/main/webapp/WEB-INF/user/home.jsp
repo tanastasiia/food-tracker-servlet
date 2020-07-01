@@ -53,6 +53,10 @@
                     <div class="alert alert-danger"><p>
                         <fmt:message key="messages.error.no.such.food.in.db"/></p></div>
                 </c:if>
+                <c:if test="${not empty meal_input_error}">
+                    <div class="alert alert-danger"><p>
+                        <fmt:message key="validation.incorrect.input"/></p></div>
+                </c:if>
 
 
                 <div class="form-group">
@@ -60,7 +64,12 @@
                         <fmt:message key="messages.enter.food.name"/>
                     </label>
                     <input class="form-control form-control-lg" id="food-name" type="text" placeholder=""
-                           name="foodName" required>
+                           name="foodName" value="${param.foodName}" required>
+                    <c:if test="${not empty error_food}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_food}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
                 <div class="form-group">
@@ -68,7 +77,12 @@
                         <fmt:message key="messages.enter.food.amount"/>
                     </label>
                     <input class="form-control form-control-lg" id="food-amount" type="number" placeholder=""
-                           name="amount" required>
+                           name="amount" value="${param.amount}" required>
+                    <c:if test="${not empty error_amount}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_amount}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
                 <button type="submit" class="btn btn-primary" style="margin-top:30px">
@@ -94,6 +108,10 @@
                 <div class="alert alert-info"><p>
                     <fmt:message key="messages.error.such.food.in.db"/></p></div>
             </c:if>
+            <c:if test="${not empty food_input_error}">
+                <div class="alert alert-danger"><p>
+                    <fmt:message key="validation.incorrect.input"/></p></div>
+            </c:if>
 
             <form action="${pageContext.request.contextPath}/foodtracker/add_food" method="post" style="margin-bottom: 30px" id="addFoodForm"
                   autocomplete="off">
@@ -103,7 +121,7 @@
                         <fmt:message key="messages.enter.food.name"/>
                     </label>
                     <input class="form-control form-control-lg" id="new-food-name" type="text"
-                           placeholder="" name="name" >
+                           placeholder="" name="name" value="${param.name}">
                 </div>
 <%--                <c:if test="${isAdmin}">
                     <div class="form-group">
@@ -121,32 +139,53 @@
                         <fmt:message key="messages.enter.food.carbs"/>
                     </label>
                     <input class="form-control form-control-lg" id="carbs" type="number" step="0.1" placeholder=""
-                           name="carbs">
+                           name="carbs" value="${param.carbs}">
                 </div>
+                <c:if test="${not empty error_carbs}">
+                    <div class="alert alert-danger"><p>
+                        <fmt:message key="${error_carbs}"/></p>
+                    </div>
+                </c:if>
 
                 <div class="form-group">
                     <label for="protein" >
                         <fmt:message key="messages.enter.food.protein"/>
                     </label>
                     <input class="form-control form-control-lg" id="protein" type="number" step="0.1" placeholder=""
-                           name="protein">
+                           name="protein" value="${param.protein}">
                 </div>
+                <c:if test="${not empty error_protein}">
+                    <div class="alert alert-danger"><p>
+                        <fmt:message key="${error_protein}"/></p>
+                    </div>
+                </c:if>
 
                 <div class="form-group">
                     <label for="fat" >
                         <fmt:message key="messages.enter.food.fat"/>
                     </label>
                     <input class="form-control form-control-lg" id="fat" type="number" step="0.1"  placeholder=""
-                           name="fat">
+                           name="fat" value="${param.fat}">
                 </div>
+                <c:if test="${not empty error_fat}">
+                    <div class="alert alert-danger"><p>
+                        <fmt:message key="${error_fat}"/></p>
+                    </div>
+                </c:if>
 
                 <div class="form-group">
                     <label for="calories" >
                         <fmt:message key="messages.enter.food.calories"/>
                     </label>
                     <input class="form-control form-control-lg" id="calories" type="number" placeholder=""
-                           name="calories">
+                           name="calories" value="${param.calories}">
                 </div>
+                <c:if test="${not empty error_calories}">
+                    <div class="alert alert-danger"><p>
+                        <fmt:message key="${error_calories}"/></p>
+                    </div>
+                </c:if>
+
                 <c:if test="${isAdmin}">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="exampleCheck1" name="isGlobal">
@@ -158,8 +197,6 @@
                         style="margin-top:30px" >
                     <fmt:message key="messages.button.submit"/>
                 </button>
-
-
 
             </form>
 

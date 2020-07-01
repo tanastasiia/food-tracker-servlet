@@ -1,6 +1,7 @@
 package ua.training;
 
 //import org.apache.logging.log4j.LogManager;
+
 import ua.training.controller.command.*;
 import ua.training.controller.Routes;
 import ua.training.controller.PagesToForward;
@@ -61,10 +62,9 @@ public class Servlet extends HttpServlet {
         Paths page = command.execute(request, response);
 
         if (!page.equals(PagesToForward.NONE)) {
-            request.getRequestDispatcher(page.getPath()).forward(request, response);
+                request.getRequestDispatcher(page.getPath()).forward(request, response);
         }
     }
-
 
 
 }

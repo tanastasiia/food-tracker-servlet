@@ -27,9 +27,10 @@ public class Mapper {
                 .setWeight(resultSet.getInt(UserConst.WEIGHT.getColumn()))
                 .setGender(resultSet.getString(UserConst.GENDER.getColumn()))
                 .setActivityLevel(resultSet.getString(UserConst.ACTIVITY_LEVEL.getColumn()))
-                .setAge(resultSet.getInt(UserConst.AGE.getColumn()))
+                .setDateOfBirth(resultSet.getDate(UserConst.DATE_OF_BIRTH.getColumn()).toLocalDate())
                 .build();
     }
+
     public static Food foodMap(ResultSet resultSet) throws SQLException {
         return new Food.Builder()
                 .setId(resultSet.getLong(FoodInfoConst.FOOD.getColumn()))
@@ -41,14 +42,16 @@ public class Mapper {
                 .setCalories(resultSet.getInt(FoodConst.CALORIES.getColumn()))
                 .build();
     }
+
     public static FoodInfo foodInfoMap(ResultSet resultSet) throws SQLException {
         return new FoodInfo.Builder()
                 .setId(resultSet.getLong(FoodInfoConst.ID.getColumn()))
                 .setFood(foodMap(resultSet))
-                .setUser(userMap(resultSet))
+                .setUser(resultSet.getObject(FoodInfoConst.USER.getColumn()) == null ? null : userMap(resultSet))
                 .setIsGlobal(resultSet.getBoolean(FoodInfoConst.IS_GLOBAL.getColumn()))
                 .build();
     }
+
     public static FoodInfo foodInfoWithoutUserMap(ResultSet resultSet) throws SQLException {
         return new FoodInfo.Builder()
                 .setId(resultSet.getLong(FoodInfoConst.ID.getColumn()))

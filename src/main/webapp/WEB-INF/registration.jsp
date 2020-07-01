@@ -86,11 +86,18 @@
                     <input id="weight" class="form-control" type=number name="weight" required/>
 
                 </div>
-                <div class="form-group">
+                <%--<div class="form-group">
                     <label for="age" class="control-label">
                         <fmt:message key="messages.enter.age"/>
                     </label>
                     <input id="age" class="form-control" type=number name="age" required/>
+
+                </div>--%>
+                <div class="form-group">
+                    <label for="dateOfBirth" class="control-label">
+                        <fmt:message key="messages.enter.date.of.birth"/>
+                    </label>
+                    <input id="dateOfBirth" class="form-control" type=date name="dateOfBirth" required/>
 
                 </div>
 

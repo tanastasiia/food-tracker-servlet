@@ -4,7 +4,7 @@ import ua.training.model.dto.UserDto;
 import ua.training.utils.Constants;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.MealDao;
-import ua.training.model.dto.MealDto;
+import ua.training.model.dto.MealRecordDto;
 import ua.training.model.dto.UserMealStatDto;
 import ua.training.model.entity.*;
 
@@ -37,14 +37,14 @@ public class MealService {
     /**
      * Save meal to database
      *
-     * @param mealDto  meal
+     * @param amount  amount
      * @param foodInfo food info
      * @param user     user which consumed food
      */
-    public void saveMeal(MealDto mealDto, FoodInfo foodInfo, UserDto user) throws ServerException {
+    public void saveMeal(FoodInfo foodInfo, Integer amount, UserDto user) throws ServerException {
         Meal meal = new Meal.Builder()
-                .setAmount(mealDto.getAmount())
-                .setDateTime(mealDto.getDate().atTime(mealDto.getTime()))
+                .setAmount(amount)
+                .setDateTime(LocalDateTime.now())
                 .setUser(user.toEntity())
                 .setFood(foodInfo.getFood()).build();
         try (MealDao dao = daoFactory.createMealDao()) {
@@ -81,12 +81,12 @@ public class MealService {
      * @param locale locale for food name
      * @return list of meals
      */
-    public List<MealDto> todaysUserMeals(Long userId, Locale locale) throws ServerException {
+    public List<MealRecordDto> todaysUserMeals(Long userId, Locale locale) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.findByUserIdAndDateTimeBetween(userId, LocalDateTime.of(LocalDate.now(), LocalTime.MIN),
                     LocalDateTime.of(LocalDate.now(), LocalTime.MAX))
                     .stream()
-                    .map(meal -> new MealDto(
+                    .map(meal -> new MealRecordDto(
                             getNameByLocale(meal, locale),
                             meal.getAmount(),
                             meal.getDateTime().toLocalDate(),
@@ -104,10 +104,10 @@ public class MealService {
      * @param offset number of first item
      * @return list if meals
      */
-    public List<MealDto> findAllUserMeals(Long userId, Locale locale, int limit, int offset) throws ServerException {
+    public List<MealRecordDto> findAllUserMeals(Long userId, Locale locale, int limit, int offset) throws ServerException {
         try (MealDao dao = daoFactory.createMealDao()) {
             return dao.findAllByUserId(userId, limit, offset).stream().map(meal ->
-                    new MealDto(
+                    new MealRecordDto(
                             getNameByLocale(meal, locale),
                             meal.getAmount(),
                             meal.getDateTime().toLocalDate(),

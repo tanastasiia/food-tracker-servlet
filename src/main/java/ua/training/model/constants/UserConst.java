@@ -16,7 +16,7 @@ public enum UserConst implements EntityConst {
     WEIGHT("weight", "weight"),
     GENDER("gender", "gender"),
     ACTIVITY_LEVEL("activityLevel", "activity_level"),
-    AGE("age", "age");
+    DATE_OF_BIRTH("dateOfBirth", "date_of_birth");
 
 
     UserConst(String field, String column) {

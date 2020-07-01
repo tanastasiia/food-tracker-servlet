@@ -13,8 +13,6 @@ import java.io.IOException;
 
 public class AdminPageCommand implements Command {
 
-
-
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
     private MealService mealService = MealService.getInstance();
     private UserService userService = UserService.getInstance();
@@ -23,13 +21,10 @@ public class AdminPageCommand implements Command {
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-
         int page = controllerUtil.getPage(request);
         int offset = controllerUtil.getOffset(page, Constants.PAGE_SIZE);
 
-
-
-        if (request.getParameter("tab")==null || request.getParameter("tab").equals("1")){
+        if (request.getParameter("tab") == null || request.getParameter("tab").equals("1")) {
 
             request.setAttribute("users", userService.findAllUsers(Constants.PAGE_SIZE, offset));
             request.setAttribute("numOfPages",

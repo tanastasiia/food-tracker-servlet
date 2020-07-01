@@ -1,37 +1,22 @@
 package ua.training.model.dto;
 
-import ua.training.model.entity.Food;
 import ua.training.model.entity.Meal;
-import ua.training.model.entity.User;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.math.BigDecimal;
+import java.util.Locale;
 
-public class MealDto implements GenericDto<MealDto, Meal> {
-
+public class MealDto {
     private String foodName;
     private Integer amount;
-    private LocalDate date;
-    private LocalTime time;
 
+    public MealDto(){
 
-    public MealDto() {
     }
-    public MealDto(String foodName, Integer amount, LocalDate date, LocalTime time) {
+
+    public MealDto(String foodName, Integer amount) {
         this.foodName = foodName;
         this.amount = amount;
-        this.date = date;
-        this.time = time;
     }
-
-    @Override
-    public Meal toEntity() {
-        return new Meal.Builder().setAmount(amount)
-                .setDateTime(date.atTime(time))
-                .setFood(new Food.Builder().setName(foodName).build()).build();
-    }
-
 
     public String getFoodName() {
         return foodName;
@@ -49,19 +34,27 @@ public class MealDto implements GenericDto<MealDto, Meal> {
         this.amount = amount;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    public static class Builder {
+        private MealDto mealDto;
 
-    public LocalTime getTime() {
-        return time;
-    }
+        public Builder() {
+            mealDto = new MealDto();
+        }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+        public MealDto.Builder setFoodName(String foodName ) {
+            this.mealDto.foodName = foodName;
+            return this;
+        }
+
+
+        public MealDto.Builder setAmount(Integer amount) {
+            this.mealDto.amount = amount;
+            return this;
+        }
+
+        public MealDto build() {
+            return mealDto;
+        }
     }
 }

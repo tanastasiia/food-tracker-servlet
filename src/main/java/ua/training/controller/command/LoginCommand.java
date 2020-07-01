@@ -29,7 +29,7 @@ public class LoginCommand implements Command {
         String password = request.getParameter("password");
 
         Optional<UserDto> user = UserService.getInstance().authentication(username, password);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             HttpSession session = request.getSession();
             session.setAttribute("role", user.get().getRole());
             session.setAttribute("user", user.get());
@@ -40,7 +40,7 @@ public class LoginCommand implements Command {
             response.sendRedirect(Routes.HOME.getPath());
 
             return PagesToForward.NONE;
-        } else{
+        } else {
             Logger.getLogger(LoginCommand.class.getName()).info("Authentication error");
             request.setAttribute("authError", true);
             return PagesToForward.LOGIN;

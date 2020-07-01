@@ -6,6 +6,7 @@ import ua.training.controller.PagesToForward;
 import ua.training.model.dto.UserDto;
 import ua.training.service.MealService;
 import ua.training.service.UserService;
+import ua.training.utils.ServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,17 +18,16 @@ public class StatisticsCommand implements Command {
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
     private MealService mealService = MealService.getInstance();
 
-
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         UserDto userDto = controllerUtil.getUser(request);
         Locale locale = controllerUtil.getLocale(request);
 
-        request.setAttribute("caloriesNorm", UserService.getInstance().countCaloriesNorm(userDto.toEntity()));
+        request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(userDto.toEntity()));
         request.setAttribute("userStat", mealService.todaysUserStatistics(userDto.getId()));
 
-        if (request.getParameter("tab")==null ||request.getParameter("tab").equals("1")) {
+        if (request.getParameter("tab") == null || request.getParameter("tab").equals("1")) {
             request.setAttribute("todaysMeals", mealService.todaysUserMeals(userDto.getId(), locale));
         } else {
             int page = controllerUtil.getPage(request);

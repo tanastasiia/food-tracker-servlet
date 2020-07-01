@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 public class LogoutCommand implements Command {
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
+
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();

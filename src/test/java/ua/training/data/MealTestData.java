@@ -24,14 +24,13 @@ public class MealTestData {
             .build();
 
 
-    public int TODAYS_CALORIES = 50*2 + 100*340/100 + 60*4+ 330*250/100 + 450*310/100;
-    public BigDecimal TODAYS_PROTEIN = BigDecimal.valueOf(500*200).divide(HUNDRED, 1)
-            .add(BigDecimal.valueOf(800*340).divide(HUNDRED, 1))
-            .add(BigDecimal.valueOf(1000*400).divide(HUNDRED, 1))
-            .add(BigDecimal.valueOf(1200*250).divide(HUNDRED, 1))
-            .add(BigDecimal.valueOf(5500*310).divide(HUNDRED, 1))
+    public int TODAYS_CALORIES = 50 * 2 + 100 * 340 / 100 + 60 * 4 + 330 * 250 / 100 + 450 * 310 / 100;
+    public BigDecimal TODAYS_PROTEIN = BigDecimal.valueOf(500 * 200).divide(HUNDRED, 1)
+            .add(BigDecimal.valueOf(800 * 340).divide(HUNDRED, 1))
+            .add(BigDecimal.valueOf(1000 * 400).divide(HUNDRED, 1))
+            .add(BigDecimal.valueOf(1200 * 250).divide(HUNDRED, 1))
+            .add(BigDecimal.valueOf(5500 * 310).divide(HUNDRED, 1))
             .divide(BigDecimal.valueOf(1000), 1, RoundingMode.HALF_UP);
-
 
 
     public List<Meal> TODAYS_MEALS_LIST = new ArrayList<>(Arrays.asList(

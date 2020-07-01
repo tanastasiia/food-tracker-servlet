@@ -31,5 +31,8 @@ public class RequestListener implements ServletRequestListener {
             req.getSession().setAttribute("lang", new Locale(req.getParameter("lang")));
         }
 
+
+
+
     }
 }
