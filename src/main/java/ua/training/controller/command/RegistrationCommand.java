@@ -25,7 +25,7 @@ public class RegistrationCommand implements Command {
             User user = controllerUtil.parseRegUser(request);
             request.setAttribute("success", UserService.getInstance().register(user));
         } catch (ValidationException e) {
-            e.getErrors().forEach(error -> request.setAttribute("error_" + error.getField(), error.getMessage()));
+            controllerUtil.setErrorAttributes(request, e.getErrors());
         } catch (Exception e) {
             request.setAttribute("reg_input_error", ValidationErrorMessages.INCORRECT_INPUT);
         }

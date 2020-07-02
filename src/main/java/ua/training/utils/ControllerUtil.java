@@ -7,12 +7,14 @@ import ua.training.model.dto.MealDto;
 import ua.training.model.dto.UserDto;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
+import ua.training.utils.validation.ValidationError;
 import ua.training.utils.validation.ValidationException;
 import ua.training.utils.validation.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 
 public class ControllerUtil {
@@ -71,6 +73,10 @@ public class ControllerUtil {
         request.getSession().removeAttribute("lastAdd");
     }
 
+    public void setErrorAttributes(HttpServletRequest request, List<ValidationError> errors){
+        errors.forEach(error -> request.setAttribute("error_" + error.getField(), error.getMessage()));
+    }
+
     public FoodDto parseFoodDto(HttpServletRequest request) throws ValidationException {
         FoodDto foodDto = new FoodDto.Builder()
                 .setProtein(new BigDecimal(request.getParameter(FoodConst.PROTEIN.getField())))
@@ -78,6 +84,7 @@ public class ControllerUtil {
                 .setCarbs(new BigDecimal(request.getParameter(FoodConst.CARBS.getField())))
                 .setCalories(Integer.parseInt(request.getParameter(FoodConst.CALORIES.getField())))
                 .setName(request.getParameter(FoodConst.NAME.getField()))
+                .setNameUa(request.getParameter(FoodConst.NAME_UA.getField()))
                 .setLocale((Locale) request.getSession().getAttribute("lang"))
                 .build();
         validator.validate(foodDto);

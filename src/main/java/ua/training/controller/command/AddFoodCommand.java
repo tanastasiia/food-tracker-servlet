@@ -21,13 +21,12 @@ public class AddFoodCommand implements Command {
     private FoodInfoService foodInfoService = FoodInfoService.getInstance();
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             FoodDto foodDto = controllerUtil.parseFoodDto(request);
-            Optional<FoodInfo> savedFoodInfo = foodInfoService
-                    .saveFood( foodDto,
-                            controllerUtil.getUser(request).toEntity(),
+
+            Optional<FoodInfo> savedFoodInfo = foodInfoService.saveFood(foodDto, controllerUtil.getUser(request).toEntity(),
                             request.getParameter(FoodInfoConst.IS_GLOBAL.getField()) != null);
 
             controllerUtil.setAddSuccessOrFailAttributesHomePage(request, savedFoodInfo.isPresent(), "food");
@@ -36,8 +35,9 @@ public class AddFoodCommand implements Command {
             return PagesToForward.NONE;
 
         } catch (ValidationException e) {
-            e.getErrors().forEach(error -> request.setAttribute("error_" + error.getField(), error.getMessage()));
+            controllerUtil.setErrorAttributes(request, e.getErrors());
         } catch (Exception e){
+            e.printStackTrace();
             request.setAttribute("food_input_error", ValidationErrorMessages.INCORRECT_INPUT);
         }
         request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request).toEntity()));

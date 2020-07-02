@@ -11,35 +11,22 @@ import java.util.Locale;
 
 public class FoodDto implements GenericDto<FoodDto, Food> {
 
-   // @NotNull
     private String name;
-
     private String nameUa;
 
     private BigDecimal carbs;
     private BigDecimal protein;
     private BigDecimal fat;
-
-    @Min(value = 0, message="calories negative")
     private Integer calories;
     private Locale locale;
 
 
-    private final Integer MILLIGRAMS_TO_GRAMS = 1000;
-    private final BigDecimal GRAMS_TO_MILLIGRAMS = BigDecimal.valueOf(1000);
-
-
-    private BigDecimal toMilligrams(Integer grams){
-        return  BigDecimal.valueOf(grams).divide(GRAMS_TO_MILLIGRAMS, 2).setScale(2, RoundingMode.HALF_UP);
-    }
-    private Integer toGrams(BigDecimal milligrams){
-        return  milligrams.multiply(BigDecimal.valueOf(MILLIGRAMS_TO_GRAMS)).intValue();
-    }
 
 
     public  FoodDto(){
 
     }
+/*
     public FoodDto(Food food, Locale locale) {
         this.name = locale.equals(Constants.LOCALE_UA)? food.getNameUa():food.getName();
         this.carbs = toMilligrams(food.getCarbs());
@@ -48,25 +35,17 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
         this.calories = food.getCalories();
         this.locale = locale;
     }
+*/
 
     @Override
     public Food toEntity() {
-        return new Food.Builder()
+        return new Food.Builder()/*
                 .setName(locale.equals(Constants.LOCALE_UA)? null : name)
                 .setNameUa(locale.equals(Constants.LOCALE_UA)? name : null)
                 .setCarbs(toGrams(carbs))
                 .setProtein(toGrams(protein))
                 .setFat(toGrams(fat))
-                .setCalories(calories).build();
-    }
-    public Food toEntity(Locale locale) {
-        return new Food.Builder()
-                .setName(locale.equals(Constants.LOCALE_UA)? null : name)
-                .setNameUa(locale.equals(Constants.LOCALE_UA)? name : null)
-                .setCarbs(toGrams(carbs))
-                .setProtein(toGrams(protein))
-                .setFat(toGrams(fat))
-                .setCalories(calories).build();
+                .setCalories(calories)*/.build();
     }
 
     public String getName() {
@@ -126,6 +105,18 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
     }
     public void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    public String getNameUa() {
+        return nameUa;
+    }
+
+    public void setNameUa(String nameUa) {
+        this.nameUa = nameUa;
+    }
+
+    public Locale getLocale() {
+        return locale;
     }
 
 

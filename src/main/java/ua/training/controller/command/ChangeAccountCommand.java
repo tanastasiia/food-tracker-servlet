@@ -29,12 +29,11 @@ public class ChangeAccountCommand implements Command {
             return PagesToForward.NONE;
 
         } catch (ValidationException e) {
-            e.getErrors().forEach(error -> request.setAttribute("error_" + error.getField(), error.getMessage()));
-            return PagesToForward.CHANGE_ACCOUNT;
-        } catch (Exception e) {
+            controllerUtil.setErrorAttributes(request, e.getErrors());
+        } catch (Exception e){
             request.setAttribute("user_input_error", ValidationErrorMessages.INCORRECT_INPUT);
-            return PagesToForward.CHANGE_ACCOUNT;
         }
+        return PagesToForward.CHANGE_ACCOUNT;
     }
 
 }

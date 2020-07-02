@@ -15,5 +15,10 @@ public class ValidationErrorMessages {
     public static final String EMPTY_FIELD = "validation.wrong.number";
     public static final String INCORRECT_INPUT = "validation.incorrect.input";
     public static final String LENGTH_MUST_BE_LESS_THAN_45 = "validation.length.must.be.less.than45";
+    public static final String BOTH_NAMES_EMPTY = "";
+
+    public static final String BOTH_NAMES_EMPTY_ERROR = "";
+
+
 
 }

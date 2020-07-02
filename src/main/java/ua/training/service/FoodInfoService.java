@@ -1,5 +1,7 @@
 package ua.training.service;
 
+import ua.training.model.entity.Food;
+import ua.training.utils.Constants;
 import ua.training.utils.ServiceUtil;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.FoodInfoDao;
@@ -11,6 +13,7 @@ import javax.validation.*;
 import java.rmi.ServerException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,24 +40,40 @@ public class FoodInfoService {
 
     /**
      * Savw food to database
-     * @param foodDto food to save
-     * @param user adder
+     *
+     * @param foodDto  food to save
+     * @param user     adder
      * @param isGlobal true if visible for all users, fasle if only for adder
      * @return Optional of saved food
      * @throws ServerException
      */
     public Optional<FoodInfo> saveFood(FoodDto foodDto, User user, Boolean isGlobal) throws ServerException {
-        if (!findFoodByFoodNameAndUser(foodDto.getName(), user.getId()).isPresent()) {
-            try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
-                return Optional.of(dao.saveFood(new FoodInfo.Builder()
-                        .setFood(foodDto.toEntity())
-                        .setIsGlobal(isGlobal)
-                        .setUser(user).build()));
-            } catch (SQLException e) {
-                throw new ServerException(e.getMessage());
-            }
+        Food.Builder foodBuilder = new Food.Builder()
+                .setCarbs(ServiceUtil.getInstance().toGrams(foodDto.getCarbs()))
+                .setProtein(ServiceUtil.getInstance().toGrams(foodDto.getProtein()))
+                .setFat(ServiceUtil.getInstance().toGrams(foodDto.getFat()))
+                .setCalories(foodDto.getCalories());
+
+        if (user.getRole().equals("ROLE_USER")) {
+            foodBuilder = foodDto.getLocale().equals(ServiceUtil.getInstance().LOCALE_UA)
+                    ? foodBuilder.setNameUa(foodDto.getName())
+                    : foodBuilder.setName(foodDto.getName());
+        } else {
+            foodBuilder = foodBuilder.setName(foodDto.getName()).setNameUa(foodDto.getNameUa());
         }
-        return Optional.empty();
+        if ((!foodDto.getName().isEmpty() && findFoodByFoodNameAndUser(foodDto.getName(), user.getId()).isPresent())
+                || (!foodDto.getNameUa().isEmpty() && findFoodByFoodNameAndUser(foodDto.getNameUa(), user.getId()).isPresent())) {
+            return Optional.empty();
+        }
+
+        try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
+            return Optional.of(dao.saveFood(new FoodInfo.Builder()
+                    .setFood(foodBuilder.build())
+                    .setIsGlobal(isGlobal)
+                    .setUser(user).build()));
+        } catch (SQLException e) {
+            throw new ServerException(e.getMessage());
+        }
     }
 
     /**

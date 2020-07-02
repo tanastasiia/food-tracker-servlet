@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class AccountCommand implements Command {
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) {
 
         return PagesToForward.ACCOUNT;
 

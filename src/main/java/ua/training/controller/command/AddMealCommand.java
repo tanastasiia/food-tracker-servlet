@@ -39,8 +39,8 @@ public class AddMealCommand implements Command {
 
 
         } catch (ValidationException e) {
-            e.getErrors().forEach(error -> request.setAttribute("error_" + error.getField(), error.getMessage()));
-        } catch (Exception e) {
+            controllerUtil.setErrorAttributes(request, e.getErrors());
+        } catch (Exception e){
             request.setAttribute("meal_input_error", ValidationErrorMessages.INCORRECT_INPUT);
         }
 

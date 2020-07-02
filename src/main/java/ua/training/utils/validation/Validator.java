@@ -29,14 +29,19 @@ public class Validator {
         if (foodDto.getCalories() < 0) {
             errors.add(new ValidationError(FoodConst.CALORIES.getField(), ValidationErrorMessages.WRONG_NUMBER));
         }
-        if (foodDto.getName().isEmpty()) {
-            errors.add(new ValidationError(FoodConst.NAME.getField(), ValidationErrorMessages.WRONG_NUMBER));
-        }
-        if (foodDto.getName().length() > 45) {
+
+        if (!foodDto.getName().isEmpty() && foodDto.getName().length() > 45) {
             errors.add(new ValidationError(FoodConst.NAME.getField(), ValidationErrorMessages.LENGTH_MUST_BE_LESS_THAN_45));
+        }
+        if (!foodDto.getNameUa().isEmpty() && foodDto.getNameUa().length() > 45) {
+            errors.add(new ValidationError(FoodConst.NAME_UA.getField(), ValidationErrorMessages.LENGTH_MUST_BE_LESS_THAN_45));
+        }
+        if(foodDto.getName().isEmpty() && foodDto.getNameUa().isEmpty()){
+            errors.add(new ValidationError("names_empty", ValidationErrorMessages.FOOD_NAMES_EMPTY));
         }
 
         if (!errors.isEmpty()) {
+            errors.forEach(e -> System.out.println(e.getField() + "  " + e.getMessage()));
             throw new ValidationException(errors);
         }
     }

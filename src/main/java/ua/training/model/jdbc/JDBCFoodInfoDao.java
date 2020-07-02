@@ -81,8 +81,16 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
              PreparedStatement createFoodSt = connection.prepareStatement(CREATE_FOOD, Statement.RETURN_GENERATED_KEYS)) {
             connection.setAutoCommit(false);
 
-            createFoodSt.setString(1, food.getName());
-            createFoodSt.setString(2, food.getNameUa());
+            if (food.getName().isEmpty()) {
+                createFoodSt.setNull(1, Types.NULL);
+            } else {
+                createFoodSt.setString(1, food.getName());
+            }
+            if (food.getNameUa().isEmpty()) {
+                createFoodSt.setNull(2, Types.NULL);
+            } else {
+                createFoodSt.setString(2, food.getNameUa());
+            }
             createFoodSt.setInt(3, food.getCarbs());
             createFoodSt.setInt(4, food.getFat());
             createFoodSt.setInt(5, food.getProtein());

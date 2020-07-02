@@ -17,6 +17,5 @@ public interface FoodInfoDao  extends GenericDao<FoodInfo> {
 
     FoodInfo saveFood(FoodInfo foodInfo) throws ServerException, SQLException;
 
-    Optional<FoodInfo> findAllByFoodNameOrFoodNameUaAndUserIdOrGlobal(String foodNameUa, Long userId) throws ServerException;
-
+    Optional<FoodInfo> findAllByFoodNameOrFoodNameUaAndUserIdOrGlobal(String foodName, Long userId) throws ServerException;
 }

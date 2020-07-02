@@ -110,7 +110,12 @@
             </c:if>
             <c:if test="${not empty food_input_error}">
                 <div class="alert alert-danger"><p>
-                    <fmt:message key="validation.incorrect.input"/></p></div>
+                    <fmt:message key="${food_input_error}"/></p></div>
+            </c:if>
+
+            <c:if test="${not empty error_names_empty}">
+                <div class="alert alert-danger"><p>
+                    <fmt:message key="${error_names_empty}"/></p></div>
             </c:if>
 
             <form action="${pageContext.request.contextPath}/foodtracker/add_food" method="post" style="margin-bottom: 30px" id="addFoodForm"
@@ -122,16 +127,27 @@
                     </label>
                     <input class="form-control form-control-lg" id="new-food-name" type="text"
                            placeholder="" name="name" value="${param.name}">
+                    <c:if test="${not empty error_name}">
+                        <div class="alert alert-danger">
+                            <p><fmt:message key="${error_name}"/></p>
+                        </div>
+                    </c:if>
                 </div>
-<%--                <c:if test="${isAdmin}">
+
+                <c:if test="${isAdmin}">
                     <div class="form-group">
                         <label for="food-name-ua">
                             <fmt:message key="messages.enter.food.name.ua"/>
                         </label>
                         <input class="form-control form-control-lg" id="food-name-ua" type="text" placeholder=""
-                               name="nameUa" required>
+                               name="nameUa" value="${param.nameUa}">
+                        <c:if test="${not empty error_nameUa}">
+                            <div class="alert alert-danger">
+                                <p><fmt:message key="${error_nameUa}"/></p>
+                            </div>
+                        </c:if>
                     </div>
-                </c:if>--%>
+                </c:if>
 
 
                 <div class="form-group">
