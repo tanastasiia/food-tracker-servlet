@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
 
-public class FoodDto implements GenericDto<FoodDto, Food> {
+public class FoodDto {
 
     private String name;
     private String nameUa;
@@ -20,44 +20,13 @@ public class FoodDto implements GenericDto<FoodDto, Food> {
     private Integer calories;
     private Locale locale;
 
-
-
-
-    public  FoodDto(){
-
-    }
-/*
-    public FoodDto(Food food, Locale locale) {
-        this.name = locale.equals(Constants.LOCALE_UA)? food.getNameUa():food.getName();
-        this.carbs = toMilligrams(food.getCarbs());
-        this.protein = toMilligrams(food.getProtein());
-        this.fat = toMilligrams(food.getFat());
-        this.calories = food.getCalories();
-        this.locale = locale;
-    }
-*/
-
-    @Override
-    public Food toEntity() {
-        return new Food.Builder()/*
-                .setName(locale.equals(Constants.LOCALE_UA)? null : name)
-                .setNameUa(locale.equals(Constants.LOCALE_UA)? name : null)
-                .setCarbs(toGrams(carbs))
-                .setProtein(toGrams(protein))
-                .setFat(toGrams(fat))
-                .setCalories(calories)*/.build();
-    }
-
     public String getName() {
         return name;
     }
 
-
     public Integer getCalories() {
         return calories;
     }
-
-
 
     @Override
     public String toString() {

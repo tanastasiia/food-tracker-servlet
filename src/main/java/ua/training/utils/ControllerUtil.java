@@ -32,8 +32,8 @@ public class ControllerUtil {
         return (Locale) request.getSession().getAttribute("lang");
     }
 
-    public UserDto getUser(HttpServletRequest request) {
-        return (UserDto) request.getSession().getAttribute("user");
+    public User getUser(HttpServletRequest request) {
+        return (User) request.getSession().getAttribute("user");
     }
 
     public long getUserId(HttpServletRequest request) {

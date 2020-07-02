@@ -1,10 +1,5 @@
 package ua.training.model.dto;
 
-import ua.training.model.entity.Meal;
-
-import java.math.BigDecimal;
-import java.util.Locale;
-
 public class MealDto {
     private String foodName;
     private Integer amount;
@@ -46,7 +41,6 @@ public class MealDto {
             this.mealDto.foodName = foodName;
             return this;
         }
-
 
         public MealDto.Builder setAmount(Integer amount) {
             this.mealDto.amount = amount;

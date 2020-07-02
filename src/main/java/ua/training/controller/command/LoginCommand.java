@@ -1,5 +1,6 @@
 package ua.training.controller.command;
 
+import ua.training.model.entity.User;
 import ua.training.utils.ControllerUtil;
 import ua.training.controller.Routes;
 import ua.training.controller.PagesToForward;
@@ -28,7 +29,7 @@ public class LoginCommand implements Command {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        Optional<UserDto> user = UserService.getInstance().authentication(username, password);
+        Optional<User> user = UserService.getInstance().authentication(username, password);
         if (user.isPresent()) {
             HttpSession session = request.getSession();
             session.setAttribute("role", user.get().getRole());

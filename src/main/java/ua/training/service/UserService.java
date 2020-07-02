@@ -55,12 +55,11 @@ public class UserService {
      * @return optional of sighed in user
      * @throws ServerException
      */
-    public Optional<UserDto> authentication(String username, String password) throws ServerException {
+    public Optional<User> authentication(String username, String password) throws ServerException {
 
         try (UserDao dao = daoFactory.createUserDao()) {
             return dao.findByUsername(username)
-                    .filter(u -> BCrypt.checkpw(password, u.getPassword()))
-                    .map(UserDto::new);
+                    .filter(u -> BCrypt.checkpw(password, u.getPassword()));
         }
 
     }
@@ -100,7 +99,7 @@ public class UserService {
      * @param user user to update
      * @throws ServerException
      */
-    public void updateAccount(User newUser, UserDto user) throws ServerException {
+    public void updateAccount(User newUser, User user) throws ServerException {
 
         newUser.setId(user.getId());
         try (UserDao dao = daoFactory.createUserDao()) {

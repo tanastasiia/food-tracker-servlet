@@ -41,11 +41,11 @@ public class MealService {
      * @param foodInfo food info
      * @param user     user which consumed food
      */
-    public void saveMeal(FoodInfo foodInfo, Integer amount, UserDto user) throws ServerException {
+    public void saveMeal(FoodInfo foodInfo, Integer amount, User user) throws ServerException {
         Meal meal = new Meal.Builder()
                 .setAmount(amount)
                 .setDateTime(LocalDateTime.now())
-                .setUser(user.toEntity())
+                .setUser(user)
                 .setFood(foodInfo.getFood()).build();
         try (MealDao dao = daoFactory.createMealDao()) {
             dao.create(meal);

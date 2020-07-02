@@ -2,6 +2,7 @@ package ua.training.controller.command;
 
 import ua.training.model.dto.MealDto;
 import ua.training.model.dto.UserDto;
+import ua.training.model.entity.User;
 import ua.training.utils.ControllerUtil;
 import ua.training.controller.Routes;
 import ua.training.controller.PagesToForward;
@@ -25,7 +26,7 @@ public class AddMealCommand implements Command {
         try {
             MealDto mealDto = controllerUtil.parseMealDto(request);
 
-            UserDto user = controllerUtil.getUser(request);
+            User user = controllerUtil.getUser(request);
             Optional<FoodInfo> foodInfo = FoodInfoService.getInstance().findFoodByFoodNameAndUser(mealDto.getFoodName(), user.getId());
 
             if (foodInfo.isPresent()) {
@@ -44,7 +45,7 @@ public class AddMealCommand implements Command {
             request.setAttribute("meal_input_error", ValidationErrorMessages.INCORRECT_INPUT);
         }
 
-        request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request).toEntity()));
+        request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request)));
         return PagesToForward.HOME;
     }
 }

@@ -9,7 +9,7 @@ import java.time.LocalTime;
 /**
  * to display at admin page
  */
-public class MealRecordDto implements GenericDto<MealRecordDto, Meal> {
+public class MealRecordDto  {
 
     private String foodName;
     private Integer amount;
@@ -22,15 +22,6 @@ public class MealRecordDto implements GenericDto<MealRecordDto, Meal> {
         this.date = date;
         this.time = time;
     }
-
-    @Override
-    public Meal toEntity() {
-        return new Meal.Builder()
-                .setAmount(amount)
-                .setFood(new Food.Builder().setName(foodName).build())
-                .build();
-    }
-
 
     public String getFoodName() {
         return foodName;

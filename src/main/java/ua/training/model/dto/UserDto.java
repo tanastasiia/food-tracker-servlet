@@ -17,19 +17,6 @@ public class UserDto implements GenericDto<UserDto, User> {
     private String activityLevel;
     private LocalDate dateOfBirth;
 
-    public UserDto(User user) {
-        this.id = user.getId();
-        this.username = user.getUsername();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.role = user.getRole();
-        this.height = user.getHeight();
-        this.weight = user.getWeight();
-        this.gender = user.getGender();
-        this.activityLevel = user.getActivityLevel();
-        this.dateOfBirth = user.getDateOfBirth();
-    }
-
     public Long getId() {
         return id;
     }

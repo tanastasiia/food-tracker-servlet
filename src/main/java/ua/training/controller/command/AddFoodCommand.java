@@ -26,7 +26,7 @@ public class AddFoodCommand implements Command {
         try {
             FoodDto foodDto = controllerUtil.parseFoodDto(request);
 
-            Optional<FoodInfo> savedFoodInfo = foodInfoService.saveFood(foodDto, controllerUtil.getUser(request).toEntity(),
+            Optional<FoodInfo> savedFoodInfo = foodInfoService.saveFood(foodDto, controllerUtil.getUser(request),
                             request.getParameter(FoodInfoConst.IS_GLOBAL.getField()) != null);
 
             controllerUtil.setAddSuccessOrFailAttributesHomePage(request, savedFoodInfo.isPresent(), "food");
@@ -40,7 +40,7 @@ public class AddFoodCommand implements Command {
             e.printStackTrace();
             request.setAttribute("food_input_error", ValidationErrorMessages.INCORRECT_INPUT);
         }
-        request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request).toEntity()));
+        request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request)));
         return PagesToForward.HOME;
 
     }

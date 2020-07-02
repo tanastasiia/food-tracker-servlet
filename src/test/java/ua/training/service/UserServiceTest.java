@@ -68,8 +68,8 @@ public class UserServiceTest {
     public void authenticationCorrectTest() throws ServerException {
         when(userDao.findByUsername(anyString())).thenReturn(Optional.of(userTestData.USER));
 
-        UserDto expected = new UserDto(userTestData.USER);
-        Optional<UserDto> actual = userService.authentication(userTestData.USER.getUsername(), "qwerty");
+        User expected = userTestData.USER;
+        Optional<User> actual = userService.authentication(userTestData.USER.getUsername(), "qwerty");
 
         verify(userDao).findByUsername(userTestData.USER.getUsername());
         assertTrue(actual.isPresent());
@@ -82,7 +82,7 @@ public class UserServiceTest {
 
         when(userDao.findByUsername(anyString())).thenReturn(Optional.of(user));
 
-        Optional<UserDto> actual = userService.authentication(userTestData.USER.getUsername(), "str");
+        Optional<User> actual = userService.authentication(userTestData.USER.getUsername(), "str");
 
         verify(userDao).findByUsername(userTestData.USER.getUsername());
         assertFalse(actual.isPresent());
