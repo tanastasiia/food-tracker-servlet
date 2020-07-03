@@ -1,7 +1,5 @@
 package ua.training.model.entity;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Food {

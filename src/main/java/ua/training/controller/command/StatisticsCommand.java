@@ -1,12 +1,10 @@
 package ua.training.controller.command;
 
-import ua.training.model.entity.User;
-import ua.training.utils.ControllerUtil;
-import ua.training.utils.Constants;
 import ua.training.controller.PagesToForward;
-import ua.training.model.dto.UserDto;
+import ua.training.model.entity.User;
 import ua.training.service.MealService;
-import ua.training.service.UserService;
+import ua.training.utils.Constants;
+import ua.training.utils.ControllerUtil;
 import ua.training.utils.ServiceUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +20,6 @@ public class StatisticsCommand implements Command {
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        User user = controllerUtil.getUser(request);
         Locale locale = controllerUtil.getLocale(request);
 
         request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request)));

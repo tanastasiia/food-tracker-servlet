@@ -1,10 +1,10 @@
 package ua.training.controller.command;
 
-import ua.training.utils.ControllerUtil;
 import ua.training.controller.PagesToForward;
 import ua.training.controller.Routes;
 import ua.training.model.entity.User;
 import ua.training.service.UserService;
+import ua.training.utils.ControllerUtil;
 import ua.training.utils.validation.ValidationErrorMessages;
 import ua.training.utils.validation.ValidationException;
 

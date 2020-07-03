@@ -1,21 +1,19 @@
 package ua.training.service;
 
-import ua.training.model.entity.Food;
-import ua.training.utils.Constants;
-import ua.training.utils.ServiceUtil;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.FoodInfoDao;
 import ua.training.model.dto.FoodDto;
+import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
 import ua.training.model.entity.User;
+import ua.training.utils.ServiceUtil;
 
-import javax.validation.*;
 import java.rmi.ServerException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FoodInfoService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -86,6 +84,21 @@ public class FoodInfoService {
     public List<FoodInfo> findAllFood(int limit, int offset) throws ServerException {
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
             return dao.findAll(limit, offset);
+
+        }
+    }
+
+    /**
+     * Get all food names
+     *
+     * @param userId  userId
+     * @return list if food names
+     */
+    public List<String> findAllFoodNamesForUser(long userId, Locale locale) throws ServerException {
+        try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
+            return dao.findAllUserFood(userId).stream()
+                    .map(foodInfo -> ServiceUtil.getInstance().getLocalizedFoodName(foodInfo.getFood(), locale))
+                    .collect(Collectors.toList());
 
         }
     }

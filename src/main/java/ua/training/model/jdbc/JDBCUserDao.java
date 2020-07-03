@@ -1,8 +1,8 @@
 package ua.training.model.jdbc;
 
+import ua.training.model.Mapper;
 import ua.training.model.dao.UserDao;
 import ua.training.model.entity.User;
-import ua.training.model.Mapper;
 
 import java.rmi.ServerException;
 import java.sql.*;

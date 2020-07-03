@@ -4,7 +4,6 @@ import ua.training.model.constants.FoodConst;
 import ua.training.model.constants.UserConst;
 import ua.training.model.dto.FoodDto;
 import ua.training.model.dto.MealDto;
-import ua.training.model.dto.UserDto;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.utils.validation.ValidationError;
@@ -92,7 +91,8 @@ public class ControllerUtil {
     }
 
     public MealDto parseMealDto(HttpServletRequest request) throws ValidationException {
-        MealDto mealDto = new MealDto.Builder().setFoodName(request.getParameter("foodName"))
+        MealDto mealDto = new MealDto.Builder()
+                .setFoodName(request.getParameter("foodName"))
                 .setAmount(Integer.parseInt(request.getParameter("amount"))).build();
 
         validator.validate(mealDto);

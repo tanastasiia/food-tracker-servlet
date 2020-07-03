@@ -1,16 +1,11 @@
 package ua.training.model.jdbc;
 
-import ua.training.controller.command.LogoutCommand;
 import ua.training.model.Mapper;
 import ua.training.model.dao.FoodDao;
 import ua.training.model.entity.Food;
-import ua.training.model.entity.FoodInfo;
-import ua.training.model.entity.User;
 
 import java.rmi.ServerException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 

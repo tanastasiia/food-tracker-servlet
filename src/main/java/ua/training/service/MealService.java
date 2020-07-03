@@ -1,12 +1,14 @@
 package ua.training.service;
 
-import ua.training.model.dto.UserDto;
-import ua.training.utils.Constants;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.MealDao;
 import ua.training.model.dto.MealRecordDto;
 import ua.training.model.dto.UserMealStatDto;
-import ua.training.model.entity.*;
+import ua.training.model.entity.Food;
+import ua.training.model.entity.FoodInfo;
+import ua.training.model.entity.Meal;
+import ua.training.model.entity.User;
+import ua.training.utils.Constants;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

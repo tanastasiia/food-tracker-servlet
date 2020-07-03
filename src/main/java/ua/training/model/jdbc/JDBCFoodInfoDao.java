@@ -4,7 +4,6 @@ import ua.training.model.Mapper;
 import ua.training.model.dao.FoodInfoDao;
 import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
-import ua.training.model.entity.User;
 
 import java.rmi.ServerException;
 import java.sql.*;
@@ -35,6 +34,11 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
 
     private static String CREATE_FOOD = "INSERT INTO food (name, name_ua, carbs_mg, fat_mg, protein_mg, calories) " +
             "VALUES(?, ?, ?, ?, ?, ?)";
+
+    private static String FIND_ALL_FOOD_NAMES_FOR_USER = "SELECT * " +
+            "FROM food_info " +
+            "LEFT OUTER JOIN food ON food_info.food_id=food.id " +
+            "WHERE food_info.adder_user_id = ? OR food_info.is_global=TRUE";
 
     public JDBCFoodInfoDao(Connection connection) {
         this.connection = connection;
@@ -129,6 +133,22 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
             ResultSet resultSet = query.executeQuery();
             while (resultSet.next()) {
                 foodInfos.add(Mapper.foodInfoMap(resultSet));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());
+            throw new ServerException(e.getMessage());
+        }
+        return foodInfos;
+    }
+
+    @Override
+    public List<FoodInfo> findAllUserFood(long userId) throws ServerException {
+        List<FoodInfo> foodInfos = new ArrayList<>();
+        try (PreparedStatement query = connection.prepareStatement(FIND_ALL_FOOD_NAMES_FOR_USER)) {
+            query.setLong(1, userId);
+            ResultSet resultSet = query.executeQuery();
+            while (resultSet.next()) {
+                foodInfos.add(Mapper.foodInfoMapWithoutUser(resultSet));
             }
         } catch (SQLException e) {
             Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());

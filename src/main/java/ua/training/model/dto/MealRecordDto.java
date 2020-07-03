@@ -1,8 +1,5 @@
 package ua.training.model.dto;
 
-import ua.training.model.entity.Food;
-import ua.training.model.entity.Meal;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 

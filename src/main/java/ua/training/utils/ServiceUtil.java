@@ -2,6 +2,7 @@ package ua.training.utils;
 
 import ua.training.model.dto.FoodDto;
 import ua.training.model.entity.ActivityLevel;
+import ua.training.model.entity.Food;
 import ua.training.model.entity.Gender;
 import ua.training.model.entity.User;
 
@@ -14,11 +15,9 @@ import java.util.Optional;
 
 public class ServiceUtil {
 
-
     private final Integer MILLIGRAMS_TO_GRAMS = 1000;
     private final BigDecimal GRAMS_TO_MILLIGRAMS = BigDecimal.valueOf(1000);
     public final Locale LOCALE_UA = new Locale("ua");
-
 
     private static class UtilityHolder {
         private static final ServiceUtil SERVICE_UTIL_INSTANCE = new ServiceUtil();
@@ -59,14 +58,14 @@ public class ServiceUtil {
     /**
      * Returns localized food name
      *
-     * @param foodDto Food which name is returned
+     * @param food Food which name is returned
      * @return name in needed locale (ukrainian or english) if  name in that locale exists in database and in another language if not.
      * Returns empty string if both names are absent.
      */
-    public String getLocalizedFoodName(FoodDto foodDto) {
-        Optional<String> nameUa = Optional.ofNullable(foodDto.getNameUa());
-        Optional<String> name = Optional.ofNullable(foodDto.getName());
-        return foodDto.getLocale().equals(LOCALE_UA)
+    public String getLocalizedFoodName(Food food, Locale locale) {
+        Optional<String> nameUa = Optional.ofNullable(food.getNameUa());
+        Optional<String> name = Optional.ofNullable(food.getName());
+        return locale.equals(LOCALE_UA)
                 ? nameUa.orElse(name.orElse(""))
                 : name.orElse(nameUa.orElse(""));
     }

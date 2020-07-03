@@ -1,7 +1,13 @@
 package ua.training.utils.validation;
 
 public class ValidationError {
+    /**
+     * Field on which validation failed
+     */
     private String field;
+    /**
+     * Message key in properties of en error type
+     */
     private String message;
 
     public ValidationError(String field, String message) {

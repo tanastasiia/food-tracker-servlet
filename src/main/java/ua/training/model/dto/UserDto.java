@@ -1,11 +1,9 @@
 package ua.training.model.dto;
 
-import ua.training.model.entity.User;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class UserDto implements GenericDto<UserDto, User> {
+public class UserDto {
     private Long id;
     private String username;
     private String firstName;
@@ -95,12 +93,6 @@ public class UserDto implements GenericDto<UserDto, User> {
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
-    }
-
-    @Override
-    public User toEntity() {
-        return new User.Builder().setFirstName(firstName).setLastName(lastName).setUsername(username).setActivityLevel(activityLevel)
-                .setDateOfBirth(dateOfBirth).setGender(gender).setHeight(height).setRole(role).setWeight(weight).setId(id).build();
     }
 
     @Override

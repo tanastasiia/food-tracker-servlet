@@ -25,6 +25,7 @@ public class Servlet extends HttpServlet {
     @Override
     public void init(ServletConfig servletConfig) {
 
+
         commands.put(Routes.LOGIN.getPath(), new LoginCommand());
         commands.put(Routes.LOGOUT.getPath(), new LogoutCommand());
         commands.put(Routes.HOME.getPath(), new HomeCommand());
@@ -36,7 +37,7 @@ public class Servlet extends HttpServlet {
         commands.put(Routes.ADMIN.getPath(), new AdminPageCommand());
         commands.put(Routes.CHANGE_ACCOUNT.getPath(), new ChangeAccountCommand());
         commands.put(Routes.CHANGE_USER_ROLE.getPath(), new ChangeUserRoleCommand());
-
+        commands.put(Routes.GET_FOOD_NAMES.getPath(), new GetFoodNamesCommand());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)

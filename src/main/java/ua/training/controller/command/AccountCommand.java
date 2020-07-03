@@ -4,7 +4,6 @@ import ua.training.controller.PagesToForward;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 
 public class AccountCommand implements Command {

@@ -3,15 +3,14 @@ package ua.training.model;
 import ua.training.model.constants.FoodConst;
 import ua.training.model.constants.FoodInfoConst;
 import ua.training.model.constants.MealConst;
-import ua.training.model.dto.UserMealStatDto;
-import ua.training.model.entity.*;
 import ua.training.model.constants.UserConst;
-import ua.training.model.jdbc.JDBCFoodDao;
-import ua.training.model.jdbc.JDBCUserDao;
+import ua.training.model.entity.Food;
+import ua.training.model.entity.FoodInfo;
+import ua.training.model.entity.Meal;
+import ua.training.model.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class Mapper {
 
@@ -52,7 +51,7 @@ public class Mapper {
                 .build();
     }
 
-    public static FoodInfo foodInfoWithoutUserMap(ResultSet resultSet) throws SQLException {
+    public static FoodInfo foodInfoMapWithoutUser(ResultSet resultSet) throws SQLException {
         return new FoodInfo.Builder()
                 .setId(resultSet.getLong(FoodInfoConst.ID.getColumn()))
                 .setFood(foodMap(resultSet))

@@ -11,6 +11,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Validation for validation entities
+ */
 public class Validator {
 
     public void validate(FoodDto foodDto) throws ValidationException {
