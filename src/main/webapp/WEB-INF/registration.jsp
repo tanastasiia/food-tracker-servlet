@@ -4,11 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-
-<%--<c:if test="${not empty param.lang}">
-    <fmt:setLocale value="${param.lang}" scope="session"/>
-</c:if>--%>
-
 <fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="messages"/>
 
@@ -20,7 +15,6 @@
     <title><fmt:message key="messages.title.login"/></title>
 </head>
 <body>
-
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -47,7 +41,6 @@
                 <c:otherwise>
                 </c:otherwise>
             </c:choose>
-
 
             <form action="${pageContext.request.contextPath}/foodtracker/registration" method="post">
 
@@ -86,21 +79,12 @@
                     <input id="weight" class="form-control" type=number name="weight" required/>
 
                 </div>
-                <%--<div class="form-group">
-                    <label for="age" class="control-label">
-                        <fmt:message key="messages.enter.age"/>
-                    </label>
-                    <input id="age" class="form-control" type=number name="age" required/>
-
-                </div>--%>
                 <div class="form-group">
                     <label for="dateOfBirth" class="control-label">
                         <fmt:message key="messages.enter.date.of.birth"/>
                     </label>
                     <input id="dateOfBirth" class="form-control" type=date name="dateOfBirth" required/>
-
                 </div>
-
 
                 <label class="control-label">
                     <fmt:message key="messages.enter.activity"/>

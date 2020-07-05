@@ -3,9 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-<%--<c:if test="${not empty param.lang}">
-    <fmt:setLocale value="${param.lang}" scope="session"/>
-</c:if>--%>
 <fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="messages"/>
 
@@ -32,19 +29,11 @@
 
             <h1 class="page-header"><fmt:message key="messages.title.login"/></h1>
 
-            <form action="${pageContext.request.contextPath}/foodtracker/login" method="POST" style="margin-bottom: 30px"
+            <form action="${pageContext.request.contextPath}/foodtracker/login" method="POST"
+                  style="margin-bottom: 30px"
                   name="form"
                   autocomplete="off">
 
-                <%--<div th:if="${param.error}">
-                    <div class="alert alert-danger"><p th:text="#{messages.error.invalid.username.or.password}"></p>
-                    </div>
-                </div>
-
-                <div th:if="${param.logout}">
-                    <div class="alert alert-info"><p th:text="#{messages.alert.loged.out}"></p></div>
-                </div>
---%>
                 <c:if test="${not empty param.error}">
                     <div class="alert alert-danger"><p><fmt:message
                             key="messages.error.invalid.username.or.password"/></p>
@@ -86,7 +75,8 @@
 						<span>
                             <p><fmt:message key="messages.text.new.user"/></p>
                             <a href="${pageContext.request.contextPath}/foodtracker/registration">
-                                <fmt:message key="messages.link.register"/></a>
+                                <fmt:message key="messages.link.register"/>
+                            </a>
                         </span>
                 </div>
 

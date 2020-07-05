@@ -3,13 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-<%--<c:if test="${not empty param.lang}">
-    <fmt:setLocale value="${param.lang}" scope="session"/>
-</c:if>--%>
-
 <fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="messages"/>
-
 
 <h2 class="page-header">
     <fmt:message key="messages.title.statistics.counting"/>
@@ -23,7 +18,6 @@
         <th scope="col" >
             <fmt:message key="messages.text.amount"/>
         </th>
-
     </tr>
     </thead>
     <tbody>

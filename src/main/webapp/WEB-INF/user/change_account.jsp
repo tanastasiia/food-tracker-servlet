@@ -49,8 +49,7 @@
                     <label for="firstName" class="control-label">
                         <fmt:message key="messages.enter.first.name"/>
                     </label>
-                    <input id="firstName" class="form-control" type=text name="firstName" value="${user.firstName}"
-                           required/>
+                    <input id="firstName" class="form-control" type=text name="firstName" value="${user.firstName}" required/>
                     <c:if test="${not empty error_firstName}">
                         <div class="alert alert-danger"><p>
                             <fmt:message key="${error_firstName}"/></p>
@@ -63,8 +62,7 @@
                     <label for="lastName" class="control-label">
                         <fmt:message key="messages.enter.last.name"/>
                     </label>
-                    <input id="lastName" class="form-control" type=text name="lastName" value="${user.lastName}"
-                           required/>
+                    <input id="lastName" class="form-control" type=text name="lastName" value="${user.lastName}" required/>
                     <c:if test="${not empty error_lastName}">
                         <div class="alert alert-danger"><p>
                             <fmt:message key="${error_lastName}"/></p>

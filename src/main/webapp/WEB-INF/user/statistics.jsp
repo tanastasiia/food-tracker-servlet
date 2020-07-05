@@ -3,12 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-
-<%--<c:if test="${not empty param.lang}">
-    <fmt:setLocale value="${param.lang}" scope="session"/>
-</c:if>--%>
-
-
+<fmt:setLocale value="${lang}" scope="session"/>
 <fmt:setBundle basename="messages"/>
 
 <html>
@@ -25,9 +20,7 @@
 
 <div class="container" style="margin-top: 60px">
 
-
     <c:import url="/WEB-INF/user/food_elements_sum.jsp" charEncoding="utf-8"/>
-
 
     <h2 class="page-header">
         <fmt:message key="messages.title.statistics.dates"/>
@@ -35,156 +28,165 @@
     <div id="tabs">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link" id="home-tab" data-toggle="tab" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=1" role="tab" aria-controls="home"
-                   aria-selected="true">Today</a>
+                <a class="nav-link" id="home-tab" data-toggle="tab"
+                   href="${pageContext.request.contextPath}\foodtracker\statistics?tab=1" role="tab"
+                   aria-controls="home"
+                   aria-selected="true"><fmt:message key="messages.title.today"/></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2" role="tab" aria-controls="contact"
-                   aria-selected="false">All time</a>
+                <a class="nav-link" id="contact-tab" data-toggle="tab"
+                   href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2" role="tab"
+                   aria-controls="contact"
+                   aria-selected="false"><fmt:message key="messages.title.all.time"/></a>
             </li>
         </ul>
 
-<c:choose>
-    <c:when test="${empty param.tab || param.tab==1}">
+        <c:choose>
+            <c:when test="${empty param.tab || param.tab==1}">
 
-        <div id="tabs-1">
+                <div id="tabs-1">
 
-            <table class="table">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">
-                        <fmt:message key="messages.enter.food.name"/>
-                    </th>
-                    <th scope="col">
-                        <fmt:message key="messages.enter.food.amount"/>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="meal" items="${todaysMeals}" varStatus="status">
-                    <tr>
-                        <td>${meal.foodName}</td>
-                        <td>${meal.amount}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">
+                                <fmt:message key="messages.enter.food.name"/>
+                            </th>
+                            <th scope="col">
+                                <fmt:message key="messages.enter.food.amount"/>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="meal" items="${todaysMeals}" varStatus="status">
+                            <tr>
+                                <td>${meal.foodName}</td>
+                                <td>${meal.amount}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
 
-        </div>
-    </c:when>
-    <c:otherwise>
+                </div>
+            </c:when>
+            <c:otherwise>
 
-        <div id="tabs-2">
+                <div id="tabs-2">
 
-            <table class="table">
-                <thead class="thead-light">
-                <tr>
-                    <th scope="col">
-                        <fmt:message key="messages.enter.food.name"/>
-                    </th>
-                    <th scope="col">
-                        <fmt:message key="messages.enter.food.amount"/>
-                    </th>
-                    <th scope="col">
-                        <fmt:message key="messages.enter.food.date"/>
-                    </th>
-                    <th scope="col">
-                        <fmt:message key="messages.enter.food.time"/>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="meal" items="${allMeals}" varStatus="status">
-                    <tr>
-                        <td>${meal.foodName}</td>
-                        <td>${meal.amount}</td>
-                        <td>${meal.date}</td>
-                        <td>${meal.time}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-
-
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <c:choose>
-
-                        <c:when test="${not empty param.page && param.page>1}">
-                            <li class="page-item">
-                                <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${param.page-1}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                        </c:when>
-
-                        <c:otherwise>
-                            <li class="page-item disabled">
-                                <a class="page-link" href="" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                        </c:otherwise>
-
-                    </c:choose>
+                    <table class="table">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">
+                                <fmt:message key="messages.enter.food.name"/>
+                            </th>
+                            <th scope="col">
+                                <fmt:message key="messages.enter.food.amount"/>
+                            </th>
+                            <th scope="col">
+                                <fmt:message key="messages.enter.food.date"/>
+                            </th>
+                            <th scope="col">
+                                <fmt:message key="messages.enter.food.time"/>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="meal" items="${allMeals}" varStatus="status">
+                            <tr>
+                                <td>${meal.foodName}</td>
+                                <td>${meal.amount}</td>
+                                <td>${meal.date}</td>
+                                <td>${meal.time}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
 
 
-                    <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=1">
-                            <fmt:message key="messages.button.first"/>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${numOfMealsPages}">
-                            <fmt:message key="messages.button.last"/>
-                        </a>
-                    </li>
-
-                    <c:choose>
-
-                        <c:when test="${not empty param.page}">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
                             <c:choose>
-                                <c:when test="${param.page < numOfMealsPages}">
+
+                                <c:when test="${not empty param.page && param.page>1}">
                                     <li class="page-item">
-                                        <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${param.page+1}"
+                                        <a class="page-link"
+                                           href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${param.page-1}"
                                            aria-label="Previous">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only"><fmt:message key="messages.previous"/></span>
                                         </a>
                                     </li>
                                 </c:when>
+
                                 <c:otherwise>
                                     <li class="page-item disabled">
-                                        <a class="page-link" href="" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
+                                        <a class="page-link" href="" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only"><fmt:message key="messages.next"/></span>
                                         </a>
                                     </li>
                                 </c:otherwise>
-                            </c:choose>
-                        </c:when>
 
-                        <c:otherwise>
+                            </c:choose>
+
+
                             <li class="page-item">
-                                <a class="page-link" href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${2}" aria-label="Previous">
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span class="sr-only">Next</span>
+                                <a class="page-link"
+                                   href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=1">
+                                    <fmt:message key="messages.button.first"/>
                                 </a>
                             </li>
-                        </c:otherwise>
+                            <li class="page-item">
+                                <a class="page-link"
+                                   href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${numOfMealsPages}">
+                                    <fmt:message key="messages.button.last"/>
+                                </a>
+                            </li>
 
-                    </c:choose>
+                            <c:choose>
 
-                </ul>
-            </nav>
+                                <c:when test="${not empty param.page}">
+                                    <c:choose>
+                                        <c:when test="${param.page < numOfMealsPages}">
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${param.page+1}"
+                                                   aria-label="Previous">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only"><fmt:message key="messages.next"/></span>
+                                                </a>
+                                            </li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only"><fmt:message key="messages.next"/></span>
+                                                </a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
 
-        </div>
-    </c:otherwise>
-</c:choose>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="${pageContext.request.contextPath}\foodtracker\statistics?tab=2&page=${2}"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only"><fmt:message key="messages.next"/></span>
+                                        </a>
+                                    </li>
+                                </c:otherwise>
+
+                            </c:choose>
+
+                        </ul>
+                    </nav>
+                </div>
+            </c:otherwise>
+        </c:choose>
     </div>
 
 

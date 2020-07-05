@@ -3,12 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-<%--<c:if test="${not empty param.lang}">
-    <fmt:setLocale value="${param.lang}" scope="session"/>
-</c:if>--%>
-
 <fmt:setLocale value="${lang}" scope="session"/>
-
 <fmt:setBundle basename="messages"/>
 
 <nav aria-label="breadcrumb">
