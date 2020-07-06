@@ -4,6 +4,7 @@ import ua.training.model.constants.FoodConst;
 import ua.training.model.constants.UserConst;
 import ua.training.model.dto.FoodDto;
 import ua.training.model.dto.MealDto;
+import ua.training.model.dto.PasswordDto;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.utils.validation.ValidationError;
@@ -129,5 +130,4 @@ public class ControllerUtil {
         validator.validate(user);
         return user;
     }
-
 }

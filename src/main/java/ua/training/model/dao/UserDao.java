@@ -13,6 +13,8 @@ public interface UserDao extends GenericDao<User>  {
 
     void updateUserRole(long userId, String role) throws ServerException;
 
+    void updateUserPassword(long userId, String newPassword) throws ServerException;
+
     List<User> findAll(int limit, int offset) throws ServerException;
 
     int countAll() throws ServerException;

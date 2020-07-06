@@ -79,10 +79,10 @@
         <fmt:message key="messages.button.change.account"/>
     </button>
 
-<%--    <button class="btn btn-primary" style="margin-top:30px"
-            onclick="location.href='/account/change/password'" type="button">
+    <button class="btn btn-primary" style="margin-top:30px"
+            onclick="location.href='/foodtracker/change_password'" type="button">
         <fmt:message key="messages.button.change.password"/>
-    </button>--%>
+    </button>
 
 </body>
 </html>

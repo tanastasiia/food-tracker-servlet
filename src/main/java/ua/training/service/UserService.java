@@ -115,7 +115,24 @@ public class UserService {
         try (UserDao dao = daoFactory.createUserDao()) {
             dao.updateUserRole(userId, role);
         }
+    }
 
+    /**
+     *
+     * @param oldPassword old user's password
+     * @param newPassword new user's password
+     * @param user user whose password is needed to be changed
+     * @return true if password changed and false if old password doesn't match
+     * @throws ServerException
+     */
+    public boolean changePassword(String oldPassword, String newPassword, User user) throws ServerException {
+        if(BCrypt.checkpw(oldPassword, user.getPassword())){
+            try (UserDao dao = daoFactory.createUserDao()) {
+                dao.updateUserPassword(user.getId(), BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+                return true;
+            }
+        }
+        return false;
     }
 
 }

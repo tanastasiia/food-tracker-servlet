@@ -37,6 +37,11 @@ public class JDBCUserDao implements UserDao {
                     "SET role=? " +
                     "WHERE users.id = ?";
 
+    private String UPDATE_USER_PASSWORD =
+            "UPDATE users " +
+                    "SET password=? " +
+                    "WHERE users.id = ?";
+
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -101,6 +106,18 @@ public class JDBCUserDao implements UserDao {
     public void updateUserRole(long userId, String role) throws ServerException {
         try (PreparedStatement query = connection.prepareStatement(UPDATE_USER_ROLE)) {
             query.setString(1, role);
+            query.setLong(2, userId);
+            query.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            throw new ServerException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateUserPassword(long userId, String newPassword) throws ServerException {
+        try (PreparedStatement query = connection.prepareStatement(UPDATE_USER_PASSWORD)) {
+            query.setString(1, newPassword);
             query.setLong(2, userId);
             query.executeUpdate();
         } catch (SQLException e) {
