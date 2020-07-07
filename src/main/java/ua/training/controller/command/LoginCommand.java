@@ -3,11 +3,11 @@ package ua.training.controller.command;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
-import ua.training.controller.Routes;
+import ua.training.controller.Paths;
+import ua.training.controller.RoutesToRedirect;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.service.UserService;
-import ua.training.utils.ControllerUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +19,7 @@ public class LoginCommand implements Command {
     private Logger logger = LogManager.getLogger(LoginCommand.class.getName());
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Paths execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         if (!request.getMethod().equalsIgnoreCase("POST")) {
             return PagesToForward.LOGIN;
@@ -38,9 +38,7 @@ public class LoginCommand implements Command {
             session.setAttribute("isAdmin", user.get().getRole().equals(Role.ROLE_ADMIN.name()));
 
             logger.info("User logged in: " + user.get());
-            response.sendRedirect(Routes.HOME.getPath());
-
-            return PagesToForward.NONE;
+            return RoutesToRedirect.HOME;
         } else {
             logger.info("Authentication error");
             request.setAttribute("authError", true);

@@ -1,8 +1,10 @@
 package ua.training.controller.filters;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+@WebFilter(urlPatterns = {"/*"})
 public class EncodingFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {

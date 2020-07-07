@@ -48,11 +48,10 @@ public class FoodInfoService {
      *
      * @param foodDto  food to save
      * @param user     adder
-     * @param isGlobal true if visible for all users, fasle if only for adder
      * @return Optional of saved food
      * @throws ServerException
      */
-    public Optional<FoodInfo> saveFood(FoodDto foodDto, User user, Boolean isGlobal) throws ServerException {
+    public Optional<FoodInfo> saveFood(FoodDto foodDto, User user) throws ServerException {
         Food.Builder foodBuilder = new Food.Builder()
                 .setCarbs(ServiceUtil.getInstance().toGrams(foodDto.getCarbs()))
                 .setProtein(ServiceUtil.getInstance().toGrams(foodDto.getProtein()))
@@ -74,7 +73,7 @@ public class FoodInfoService {
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
             return Optional.ofNullable(dao.saveFood(new FoodInfo.Builder()
                     .setFood(foodBuilder.build())
-                    .setIsGlobal(isGlobal)
+                    .setIsGlobal(foodDto.getGlobal())
                     .setUser(user).build()));
         } catch (SQLException e) {
             throw new ServerException(e.getMessage());

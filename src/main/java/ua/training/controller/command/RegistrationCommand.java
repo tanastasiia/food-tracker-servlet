@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
+import ua.training.controller.Paths;
 import ua.training.model.entity.User;
 import ua.training.service.UserService;
 import ua.training.utils.ControllerUtil;
@@ -18,7 +19,7 @@ public class RegistrationCommand implements Command {
     private Logger logger = LogManager.getLogger(RegistrationCommand.class.getName());
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) {
+    public Paths execute(HttpServletRequest request, HttpServletResponse response) {
 
         if (controllerUtil.isMethodGet(request)) {
             return PagesToForward.REGISTRATION;

@@ -1,6 +1,7 @@
 package ua.training.controller.command;
 
 import ua.training.controller.PagesToForward;
+import ua.training.controller.Paths;
 import ua.training.service.FoodInfoService;
 import ua.training.service.MealService;
 import ua.training.utils.ControllerUtil;
@@ -16,7 +17,7 @@ public class HomeCommand implements Command {
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
+    public Paths execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
 
         request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request)));
         request.getSession().setAttribute("todaysCalories", MealService.getInstance().todaysUserCalories(controllerUtil.getUserId(request)));

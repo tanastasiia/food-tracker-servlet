@@ -1,5 +1,12 @@
 package ua.training.controller;
 
+import ua.training.model.entity.Role;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 public enum PagesToForward implements Paths {
 
     LOGIN("/WEB-INF/login.jsp"),
@@ -17,14 +24,19 @@ public enum PagesToForward implements Paths {
     NONE(""),
     ERROR("/WEB-INF/error.jsp");
 
-
     private String path;
 
     PagesToForward(String path) {
         this.path = path;
     }
 
+    @Override
     public String getPath() {
         return path;
+    }
+
+    @Override
+    public void go(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.getRequestDispatcher(path).forward(request, response);
     }
 }

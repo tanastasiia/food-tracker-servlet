@@ -1,6 +1,7 @@
 package ua.training.controller.command;
 
 import ua.training.controller.PagesToForward;
+import ua.training.controller.Paths;
 import ua.training.model.entity.User;
 import ua.training.service.MealService;
 import ua.training.utils.Constants;
@@ -19,7 +20,7 @@ public class StatisticsCommand implements Command {
     private MealService mealService = MealService.getInstance();
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
+    public Paths execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
 
         Locale locale = controllerUtil.getLocale(request);
 
@@ -28,7 +29,8 @@ public class StatisticsCommand implements Command {
 
         if (request.getParameter("tab") == null || request.getParameter("tab").equals("1")) {
             request.setAttribute("todaysMeals", mealService.todaysUserMeals(controllerUtil.getUserId(request), locale));
-        } else {
+        }
+        else {
             int page = controllerUtil.getPage(request);
             int offset = controllerUtil.getOffset(page, Constants.PAGE_SIZE);
 

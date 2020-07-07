@@ -1,6 +1,7 @@
 package ua.training.controller.command;
 
 import ua.training.controller.PagesToForward;
+import ua.training.controller.Paths;
 import ua.training.service.FoodInfoService;
 import ua.training.service.MealService;
 import ua.training.service.UserService;
@@ -20,7 +21,7 @@ public class AdminPageCommand implements Command {
     private FoodInfoService foodInfoService = FoodInfoService.getInstance();
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
+    public Paths execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
 
         int page = controllerUtil.getPage(request);
         int offset = controllerUtil.getOffset(page, Constants.PAGE_SIZE);

@@ -2,9 +2,9 @@ package ua.training.controller.command;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import ua.training.controller.PagesToForward;
-import ua.training.controller.Routes;
-import ua.training.utils.ControllerUtil;
+import ua.training.controller.Paths;
+import ua.training.controller.RoutesToRedirect;
+import ua.training.model.entity.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,17 +16,16 @@ public class LogoutCommand implements Command {
     private Logger logger = LogManager.getLogger(LogoutCommand.class.getName());
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Paths execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
-        session.removeAttribute("role");
+        session.setAttribute("role", Role.ROLE_GUEST.name());
         session.removeAttribute("user");
         session.removeAttribute("userId");
         session.removeAttribute("isAdmin");
 
         logger.info("User logged out");
-        response.sendRedirect(Routes.LOGIN.getPath() + "?logout=true");
+        return RoutesToRedirect.LOGIN_LOGOUT;
 
-        return PagesToForward.NONE;
     }
 }

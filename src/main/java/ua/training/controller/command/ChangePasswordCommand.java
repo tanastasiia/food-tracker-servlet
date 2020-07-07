@@ -3,6 +3,7 @@ package ua.training.controller.command;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
+import ua.training.controller.Paths;
 import ua.training.model.constants.UserConst;
 import ua.training.service.UserService;
 import ua.training.utils.ControllerUtil;
@@ -17,7 +18,7 @@ public class ChangePasswordCommand implements Command {
     private Logger logger = LogManager.getLogger(ChangePasswordCommand.class.getName());
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Paths execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (ControllerUtil.getInst().isMethodGet(request)){
             request.removeAttribute("success");
             return PagesToForward.CHANGE_PASSWORD;

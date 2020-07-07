@@ -1,7 +1,7 @@
 package ua.training.controller.command;
 
-import ua.training.controller.PagesToForward;
-import ua.training.controller.Routes;
+import ua.training.controller.Paths;
+import ua.training.controller.RoutesToRedirect;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,10 +9,9 @@ import java.io.IOException;
 
 public class EmptyCommand implements Command {
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Paths execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        response.sendRedirect(Routes.HOME.getPath());
-        return PagesToForward.NONE;
+        return RoutesToRedirect.HOME;
 
     }
 }
