@@ -12,7 +12,7 @@ import java.io.IOException;
 public class ChangePasswordCommand implements Command {
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (request.getMethod().equals("GET")){
+        if (ControllerUtil.getInst().isMethodGet(request)){
             request.removeAttribute("success");
             return PagesToForward.CHANGE_PASSWORD;
         }

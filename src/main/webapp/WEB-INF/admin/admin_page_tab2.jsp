@@ -37,6 +37,9 @@
             <th scope="col">
                 <fmt:message key="messages.global"/>
             </th>
+            <th scope="col">
+                <fmt:message key="messages.button.change"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -72,6 +75,14 @@
                 </c:choose>
 
                 <td><fmt:message key="${foodInfo.isGlobal}"/></td>
+
+                <td>
+                    <div>
+                        <button type="submit" class="btn btn-success"  onclick="location.href='/foodtracker/admin/change_food?foodId=${foodInfo.food.id}'">
+                            <fmt:message key="messages.button.change"/>
+                        </button>
+                    </div>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

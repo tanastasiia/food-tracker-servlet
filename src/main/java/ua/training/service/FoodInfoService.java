@@ -2,6 +2,7 @@ package ua.training.service;
 
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.FoodInfoDao;
+import ua.training.model.dao.UserDao;
 import ua.training.model.dto.FoodDto;
 import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
@@ -33,6 +34,12 @@ public class FoodInfoService {
 
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
             return dao.findAllByFoodNameOrFoodNameUaAndUserIdOrGlobal(foodName, userId);
+        }
+    }
+
+    public Optional<FoodInfo> findByFoodId(Long foodId) throws ServerException {
+        try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
+            return dao.findByFoodId(foodId);
         }
     }
 
@@ -110,6 +117,23 @@ public class FoodInfoService {
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
             return dao.countAll();
         }
+    }
+
+    public void updateFood(FoodDto foodDto, Long foodId) throws ServerException {
+
+        Food food = new Food.Builder()
+                .setId(foodId)
+                .setName(foodDto.getName())
+                .setNameUa(foodDto.getNameUa())
+                .setCarbs(ServiceUtil.getInstance().toGrams(foodDto.getCarbs()))
+                .setProtein(ServiceUtil.getInstance().toGrams(foodDto.getProtein()))
+                .setFat(ServiceUtil.getInstance().toGrams(foodDto.getFat()))
+                .setCalories(foodDto.getCalories())
+                .build();
+        try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
+            dao.updateFoodInfo(new FoodInfo.Builder().setFood(food).setIsGlobal(foodDto.getGlobal()).build());
+        }
+
     }
 
 }

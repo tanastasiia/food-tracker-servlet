@@ -13,6 +13,7 @@ public class FoodDto {
     private BigDecimal fat;
     private Integer calories;
     private Locale locale;
+    private Boolean isGlobal;
 
     @Override
     public String toString() {
@@ -24,6 +25,7 @@ public class FoodDto {
                 ", fat=" + fat.setScale(2, RoundingMode.HALF_UP).toString() +
                 ", calories=" + calories +
                 ", locale=" + locale +
+                ", isGlobal=" + isGlobal +
                 '}';
     }
 
@@ -83,6 +85,14 @@ public class FoodDto {
         return locale;
     }
 
+    public Boolean getGlobal() {
+        return isGlobal;
+    }
+
+    public void setGlobal(Boolean global) {
+        isGlobal = global;
+    }
+
     public static class Builder {
         private FoodDto foodDto;
 
@@ -122,6 +132,11 @@ public class FoodDto {
 
         public FoodDto.Builder setLocale(Locale locale) {
             this.foodDto.locale = locale;
+            return this;
+        }
+
+        public FoodDto.Builder setIsGlobal(Boolean isGlobal) {
+            this.foodDto.isGlobal = isGlobal;
             return this;
         }
 

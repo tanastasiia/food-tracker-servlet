@@ -17,6 +17,7 @@ public enum Routes implements Paths {
     CHANGE_ACCOUNT( APP.getPath() + "/change_account" ),
     CHANGE_USER_ROLE( APP.getPath() + "/change_role" ),
     CHANGE_USER_PASSWORD( APP.getPath() + "/change_password" ),
+    CHANGE_FOOD( APP.getPath() + "/admin/change_food" ),
     GET_FOOD_NAMES(APP.getPath() + "/get_food_names");
 
     private String path;

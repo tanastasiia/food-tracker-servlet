@@ -4,6 +4,7 @@ import ua.training.model.Mapper;
 import ua.training.model.dao.FoodInfoDao;
 import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
+import ua.training.model.entity.User;
 
 import java.rmi.ServerException;
 import java.sql.*;
@@ -39,6 +40,17 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
             "FROM food_info " +
             "LEFT OUTER JOIN food ON food_info.food_id=food.id " +
             "WHERE food_info.adder_user_id = ? OR food_info.is_global=TRUE";
+
+    private String UPDATE_FOOD_INFO =
+            "UPDATE food_info " +
+                    "LEFT OUTER JOIN food ON food_info.food_id=food.id " +
+                    "SET food.name=?, food.name_ua=?, food.carbs_mg=?, food.fat_mg=?, food.protein_mg=?, food.calories=?, " +
+                    "food_info.is_global=? " +
+                    "WHERE food_info.food_id=? ";
+
+    private String FIND_BY_FOOD_ID = "SELECT * FROM food_info " +
+            "LEFT OUTER JOIN food ON food_info.food_id=food.id " +
+            "WHERE food_info.food_id=? ";
 
     public JDBCFoodInfoDao(Connection connection) {
         this.connection = connection;
@@ -197,4 +209,39 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
         }
         return count;
     }
+
+    @Override
+    public void updateFoodInfo(FoodInfo foodInfo) throws ServerException {
+        try (PreparedStatement query = connection.prepareStatement(UPDATE_FOOD_INFO)) {
+            query.setString(1, foodInfo.getFood().getName());
+            query.setString(2, foodInfo.getFood().getNameUa());
+            query.setInt(3, foodInfo.getFood().getCarbs());
+            query.setInt(4, foodInfo.getFood().getFat());
+            query.setInt(5,foodInfo.getFood().getProtein());
+            query.setInt(6, foodInfo.getFood().getCalories());
+            query.setBoolean(7, foodInfo.getIsGlobal());
+            query.setLong(8, foodInfo.getFood().getId());
+            query.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            throw new ServerException(e.getMessage());
+        }
+    }
+
+    @Override
+    public Optional<FoodInfo> findByFoodId(Long foodId) throws ServerException {
+        Optional<FoodInfo> foodInfo = Optional.empty();
+        try (PreparedStatement query = connection.prepareStatement(FIND_BY_FOOD_ID)) {
+            query.setLong(1, foodId);
+            ResultSet resultSet = query.executeQuery();
+            if (resultSet.next()) {
+                foodInfo = Optional.of(Mapper.foodInfoMapWithoutUser(resultSet));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            throw new ServerException(e.getMessage());
+        }
+        return foodInfo;
+    }
 }
+

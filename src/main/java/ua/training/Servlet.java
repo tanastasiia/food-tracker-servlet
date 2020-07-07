@@ -38,6 +38,7 @@ public class Servlet extends HttpServlet {
         commands.put(Routes.CHANGE_ACCOUNT.getPath(), new ChangeAccountCommand());
         commands.put(Routes.CHANGE_USER_ROLE.getPath(), new ChangeUserRoleCommand());
         commands.put(Routes.CHANGE_USER_PASSWORD.getPath(), new ChangePasswordCommand());
+        commands.put(Routes.CHANGE_FOOD.getPath(), new ChangeFoodCommand());
         commands.put(Routes.GET_FOOD_NAMES.getPath(), new GetFoodNamesCommand());
     }
 

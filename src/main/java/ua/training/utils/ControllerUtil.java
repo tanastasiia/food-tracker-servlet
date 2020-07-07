@@ -1,10 +1,11 @@
 package ua.training.utils;
 
 import ua.training.model.constants.FoodConst;
+import ua.training.model.constants.FoodInfoConst;
 import ua.training.model.constants.UserConst;
 import ua.training.model.dto.FoodDto;
 import ua.training.model.dto.MealDto;
-import ua.training.model.dto.PasswordDto;
+import ua.training.model.entity.FoodInfo;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.utils.validation.ValidationError;
@@ -73,7 +74,7 @@ public class ControllerUtil {
         request.getSession().removeAttribute("lastAdd");
     }
 
-    public void setErrorAttributes(HttpServletRequest request, List<ValidationError> errors){
+    public void setErrorAttributes(HttpServletRequest request, List<ValidationError> errors) {
         errors.forEach(error -> request.setAttribute("error_" + error.getField(), error.getMessage()));
     }
 
@@ -85,6 +86,7 @@ public class ControllerUtil {
                 .setCalories(Integer.parseInt(request.getParameter(FoodConst.CALORIES.getField())))
                 .setName(request.getParameter(FoodConst.NAME.getField()))
                 .setNameUa(request.getParameter(FoodConst.NAME_UA.getField()))
+                .setIsGlobal(request.getParameter(FoodInfoConst.IS_GLOBAL.getField()) != null)
                 .setLocale((Locale) request.getSession().getAttribute("lang"))
                 .build();
         validator.validate(foodDto);
