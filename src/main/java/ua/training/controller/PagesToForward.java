@@ -15,7 +15,7 @@ public enum PagesToForward implements Paths {
     CHANGE_FOOD("/WEB-INF/admin/change_food.jsp"),
 
     NONE(""),
-    REFERER("");
+    ERROR("/WEB-INF/error.jsp");
 
 
     private String path;

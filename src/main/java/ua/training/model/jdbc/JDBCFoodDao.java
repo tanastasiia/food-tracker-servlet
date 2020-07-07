@@ -1,5 +1,8 @@
 package ua.training.model.jdbc;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import ua.training.controller.command.LoginCommand;
 import ua.training.model.Mapper;
 import ua.training.model.dao.FoodDao;
 import ua.training.model.entity.Food;
@@ -7,11 +10,11 @@ import ua.training.model.entity.Food;
 import java.rmi.ServerException;
 import java.sql.*;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class JDBCFoodDao implements FoodDao {
 
     private Connection connection;
+    private Logger logger = LogManager.getLogger(JDBCFoodDao.class.getName());
 
     private String FIND_BY_NAME = "select * from food WHERE name=?";
 
@@ -34,6 +37,7 @@ public class JDBCFoodDao implements FoodDao {
                 food = Optional.of(Mapper.foodMap(resultSet));
             }
         } catch (Exception e) {
+            logger.error("Error finding by id=" + id + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return food;
@@ -45,6 +49,7 @@ public class JDBCFoodDao implements FoodDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("Error closing: " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -68,7 +73,7 @@ public class JDBCFoodDao implements FoodDao {
             }
             return food;
         } catch (SQLException e) {
-            Logger.getLogger(JDBCFoodDao.class.getName()).severe("Food creation error: " + e.getMessage());
+            logger.error("Error creating food=" + food + ": " + e);
             throw new ServerException(e.getMessage());
         }
 
@@ -84,7 +89,7 @@ public class JDBCFoodDao implements FoodDao {
                 food = Optional.of(Mapper.foodMap(resultSet));
             }
         } catch (Exception e) {
-            Logger.getLogger(JDBCFoodDao.class.getName()).severe("findByName eror: " + e.getMessage());
+            logger.error("Error finding by name=" + name + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return food;

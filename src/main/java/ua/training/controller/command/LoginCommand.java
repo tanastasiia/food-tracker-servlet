@@ -1,5 +1,7 @@
 package ua.training.controller.command;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
 import ua.training.controller.Routes;
 import ua.training.model.entity.Role;
@@ -12,11 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class LoginCommand implements Command {
-    private ControllerUtil controllerUtil = ControllerUtil.getInst();
-    //private static final Logger LOGGER = LogManager.getLogger(LoginCommand.class);
+    private Logger logger = LogManager.getLogger(LoginCommand.class.getName());
 
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -29,6 +29,7 @@ public class LoginCommand implements Command {
         String password = request.getParameter("password");
 
         Optional<User> user = UserService.getInstance().authentication(username, password);
+
         if (user.isPresent()) {
             HttpSession session = request.getSession();
             session.setAttribute("role", user.get().getRole());
@@ -36,12 +37,12 @@ public class LoginCommand implements Command {
             session.setAttribute("userId", user.get().getId());
             session.setAttribute("isAdmin", user.get().getRole().equals(Role.ROLE_ADMIN.name()));
 
-            Logger.getLogger(LoginCommand.class.getName()).info("User logged in: " + user.get());
+            logger.info("User logged in: " + user.get());
             response.sendRedirect(Routes.HOME.getPath());
 
             return PagesToForward.NONE;
         } else {
-            Logger.getLogger(LoginCommand.class.getName()).info("Authentication error");
+            logger.info("Authentication error");
             request.setAttribute("authError", true);
             return PagesToForward.LOGIN;
         }

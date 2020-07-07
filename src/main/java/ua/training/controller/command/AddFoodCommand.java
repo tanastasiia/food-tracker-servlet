@@ -1,5 +1,7 @@
 package ua.training.controller.command;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
 import ua.training.controller.Routes;
 import ua.training.model.constants.FoodInfoConst;
@@ -19,15 +21,16 @@ public class AddFoodCommand implements Command {
 
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
     private FoodInfoService foodInfoService = FoodInfoService.getInstance();
+    private Logger logger = LogManager.getLogger(AddFoodCommand.class.getName());
 
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) {
 
         try {
-            FoodDto foodDto = controllerUtil.parseFoodDto(request);
-
-            Optional<FoodInfo> savedFoodInfo = foodInfoService.saveFood(foodDto, controllerUtil.getUser(request),
-                            request.getParameter(FoodInfoConst.IS_GLOBAL.getField()) != null);
+            Optional<FoodInfo> savedFoodInfo = foodInfoService.saveFood(
+                    controllerUtil.parseFoodDto(request),
+                    controllerUtil.getUser(request),
+                    request.getParameter(FoodInfoConst.IS_GLOBAL.getField()) != null);
 
             controllerUtil.setAddSuccessOrFailAttributesHomePage(request, savedFoodInfo.isPresent(), "food");
 
@@ -35,9 +38,10 @@ public class AddFoodCommand implements Command {
             return PagesToForward.NONE;
 
         } catch (ValidationException e) {
+            logger.info("Validation errors: " + e.getErrors());
             controllerUtil.setErrorAttributes(request, e.getErrors());
         } catch (Exception e){
-            e.printStackTrace();
+            logger.info("Exception: " + e);
             request.setAttribute("food_input_error", ValidationErrorMessages.INCORRECT_INPUT);
         }
         request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request)));

@@ -1,5 +1,7 @@
 package ua.training.controller.command;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
 import ua.training.controller.Routes;
 import ua.training.model.dto.MealDto;
@@ -18,6 +20,7 @@ import java.util.Optional;
 
 public class AddMealCommand implements Command {
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
+    private Logger logger = LogManager.getLogger(AddFoodCommand.class.getName());
 
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -39,6 +42,7 @@ public class AddMealCommand implements Command {
 
 
         } catch (ValidationException e) {
+            logger.info("Validation errors: " + e.getErrors());
             controllerUtil.setErrorAttributes(request, e.getErrors());
         } catch (Exception e){
             request.setAttribute("meal_input_error", ValidationErrorMessages.INCORRECT_INPUT);

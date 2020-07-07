@@ -1,21 +1,22 @@
 package ua.training.model.jdbc;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.Mapper;
 import ua.training.model.dao.FoodInfoDao;
 import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
-import ua.training.model.entity.User;
 
 import java.rmi.ServerException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class JDBCFoodInfoDao implements FoodInfoDao {
 
     private Connection connection;
+    private Logger logger = LogManager.getLogger(JDBCFoodInfoDao.class.getName());
 
     private String FIND_ALL_BY_FOOD_NAME_OR_FOOD_NAME_UA_AND_USER_ID_OR_GLOBAL =
             "SELECT * FROM food_info " +
@@ -61,7 +62,7 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());
+            logger.error("Error closing: " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -83,13 +84,13 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
             return foodInfo;
 
         } catch (SQLException e) {
-            Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());
+            logger.error("Error creating foodInfo=" + foodInfo + ": " + e);
             throw new ServerException(e.getMessage());
         }
     }
 
     @Override
-    public FoodInfo saveFood(FoodInfo foodInfo) throws SQLException, ServerException {
+    public FoodInfo saveFood(FoodInfo foodInfo) throws ServerException {
 
         Food food = foodInfo.getFood();
 
@@ -129,8 +130,13 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
             }
             connection.commit();
         } catch (SQLException e) {
-            connection.rollback();
-            Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());
+            logger.error("Error saving food=" + food + ": " + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                logger.error("Error rollback saving food=" + food + ": " + ex);
+                throw new ServerException(ex.getMessage());
+            }
             throw new ServerException(e.getMessage());
         }
         return foodInfo;
@@ -147,7 +153,7 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
                 foodInfos.add(Mapper.foodInfoMap(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());
+            logger.error("Error finding all: " + e);
             throw new ServerException(e.getMessage());
         }
         return foodInfos;
@@ -163,7 +169,7 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
                 foodInfos.add(Mapper.foodInfoMapWithoutUser(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());
+            logger.error("Error finding users food with userId=" + userId + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return foodInfos;
@@ -188,8 +194,8 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
             if (resultSet.next()) {
                 foodInfo = Optional.of(Mapper.foodInfoMap(resultSet));
             }
-        } catch (Exception e) {
-            Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());
+        } catch (SQLException e) {
+            logger.error("Error finding users food with userId=" + userId + " foodName=" + foodName + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return foodInfo;
@@ -204,7 +210,7 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
                 count = resultSet.getInt("count");
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCFoodInfoDao.class.getName()).severe(e.getMessage());
+            logger.error("Error counting all: " + e);
             throw new ServerException(e.getMessage());
         }
         return count;
@@ -217,13 +223,13 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
             query.setString(2, foodInfo.getFood().getNameUa());
             query.setInt(3, foodInfo.getFood().getCarbs());
             query.setInt(4, foodInfo.getFood().getFat());
-            query.setInt(5,foodInfo.getFood().getProtein());
+            query.setInt(5, foodInfo.getFood().getProtein());
             query.setInt(6, foodInfo.getFood().getCalories());
             query.setBoolean(7, foodInfo.getIsGlobal());
             query.setLong(8, foodInfo.getFood().getId());
             query.executeUpdate();
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error updating foodInfo=" + foodInfo + ": " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -238,7 +244,7 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
                 foodInfo = Optional.of(Mapper.foodInfoMapWithoutUser(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error finding by foodId=" + foodId + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return foodInfo;

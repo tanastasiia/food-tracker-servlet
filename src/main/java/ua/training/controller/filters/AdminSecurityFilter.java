@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/foodtracker/admin"})
+@WebFilter(urlPatterns = {"/foodtracker/admin", "/foodtracker/change_role", "/foodtracker/admin/change_food"})
 public class AdminSecurityFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) {
     }

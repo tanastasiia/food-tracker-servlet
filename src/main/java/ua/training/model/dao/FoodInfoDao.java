@@ -19,7 +19,7 @@ public interface FoodInfoDao  extends GenericDao<FoodInfo> {
 
     Optional<FoodInfo> findAllByFoodNameOrFoodNameUaAndUserIdOrGlobal(String foodName, Long userId) throws ServerException;
 
-    public List<FoodInfo> findAllUserFood(long userId) throws ServerException;
+    List<FoodInfo> findAllUserFood(long userId) throws ServerException;
 
     void updateFoodInfo(FoodInfo foodInfo) throws ServerException;
 

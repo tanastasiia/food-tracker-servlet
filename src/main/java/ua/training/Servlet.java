@@ -2,6 +2,8 @@ package ua.training;
 
 //import org.apache.logging.log4j.LogManager;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.controller.command.*;
 import ua.training.controller.Routes;
 import ua.training.controller.PagesToForward;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.rmi.ServerException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,17 +58,20 @@ public class Servlet extends HttpServlet {
 
     }
 
-    private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String path = request.getRequestURI();
 
         Command command = commands.getOrDefault(path, new EmptyCommand());
 
-        Paths page = command.execute(request, response);
-
-        if (!page.equals(PagesToForward.NONE)) {
+        try {
+            Paths page = command.execute(request, response);
+            if (!page.equals(PagesToForward.NONE)) {
                 request.getRequestDispatcher(page.getPath()).forward(request, response);
+            }
+        } catch (IOException e) {
+            LogManager.getRootLogger().error(e);
+            request.getRequestDispatcher(PagesToForward.ERROR.getPath()).forward(request, response);
         }
     }
 

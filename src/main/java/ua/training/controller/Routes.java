@@ -20,7 +20,8 @@ public enum Routes implements Paths {
     CHANGE_FOOD( APP.getPath() + "/admin/change_food" ),
     GET_FOOD_NAMES(APP.getPath() + "/get_food_names");
 
-    private String path;
+    private final String path;
+
     Routes(String path){
         this.path = path;
     }

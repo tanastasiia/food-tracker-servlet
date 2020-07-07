@@ -1,5 +1,7 @@
 package ua.training.model.jdbc;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.Mapper;
 import ua.training.model.dao.UserDao;
 import ua.training.model.entity.User;
@@ -9,10 +11,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;
+    private Logger logger = LogManager.getLogger(JDBCMealDao.class.getName());
 
     private String FIND_ALL_BY_USERNAME = "select * from users where username = ?";
 
@@ -52,7 +54,7 @@ public class JDBCUserDao implements UserDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error closing: " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -79,7 +81,7 @@ public class JDBCUserDao implements UserDao {
             }
             return user;
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error creating user=" + user + ": " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -97,7 +99,7 @@ public class JDBCUserDao implements UserDao {
             query.setLong(8, newUser.getId());
             query.executeUpdate();
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error updating user=" + newUser + ": " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -109,7 +111,7 @@ public class JDBCUserDao implements UserDao {
             query.setLong(2, userId);
             query.executeUpdate();
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error updating user role: " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -121,7 +123,7 @@ public class JDBCUserDao implements UserDao {
             query.setLong(2, userId);
             query.executeUpdate();
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error updating password: " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -137,7 +139,7 @@ public class JDBCUserDao implements UserDao {
                 users.add(Mapper.userMap(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error closing: " + e);
             throw new ServerException(e.getMessage());
         }
         return users;
@@ -154,7 +156,7 @@ public class JDBCUserDao implements UserDao {
                 user = Optional.of(Mapper.userMap(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error finding by username=" + username + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return user;
@@ -169,7 +171,7 @@ public class JDBCUserDao implements UserDao {
                 count = resultSet.getInt("count");
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCUserDao.class.getName()).severe(e.getMessage());
+            logger.error("Error counting: " + e);
             throw new ServerException(e.getMessage());
         }
         return count;

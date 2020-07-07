@@ -1,5 +1,7 @@
 package ua.training.controller.command;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
 import ua.training.controller.Routes;
 import ua.training.model.dto.FoodDto;
@@ -16,6 +18,7 @@ public class ChangeFoodCommand implements Command {
 
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
     private FoodInfoService foodInfoService = FoodInfoService.getInstance();
+    private Logger logger = LogManager.getLogger(ChangeFoodCommand.class.getName());
 
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -30,6 +33,7 @@ public class ChangeFoodCommand implements Command {
             response.sendRedirect(Routes.ADMIN.getPath());
             return PagesToForward.NONE;
         } catch (ValidationException e) {
+            logger.info("Validation errors: " + e.getErrors());
             controllerUtil.setErrorAttributes(request, e.getErrors());
             foodInfoService.findByFoodId(Long.parseLong(request.getParameter("foodId")))
                     .ifPresent(foodInfo -> request.setAttribute("foodInfo", foodInfo));

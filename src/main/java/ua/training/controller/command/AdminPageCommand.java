@@ -10,6 +10,7 @@ import ua.training.utils.ControllerUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.rmi.ServerException;
 
 public class AdminPageCommand implements Command {
 
@@ -19,7 +20,7 @@ public class AdminPageCommand implements Command {
     private FoodInfoService foodInfoService = FoodInfoService.getInstance();
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
 
         int page = controllerUtil.getPage(request);
         int offset = controllerUtil.getOffset(page, Constants.PAGE_SIZE);

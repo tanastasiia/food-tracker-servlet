@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/foodtracker/home", "/foodtracker/statistics"})
+@WebFilter(urlPatterns = {"/foodtracker/home",
+        "/foodtracker/account", "/foodtracker/change_account",  "/foodtracker/add_meal",
+        "/foodtracker/add_food",  "/foodtracker/add_food", "/foodtracker/statistics",
+        "/foodtracker/get_food_names", "/foodtracker/change_password"})
 public class UserSecurityFilter implements Filter {
 
     @Override

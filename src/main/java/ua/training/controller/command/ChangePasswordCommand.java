@@ -1,5 +1,7 @@
 package ua.training.controller.command;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
 import ua.training.model.constants.UserConst;
 import ua.training.service.UserService;
@@ -10,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ChangePasswordCommand implements Command {
+
+    private ControllerUtil controllerUtil = ControllerUtil.getInst();
+    private Logger logger = LogManager.getLogger(ChangePasswordCommand.class.getName());
+
     @Override
     public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (ControllerUtil.getInst().isMethodGet(request)){
@@ -19,7 +25,10 @@ public class ChangePasswordCommand implements Command {
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
 
-        request.setAttribute("success", UserService.getInstance().changePassword(oldPassword, newPassword, ControllerUtil.getInst().getUser(request)));
+        boolean isPasswordChanged = UserService.getInstance().changePassword(oldPassword, newPassword, ControllerUtil.getInst().getUser(request));
+
+        request.setAttribute("success", isPasswordChanged);
+        logger.info("For user with id=" + controllerUtil.getUserId(request) + " password changed: " + isPasswordChanged);
 
         return PagesToForward.CHANGE_PASSWORD;
 

@@ -10,6 +10,7 @@ import ua.training.utils.ServiceUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.rmi.ServerException;
 import java.util.Locale;
 
 public class StatisticsCommand implements Command {
@@ -18,7 +19,7 @@ public class StatisticsCommand implements Command {
     private MealService mealService = MealService.getInstance();
 
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
 
         Locale locale = controllerUtil.getLocale(request);
 

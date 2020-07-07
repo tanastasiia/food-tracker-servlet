@@ -1,5 +1,7 @@
 package ua.training.model;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.dao.FoodDao;
 import ua.training.model.dao.FoodInfoDao;
 import ua.training.model.dao.MealDao;
@@ -41,6 +43,7 @@ public class JDBCDaoFactory extends DaoFactory {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
+            LogManager.getLogger(JDBCDaoFactory.class.getName()).fatal("Error getting connection: " + e);
             throw new RuntimeException(e);
         }
     }

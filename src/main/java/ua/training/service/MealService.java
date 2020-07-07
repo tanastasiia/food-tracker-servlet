@@ -203,7 +203,6 @@ public class MealService {
         Optional<String> name = Optional.ofNullable(meal.getFood().getName());
 
         return locale.equals(Constants.LOCALE_UA) ? nameUa.orElse(name.orElse("")) : name.orElse(nameUa.orElse(""));
-
     }
 
 

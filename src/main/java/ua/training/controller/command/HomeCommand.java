@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.rmi.ServerException;
 
 public class HomeCommand implements Command {
+
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
+
     @Override
-    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public PagesToForward execute(HttpServletRequest request, HttpServletResponse response) throws ServerException {
 
         request.setAttribute("caloriesNorm", ServiceUtil.getInstance().countCaloriesNorm(controllerUtil.getUser(request)));
         request.getSession().setAttribute("todaysCalories", MealService.getInstance().todaysUserCalories(controllerUtil.getUserId(request)));

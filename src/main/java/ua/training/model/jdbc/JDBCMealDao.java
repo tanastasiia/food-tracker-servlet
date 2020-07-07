@@ -1,5 +1,7 @@
 package ua.training.model.jdbc;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.model.Mapper;
 import ua.training.model.dao.MealDao;
 import ua.training.model.entity.Meal;
@@ -9,10 +11,11 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class JDBCMealDao implements MealDao {
+
     private Connection connection;
+    private Logger logger = LogManager.getLogger(JDBCMealDao.class.getName());
 
     public JDBCMealDao(Connection connection) {
         this.connection = connection;
@@ -70,6 +73,7 @@ public class JDBCMealDao implements MealDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            logger.error("Error closing: " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -90,7 +94,7 @@ public class JDBCMealDao implements MealDao {
             }
             return meal;
         } catch (SQLException e) {
-            Logger.getLogger(JDBCMealDao.class.getName()).severe(e.getMessage());
+            logger.error("Error creating meal=" + meal + ": " + e);
             throw new ServerException(e.getMessage());
         }
     }
@@ -106,7 +110,7 @@ public class JDBCMealDao implements MealDao {
                 meals.add(Mapper.mealFoodMap(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCMealDao.class.getName()).severe(e.getMessage());
+            logger.error("Error findAll: " + e);
             throw new ServerException(e.getMessage());
         }
         return meals;
@@ -124,7 +128,7 @@ public class JDBCMealDao implements MealDao {
                 meals.add(Mapper.mealFoodWithoutUserMap(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCMealDao.class.getName()).severe(e.getMessage());
+            logger.error("Error finding by userId=" + userId + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return meals;
@@ -142,7 +146,7 @@ public class JDBCMealDao implements MealDao {
                 meals.add(Mapper.mealFoodWithoutUserMap(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCMealDao.class.getName()).severe(e.getMessage());
+            logger.error("Error finding by userId=" + userId + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return meals;
@@ -163,7 +167,7 @@ public class JDBCMealDao implements MealDao {
                 meals.add(Mapper.mealFoodWithoutUserMap(resultSet));
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCMealDao.class.getName()).severe(e.getMessage());
+            logger.error("Error finding by userId=" + userId + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return meals;
@@ -179,7 +183,7 @@ public class JDBCMealDao implements MealDao {
                 count = resultSet.getInt("count");
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCMealDao.class.getName()).severe(e.getMessage());
+            logger.error("Error counting by userId=" + userId + ": " + e);
             throw new ServerException(e.getMessage());
         }
         return count;
@@ -194,7 +198,7 @@ public class JDBCMealDao implements MealDao {
                 count = resultSet.getInt("count");
             }
         } catch (SQLException e) {
-            Logger.getLogger(JDBCMealDao.class.getName()).severe(e.getMessage());
+            logger.error("Error counting: " + e);
             throw new ServerException(e.getMessage());
         }
         return count;

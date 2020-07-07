@@ -17,8 +17,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FoodInfoService {
-    private DaoFactory daoFactory = DaoFactory.getInstance();
 
+    private DaoFactory daoFactory = DaoFactory.getInstance();
 
     private static class Holder {
         private static final FoodInfoService INSTANCE = new FoodInfoService();
@@ -44,7 +44,7 @@ public class FoodInfoService {
     }
 
     /**
-     * Savw food to database
+     * Save food to database
      *
      * @param foodDto  food to save
      * @param user     adder
@@ -72,7 +72,7 @@ public class FoodInfoService {
         }
 
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
-            return Optional.of(dao.saveFood(new FoodInfo.Builder()
+            return Optional.ofNullable(dao.saveFood(new FoodInfo.Builder()
                     .setFood(foodBuilder.build())
                     .setIsGlobal(isGlobal)
                     .setUser(user).build()));
@@ -91,7 +91,6 @@ public class FoodInfoService {
     public List<FoodInfo> findAllFood(int limit, int offset) throws ServerException {
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {
             return dao.findAll(limit, offset);
-
         }
     }
 
@@ -106,7 +105,6 @@ public class FoodInfoService {
             return dao.findAllUserFood(userId).stream()
                     .map(foodInfo -> ServiceUtil.getInstance().getLocalizedFoodName(foodInfo.getFood(), locale))
                     .collect(Collectors.toList());
-
         }
     }
 
