@@ -14,7 +14,6 @@ public class User {
     private Integer weight;
     private String gender;
     private String activityLevel;
-    private Integer age;
     private LocalDate dateOfBirth;
 
     @Override
@@ -117,7 +116,8 @@ public class User {
             return user;
         }
     }
-/////////////////////////////////
+
+
     public Long getId() {
         return id;
     }

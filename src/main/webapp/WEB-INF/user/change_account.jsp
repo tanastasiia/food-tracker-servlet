@@ -44,6 +44,17 @@
 
             <form action="${pageContext.request.contextPath}/foodtracker/change_account" method="post">
 
+                <div class="form-group">
+                    <label for="username" class="control-label">
+                        <fmt:message key="messages.enter.username"/>
+                    </label>
+                    <input id="username" class="form-control" type=text name="username" value="${user.username}"  required/>
+                    <c:if test="${not empty error_username}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_username}"/></p>
+                        </div>
+                    </c:if>
+                </div>
 
                 <div class="form-group">
                     <label for="firstName" class="control-label">
@@ -113,6 +124,7 @@
                         <fmt:message key="messages.enter.activity"/>
                     </label>
                 </div>
+
                 <c:choose>
                     <c:when test="${user.activityLevel=='FIRST'}">
                         <div class="form-check">
@@ -155,7 +167,6 @@
                     </c:otherwise>
                 </c:choose>
 
-
                 <c:choose>
                     <c:when test="${user.activityLevel=='THIRD'}">
                         <div class="form-check">
@@ -177,7 +188,6 @@
                     </c:otherwise>
                 </c:choose>
 
-
                 <c:choose>
                     <c:when test="${user.activityLevel=='FORTH'}">
                         <div class="form-check">
@@ -198,7 +208,6 @@
                         </div>
                     </c:otherwise>
                 </c:choose>
-
 
                 <c:choose>
                     <c:when test="${user.activityLevel=='FIFTH'}">

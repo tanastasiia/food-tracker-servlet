@@ -1,4 +1,4 @@
-package ua.training.service;
+package ua.training.model.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import ua.training.data.UserTestData;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.UserDao;
-import ua.training.model.dto.UserDto;
 import ua.training.model.entity.User;
 
 import java.rmi.ServerException;

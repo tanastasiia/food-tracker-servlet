@@ -1,4 +1,4 @@
-package ua.training.service;
+package ua.training.model.service;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,6 @@ import ua.training.data.FoodInfoTestData;
 import ua.training.data.FoodTestData;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.FoodInfoDao;
-import ua.training.model.dto.FoodDto;
 import ua.training.model.entity.FoodInfo;
 
 import java.rmi.ServerException;
@@ -85,9 +84,8 @@ public class FoodInfoServiceTest {
                 .thenReturn(Optional.empty());
         doReturn(expected).when(foodInfoDao).saveFood(any());
 
-        Optional<FoodInfo> actual = foodInfoService.saveFood(foodTestData.FOOD_DTO, expected.getUser(), false);
+        Optional<FoodInfo> actual = foodInfoService.saveFood(foodTestData.FOOD_DTO, expected.getUser());
 
-        verify(foodInfoDao).findAllByFoodNameOrFoodNameUaAndUserIdOrGlobal(anyString(), anyLong());
         verify(foodInfoDao).saveFood(any(FoodInfo.class));
         assertTrue(actual.isPresent());
         assertThat(actual.get(), is(expected));
@@ -101,7 +99,7 @@ public class FoodInfoServiceTest {
         when(foodInfoDao.findAllByFoodNameOrFoodNameUaAndUserIdOrGlobal(anyString(), anyLong())).thenReturn(Optional.of(expected));
         doReturn(expected).when(foodInfoDao).saveFood(any());
 
-        Optional<FoodInfo> actual = foodInfoService.saveFood(foodTestData.FOOD_DTO, expected.getUser(), false);
+        Optional<FoodInfo> actual = foodInfoService.saveFood(foodTestData.FOOD_DTO, expected.getUser());
 
         verify(foodInfoDao).findAllByFoodNameOrFoodNameUaAndUserIdOrGlobal(anyString(), anyLong());
         verify(foodInfoDao, never()).saveFood(any(FoodInfo.class));

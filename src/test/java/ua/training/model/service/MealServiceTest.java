@@ -1,26 +1,19 @@
-package ua.training.service;
+package ua.training.model.service;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ua.training.data.FoodInfoTestData;
-import ua.training.data.FoodTestData;
 import ua.training.data.MealTestData;
 import ua.training.model.DaoFactory;
-import ua.training.model.dao.FoodInfoDao;
 import ua.training.model.dao.MealDao;
-import ua.training.model.dto.UserMealStatDto;
 import ua.training.model.entity.Food;
-import ua.training.model.entity.Meal;
 
 import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)

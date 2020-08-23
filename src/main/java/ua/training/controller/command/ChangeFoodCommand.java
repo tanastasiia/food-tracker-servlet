@@ -4,16 +4,21 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.controller.PagesToForward;
 import ua.training.controller.Paths;
-import ua.training.controller.RoutesToRedirect;
+import ua.training.controller.Endpoints;
 import ua.training.model.dto.FoodDto;
-import ua.training.service.FoodInfoService;
-import ua.training.utils.ControllerUtil;
+import ua.training.model.service.FoodInfoService;
+import ua.training.controller.ControllerUtil;
 import ua.training.utils.validation.ValidationException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Command for changing food info
+ *
+ * @see Endpoints#CHANGE_FOOD
+ */
 public class ChangeFoodCommand implements Command {
 
     private ControllerUtil controllerUtil = ControllerUtil.getInst();
@@ -30,7 +35,7 @@ public class ChangeFoodCommand implements Command {
         try {
             FoodDto foodDto = controllerUtil.parseFoodDto(request);
             foodInfoService.updateFood(foodDto, Long.parseLong(request.getParameter("foodId")));
-            return RoutesToRedirect.ADMIN;
+            return Endpoints.ADMIN;
         } catch (ValidationException e) {
             logger.info("Validation errors: " + e.getErrors());
             controllerUtil.setErrorAttributes(request, e.getErrors());

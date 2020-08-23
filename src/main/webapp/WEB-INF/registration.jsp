@@ -49,6 +49,11 @@
                         <fmt:message key="messages.enter.first.name"/>
                     </label>
                     <input id="firstName" class="form-control" type=text name="firstName" required/>
+                    <c:if test="${not empty error_firstName}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_firstName}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
                 <div class="form-group">
@@ -56,6 +61,11 @@
                         <fmt:message key="messages.enter.last.name"/>
                     </label>
                     <input id="lastName" class="form-control" type=text name="lastName" required/>
+                    <c:if test="${not empty error_lastName}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_lastName}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
                 <div class="form-group">
@@ -63,6 +73,11 @@
                         <fmt:message key="messages.enter.username"/>
                     </label>
                     <input id="username" class="form-control" type=text name="username" required/>
+                    <c:if test="${not empty error_username}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_username}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
                 <div class="form-group">
@@ -70,6 +85,11 @@
                         <fmt:message key="messages.enter.height"/>
                     </label>
                     <input id="height" class="form-control" type=number name="height" required/>
+                    <c:if test="${not empty error_height}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_height}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
                 <div class="form-group">
@@ -77,6 +97,11 @@
                         <fmt:message key="messages.enter.weight"/>
                     </label>
                     <input id="weight" class="form-control" type=number name="weight" required/>
+                    <c:if test="${not empty error_weight}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_weight}"/></p>
+                        </div>
+                    </c:if>
 
                 </div>
                 <div class="form-group">
@@ -84,6 +109,11 @@
                         <fmt:message key="messages.enter.date.of.birth"/>
                     </label>
                     <input id="dateOfBirth" class="form-control" type=date name="dateOfBirth" required/>
+                    <c:if test="${not empty error_dateOfBirth}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_dateOfBirth}"/></p>
+                        </div>
+                    </c:if>
                 </div>
 
                 <label class="control-label">
@@ -143,6 +173,12 @@
                         <fmt:message key="messages.enter.female"/>
                     </label>
                 </div>
+                <c:if test="${not empty error_gender}">
+                    <div class="alert alert-danger"><p>
+                        <fmt:message key="${error_gender}"/></p>
+                    </div>
+                </c:if>
+
 
 
                 <div class="form-group">
@@ -150,6 +186,11 @@
                         <fmt:message key="messages.enter.password"/>
                     </label>
                     <input id="password" class="form-control" type="password" name="password" required/>
+                    <c:if test="${not empty error_password}">
+                        <div class="alert alert-danger"><p>
+                            <fmt:message key="${error_password}"/></p>
+                        </div>
+                    </c:if>
 
                 </div>
 

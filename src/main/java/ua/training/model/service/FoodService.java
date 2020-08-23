@@ -1,4 +1,4 @@
-package ua.training.service;
+package ua.training.model.service;
 
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.FoodDao;
@@ -12,6 +12,10 @@ public class FoodService {
 
     private static class Holder {
         private static final FoodService INSTANCE = new FoodService();
+    }
+
+    private FoodService() {
+
     }
 
     public static FoodService getInstance() {

@@ -1,6 +1,5 @@
-package ua.training.utils;
+package ua.training.model;
 
-import ua.training.model.dto.FoodDto;
 import ua.training.model.entity.ActivityLevel;
 import ua.training.model.entity.Food;
 import ua.training.model.entity.Gender;
@@ -16,7 +15,6 @@ import java.util.Optional;
 public class ServiceUtil {
 
     private final Integer MILLIGRAMS_TO_GRAMS = 1000;
-    private final BigDecimal GRAMS_TO_MILLIGRAMS = BigDecimal.valueOf(1000);
     public final Locale LOCALE_UA = new Locale("ua");
 
     private static class UtilityHolder {
@@ -47,12 +45,13 @@ public class ServiceUtil {
                 - 5 * Period.between(user.getDateOfBirth(), LocalDate.now()).getYears()));
     }
 
-
-    public BigDecimal toMilligrams(Integer grams){
-        return  BigDecimal.valueOf(grams).divide(GRAMS_TO_MILLIGRAMS, 2).setScale(2, RoundingMode.HALF_UP);
-    }
-    public Integer toGrams(BigDecimal milligrams){
-        return  milligrams.multiply(BigDecimal.valueOf(MILLIGRAMS_TO_GRAMS)).intValue();
+    /**
+     * Converts grams to milligrams
+     * @param grams grams to convert
+     * @return milligrams
+     */
+    public Integer toMilligrams(BigDecimal grams){
+        return  grams.multiply(BigDecimal.valueOf(MILLIGRAMS_TO_GRAMS)).intValue();
     }
 
     /**

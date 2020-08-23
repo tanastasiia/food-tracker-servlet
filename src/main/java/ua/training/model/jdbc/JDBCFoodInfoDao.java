@@ -98,12 +98,12 @@ public class JDBCFoodInfoDao implements FoodInfoDao {
              PreparedStatement createFoodSt = connection.prepareStatement(CREATE_FOOD, Statement.RETURN_GENERATED_KEYS)) {
             connection.setAutoCommit(false);
 
-            if (food.getName().isEmpty()) {
+            if (food.getName() == null || food.getName().isEmpty()) {
                 createFoodSt.setNull(1, Types.NULL);
             } else {
                 createFoodSt.setString(1, food.getName());
             }
-            if (food.getNameUa().isEmpty()) {
+            if (food.getNameUa() == null || food.getNameUa().isEmpty()) {
                 createFoodSt.setNull(2, Types.NULL);
             } else {
                 createFoodSt.setString(2, food.getNameUa());

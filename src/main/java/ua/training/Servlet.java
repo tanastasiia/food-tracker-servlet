@@ -4,7 +4,7 @@ package ua.training;
 
 import org.apache.log4j.LogManager;
 import ua.training.controller.command.*;
-import ua.training.controller.RoutesToRedirect;
+import ua.training.controller.Endpoints;
 import ua.training.controller.PagesToForward;
 import ua.training.controller.Paths;
 
@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,20 +26,20 @@ public class Servlet extends HttpServlet {
     @Override
     public void init(ServletConfig servletConfig) {
 
-        commands.put(RoutesToRedirect.LOGIN.getPath(), new LoginCommand());
-        commands.put(RoutesToRedirect.LOGOUT.getPath(), new LogoutCommand());
-        commands.put(RoutesToRedirect.HOME.getPath(), new HomeCommand());
-        commands.put(RoutesToRedirect.ADD_MEAL.getPath(), new AddMealCommand());
-        commands.put(RoutesToRedirect.ADD_FOOD.getPath(), new AddFoodCommand());
-        commands.put(RoutesToRedirect.REGISTRATION.getPath(), new RegistrationCommand());
-        commands.put(RoutesToRedirect.ACCOUNT.getPath(), new AccountCommand());
-        commands.put(RoutesToRedirect.STATISTICS.getPath(), new StatisticsCommand());
-        commands.put(RoutesToRedirect.ADMIN.getPath(), new AdminPageCommand());
-        commands.put(RoutesToRedirect.CHANGE_ACCOUNT.getPath(), new ChangeAccountCommand());
-        commands.put(RoutesToRedirect.CHANGE_USER_ROLE.getPath(), new ChangeUserRoleCommand());
-        commands.put(RoutesToRedirect.CHANGE_USER_PASSWORD.getPath(), new ChangePasswordCommand());
-        commands.put(RoutesToRedirect.CHANGE_FOOD.getPath(), new ChangeFoodCommand());
-        commands.put(RoutesToRedirect.GET_FOOD_NAMES.getPath(), new GetFoodNamesCommand());
+        commands.put(Endpoints.LOGIN.getPath(), new LoginCommand());
+        commands.put(Endpoints.LOGOUT.getPath(), new LogoutCommand());
+        commands.put(Endpoints.HOME.getPath(), new HomeCommand());
+        commands.put(Endpoints.ADD_MEAL.getPath(), new AddMealCommand());
+        commands.put(Endpoints.ADD_FOOD.getPath(), new AddFoodCommand());
+        commands.put(Endpoints.REGISTRATION.getPath(), new RegistrationCommand());
+        commands.put(Endpoints.ACCOUNT.getPath(), new AccountCommand());
+        commands.put(Endpoints.STATISTICS.getPath(), new StatisticsCommand());
+        commands.put(Endpoints.ADMIN.getPath(), new AdminPageCommand());
+        commands.put(Endpoints.CHANGE_ACCOUNT.getPath(), new ChangeAccountCommand());
+        commands.put(Endpoints.CHANGE_USER_ROLE.getPath(), new ChangeUserRoleCommand());
+        commands.put(Endpoints.CHANGE_USER_PASSWORD.getPath(), new ChangePasswordCommand());
+        commands.put(Endpoints.CHANGE_FOOD.getPath(), new ChangeFoodCommand());
+        commands.put(Endpoints.GET_FOOD_NAMES.getPath(), new GetFoodNamesCommand());
 
     }
 

@@ -2,17 +2,23 @@ package ua.training.controller.command;
 
 import ua.training.controller.PagesToForward;
 import ua.training.controller.Paths;
-import ua.training.service.FoodInfoService;
-import ua.training.service.MealService;
-import ua.training.service.UserService;
+import ua.training.controller.Endpoints;
+import ua.training.model.service.FoodInfoService;
+import ua.training.model.service.MealService;
+import ua.training.model.service.UserService;
 import ua.training.utils.Constants;
-import ua.training.utils.ControllerUtil;
+import ua.training.controller.ControllerUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.rmi.ServerException;
 
+
+/**
+ * Command for admin page
+ *
+ * @see Endpoints#ADMIN
+ */
 public class AdminPageCommand implements Command {
 
     private ControllerUtil controllerUtil = ControllerUtil.getInst();

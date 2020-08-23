@@ -3,14 +3,18 @@ package ua.training.controller.command;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.controller.Paths;
-import ua.training.controller.RoutesToRedirect;
+import ua.training.controller.Endpoints;
 import ua.training.model.entity.Role;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
+/**
+ * Command for logout
+ *
+ * @see Endpoints#LOGOUT
+ */
 public class LogoutCommand implements Command {
 
     private Logger logger = LogManager.getLogger(LogoutCommand.class.getName());
@@ -25,7 +29,6 @@ public class LogoutCommand implements Command {
         session.removeAttribute("isAdmin");
 
         logger.info("User logged out");
-        return RoutesToRedirect.LOGIN_LOGOUT;
-
+        return Endpoints.LOGIN_LOGOUT;
     }
 }

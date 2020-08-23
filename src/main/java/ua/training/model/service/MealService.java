@@ -1,4 +1,4 @@
-package ua.training.service;
+package ua.training.model.service;
 
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.MealDao;
@@ -32,6 +32,10 @@ public class MealService {
         private static final MealService INSTANCE = new MealService();
     }
 
+    private MealService() {
+
+    }
+
     public static MealService getInstance() {
         return MealService.Holder.INSTANCE;
     }
@@ -39,7 +43,7 @@ public class MealService {
     /**
      * Save meal to database
      *
-     * @param amount  amount
+     * @param amount   amount
      * @param foodInfo food info
      * @param user     user which consumed food
      */

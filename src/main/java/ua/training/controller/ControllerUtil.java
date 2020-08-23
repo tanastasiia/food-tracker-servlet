@@ -1,11 +1,11 @@
-package ua.training.utils;
+package ua.training.controller;
 
 import ua.training.model.constants.FoodConst;
 import ua.training.model.constants.FoodInfoConst;
 import ua.training.model.constants.UserConst;
 import ua.training.model.dto.FoodDto;
 import ua.training.model.dto.MealDto;
-import ua.training.model.entity.FoodInfo;
+import ua.training.model.dto.UserUpdateDto;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 import ua.training.utils.validation.ValidationError;
@@ -35,6 +35,10 @@ public class ControllerUtil {
 
     public User getUser(HttpServletRequest request) {
         return (User) request.getSession().getAttribute("user");
+    }
+
+    public void setUser(HttpServletRequest request, User user) {
+        request.getSession().setAttribute("user", user);
     }
 
     public long getUserId(HttpServletRequest request) {
@@ -102,8 +106,9 @@ public class ControllerUtil {
         return mealDto;
     }
 
-    public User parseUserUpdate(HttpServletRequest request) throws ValidationException {
-        User user = new User.Builder()
+    public UserUpdateDto parseUserUpdate(HttpServletRequest request) throws ValidationException {
+        UserUpdateDto user = new UserUpdateDto.Builder()
+                .setUsername(request.getParameter(UserConst.USERNAME.getField()))
                 .setFirstName(request.getParameter(UserConst.FIRST_NAME.getField()))
                 .setLastName(request.getParameter(UserConst.LAST_NAME.getField()))
                 .setHeight(Integer.parseInt(request.getParameter(UserConst.HEIGHT.getField())))

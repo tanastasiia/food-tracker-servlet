@@ -1,12 +1,15 @@
-package ua.training.service;
+package ua.training.model.service;
 
+import org.apache.log4j.LogManager;
 import org.mindrot.jbcrypt.BCrypt;
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.UserDao;
+import ua.training.model.dto.UserUpdateDto;
 import ua.training.model.entity.Role;
 import ua.training.model.entity.User;
 
 import java.rmi.ServerException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,13 +21,17 @@ public class UserService {
         private static final UserService INSTANCE = new UserService();
     }
 
+    private UserService() {
+    }
+
     public static UserService getInstance() {
         return Holder.INSTANCE;
     }
 
     /**
      * Get users page
-     * @param limit number of elements
+     *
+     * @param limit  number of elements
      * @param offset number of first item
      * @return users
      */
@@ -45,6 +52,7 @@ public class UserService {
 
     /**
      * Authentication by username
+     *
      * @param username username of user
      * @param password password of user
      * @return optional of sighed in user
@@ -68,6 +76,7 @@ public class UserService {
 
     /**
      * Registration of user
+     *
      * @param user user to register
      * @return true if successfully registered false if user with such username already exists
      */
@@ -85,29 +94,36 @@ public class UserService {
 
     /**
      * Updating user account information
-     * @param newUser user with updated data
-     * @param user user to update
+     *
+     * @param userUpdateDto user with updated data
+     * @param user          user to update
      */
-    public void updateAccount(User newUser, User user) throws ServerException {
+    public User updateAccount(UserUpdateDto userUpdateDto, User user) throws ServerException {
 
-        newUser.setId(user.getId());
+        User newUser = new User.Builder()
+                .setUsername(userUpdateDto.getUsername())
+                .setFirstName(userUpdateDto.getFirstName())
+                .setLastName(userUpdateDto.getLastName())
+                .setHeight(userUpdateDto.getHeight())
+                .setWeight(userUpdateDto.getWeight())
+                .setGender(userUpdateDto.getGender())
+                .setActivityLevel(userUpdateDto.getActivityLevel())
+                .setDateOfBirth(userUpdateDto.getDateOfBirth())
+                .setId(user.getId())
+                .setRole(user.getRole())
+                .build();
+
         try (UserDao dao = daoFactory.createUserDao()) {
             dao.updateUser(newUser);
         }
-        user.setFirstName(newUser.getFirstName());
-        user.setLastName(newUser.getLastName());
-        user.setHeight(newUser.getHeight());
-        user.setWeight(newUser.getWeight());
-        user.setDateOfBirth(newUser.getDateOfBirth());
-        user.setActivityLevel(newUser.getActivityLevel());
-        user.setGender(newUser.getGender());
-
+        return newUser;
     }
 
     /**
      * Change role of user to opposite
+     *
      * @param userId of user whose role is being changed
-     * @param role current user role
+     * @param role   current user role
      */
     public void changeRole(long userId, String role) throws ServerException {
 
@@ -118,15 +134,13 @@ public class UserService {
     }
 
     /**
-     *
      * @param oldPassword old user's password
      * @param newPassword new user's password
-     * @param user user whose password is needed to be changed
+     * @param user        user whose password is needed to be changed
      * @return true if password changed and false if old password doesn't match
-     * @throws ServerException
      */
     public boolean changePassword(String oldPassword, String newPassword, User user) throws ServerException {
-        if(BCrypt.checkpw(oldPassword, user.getPassword())){
+        if (BCrypt.checkpw(oldPassword, user.getPassword())) {
             try (UserDao dao = daoFactory.createUserDao()) {
                 dao.updateUserPassword(user.getId(), BCrypt.hashpw(newPassword, BCrypt.gensalt()));
                 return true;

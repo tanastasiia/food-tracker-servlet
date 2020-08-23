@@ -31,7 +31,7 @@ public class JDBCUserDao implements UserDao {
 
     private String UPDATE_USER =
             "UPDATE users " +
-                    "SET first_name=?, last_name=?, height=?, weight=?, date_of_birth=?, activity_level=?, gender=? " +
+                    "SET first_name=?, last_name=?, height=?, weight=?, date_of_birth=?, activity_level=?, gender=?, username=? " +
                     "WHERE users.id = ?";
 
     private String UPDATE_USER_ROLE =
@@ -96,7 +96,8 @@ public class JDBCUserDao implements UserDao {
             query.setObject(5, newUser.getDateOfBirth());
             query.setString(6, newUser.getActivityLevel());
             query.setString(7, newUser.getGender());
-            query.setLong(8, newUser.getId());
+            query.setString(8, newUser.getUsername());
+            query.setLong(9, newUser.getId());
             query.executeUpdate();
         } catch (SQLException e) {
             logger.error("Error updating user=" + newUser + ": " + e);

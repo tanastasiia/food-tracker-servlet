@@ -1,13 +1,12 @@
-package ua.training.service;
+package ua.training.model.service;
 
 import ua.training.model.DaoFactory;
 import ua.training.model.dao.FoodInfoDao;
-import ua.training.model.dao.UserDao;
 import ua.training.model.dto.FoodDto;
 import ua.training.model.entity.Food;
 import ua.training.model.entity.FoodInfo;
 import ua.training.model.entity.User;
-import ua.training.utils.ServiceUtil;
+import ua.training.model.ServiceUtil;
 
 import java.rmi.ServerException;
 import java.sql.SQLException;
@@ -22,6 +21,10 @@ public class FoodInfoService {
 
     private static class Holder {
         private static final FoodInfoService INSTANCE = new FoodInfoService();
+    }
+
+    private FoodInfoService() {
+
     }
 
     public static FoodInfoService getInstance() {
@@ -46,27 +49,29 @@ public class FoodInfoService {
     /**
      * Save food to database
      *
-     * @param foodDto  food to save
-     * @param user     adder
+     * @param foodDto food to save
+     * @param user    adder
      * @return Optional of saved food
-     * @throws ServerException
      */
     public Optional<FoodInfo> saveFood(FoodDto foodDto, User user) throws ServerException {
         Food.Builder foodBuilder = new Food.Builder()
-                .setCarbs(ServiceUtil.getInstance().toGrams(foodDto.getCarbs()))
-                .setProtein(ServiceUtil.getInstance().toGrams(foodDto.getProtein()))
-                .setFat(ServiceUtil.getInstance().toGrams(foodDto.getFat()))
+                .setCarbs(ServiceUtil.getInstance().toMilligrams(foodDto.getCarbs()))
+                .setProtein(ServiceUtil.getInstance().toMilligrams(foodDto.getProtein()))
+                .setFat(ServiceUtil.getInstance().toMilligrams(foodDto.getFat()))
                 .setCalories(foodDto.getCalories());
 
         if (user.getRole().equals("ROLE_USER")) {
             foodBuilder = foodDto.getLocale().equals(ServiceUtil.getInstance().LOCALE_UA)
                     ? foodBuilder.setNameUa(foodDto.getName())
                     : foodBuilder.setName(foodDto.getName());
+
         } else {
             foodBuilder = foodBuilder.setName(foodDto.getName()).setNameUa(foodDto.getNameUa());
         }
-        if ((!foodDto.getName().isEmpty() && findFoodByFoodNameAndUser(foodDto.getName(), user.getId()).isPresent())
-                || (!foodDto.getNameUa().isEmpty() && findFoodByFoodNameAndUser(foodDto.getNameUa(), user.getId()).isPresent())) {
+
+        if ((foodDto.getName() != null && !foodDto.getName().isEmpty() && findFoodByFoodNameAndUser(foodDto.getName(), user.getId()).isPresent())
+                || (foodDto.getNameUa() != null && !foodDto.getNameUa().isEmpty() && findFoodByFoodNameAndUser(foodDto.getNameUa(), user.getId()).isPresent())) {
+
             return Optional.empty();
         }
 
@@ -96,7 +101,7 @@ public class FoodInfoService {
     /**
      * Get all food names
      *
-     * @param userId  userId
+     * @param userId userId
      * @return list if food names
      */
     public List<String> findAllFoodNamesForUser(long userId, Locale locale) throws ServerException {
@@ -122,9 +127,9 @@ public class FoodInfoService {
                 .setId(foodId)
                 .setName(foodDto.getName())
                 .setNameUa(foodDto.getNameUa())
-                .setCarbs(ServiceUtil.getInstance().toGrams(foodDto.getCarbs()))
-                .setProtein(ServiceUtil.getInstance().toGrams(foodDto.getProtein()))
-                .setFat(ServiceUtil.getInstance().toGrams(foodDto.getFat()))
+                .setCarbs(ServiceUtil.getInstance().toMilligrams(foodDto.getCarbs()))
+                .setProtein(ServiceUtil.getInstance().toMilligrams(foodDto.getProtein()))
+                .setFat(ServiceUtil.getInstance().toMilligrams(foodDto.getFat()))
                 .setCalories(foodDto.getCalories())
                 .build();
         try (FoodInfoDao dao = daoFactory.createFoodInfoDao()) {

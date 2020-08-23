@@ -1,7 +1,5 @@
 package ua.training.controller;
 
-import ua.training.model.entity.Role;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
